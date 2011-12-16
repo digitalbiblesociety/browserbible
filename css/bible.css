@@ -1,14 +1,14 @@
-/* Chapter:Verse number styling */
 
-.c-num {
+/* Chapter:Verse number styling */
+.chapter-num {
     float: left;
     margin: 0 .5em .5em 0;
 }
-.v-num {
+.verse-num {
     font-weight: bold;
     font-size: 80%;
     vertical-align: top;
 }
-.v-1 {
+.verse-1 {
     display: none;
 }

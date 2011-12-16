@@ -1,0 +1,14 @@
+/* Chapter:Verse number styling */
+
+.c-num {
+    float: left;
+    margin: 0 .5em .5em 0;
+}
+.v-num {
+    font-weight: bold;
+    font-size: 80%;
+    vertical-align: top;
+}
+.v-1 {
+    display: none;
+}

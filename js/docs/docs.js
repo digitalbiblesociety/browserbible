@@ -1,0 +1,3 @@
+/* Document manager */
+
+var docs = {};

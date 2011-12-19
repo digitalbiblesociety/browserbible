@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Search Test</title>	
+	
+	<script src="js/jquery.js"></script>
+	<script src="js/bible/bible.js"></script>
+	
+	<style>
+	html, body {
+		margin: 0;
+	}
+	#header, #footer {
+		padding: 10px;
+	}
+	#content {
+		overflow: auto;
+		background: #eee;
+	}
+	
+	#results {
+		padding: 20px;
+	}
+	
+	.highlight {
+		background: yellow;
+		
+	}
+	
+	.search-result {
+		overflow: hidden;
+		margin: 0 0 10px 0;	
+	}
+	
+	.search-result .verse {
+		display: block	;
+		float: left;
+		width: 400px;
+	}
+	
+	
+	.search-result .search-verse {
+		display: block;
+		font-weight: bold;
+		float: left;
+		width: 90px;
+	}
+	
+	.search-result .verse-num {
+		display:none;
+	}	
+	
+	</style>
+</head>
+<body>	
+	<div id="header">
+		<h1>Search Test</h1>
+		
+		<p>Load and search</p>
+	
+		<table>
+			<thead>
+				<tr><th>action</th><th>Safari</th><th>Firefox</th><th>IE9 (VM)</tr>
+			</head>
+			<tbody>
+				<tr><td>load</td><td>3</td><td>5</td><td>3.2</td></tr>
+				<tr><td>load, $(data)</td><td>5</td><td>9.6</td><td>13.3</td></tr>
+				<tr><td>load, $(data), span.verse:content('light')</td><td>5.8</td><td>10.5</td><td>13.8</td></tr>
+				<tr><td>load, $(data), span.verse:content('light'), append</td><td>7.3</td><td>14.9</td><td>14.4</td></tr>
+				<tr><td>load, $(data), span.verse:content('light'), format, append</td><td>7.4</td><td>11.7</td><td>15.1</td></tr>
+				<tr><td>load, $(data), span.verse, regex, format, append</td><td>7.0</td><td>19.4</td><td></td></tr>
+			</tbody>
+		</table>	
+		
+		<input type="text" id="search" placeholder="Paul, Jesus, etc." />
+		<input type="button" id="search-button" value="Search" />
+		<input type="button" id="cancel-button" value="Cancel" />
+		
+		<div id="status">
+		</div>	
+	
+	</div>
+	<div id="content">
+	
+
+		
+		<div id="results">
+			
+		</div>
+	
+	
+	</div>
+	<div id="footer">
+		<p>Copyright</p>
+	</div>
+	
+<script>
+jQuery(function($) {
+	
+	function resize() {
+		var footerHeight = $('#footer').outerHeight(true),
+			headerHeight = $('#header').outerHeight(true),
+			windowHeight = $(window).height();
+		
+		$('#content').height(windowHeight - footerHeight - headerHeight - 100);
+		
+	}
+	resize();
+	$(window).resize(resize);
+	
+	
+	
+	var status = $('#status'),
+		results = $('#results'),
+		searchButton = $('#search-button').prop('disabled', false)	,
+		cancelButton = $('#cancel-button'),
+		searchText = $('#search');
+	
+	searchButton.click(function() {
+		
+		search.startSearch( searchText.val() );
+		
+		searchButton.prop('disabled', true);
+		searchText.prop('disbled', true);
+		
+	});
+	
+	cancelButton.click(function() {
+		
+		search.cancelSearch();
+		
+		searchButton.prop('disabled', false);
+		searchText.prop('disbled', false);
+		
+	});	
+	
+	
+	var search = {
+		
+		isSearching: false,
+		
+		canceled: false,
+		
+		bookIndex: 0,
+		
+		chapterIndex: 0,
+		
+		searchText: '',
+		
+		searchRegExp: null,
+		
+		resultCount: 0,
+		
+		startTime: null,
+		
+		startSearch: function(text) {
+			if (this.isSearching)
+				return;
+			
+			this.bookIndex = 0;
+			this.chapterIndex = 0;
+			this.searchText = text;
+			this.searchRegExp = new RegExp("\\b" + text + "\\b", "gi");
+			this.canceled = false;
+			this.resultCount = 0;
+			this.startTime = new Date();
+			
+			results.empty();
+			
+			this.isSearching = true;
+			this.loadChapter();
+		},
+		
+		cancelSearch: function() {
+			this.isSearching = false;
+			this.canceled = true;
+		},
+		
+		
+		loadChapter: function() {
+			
+			var s = this,
+				chapterUrl = 'content/bibles/en_kjv/' + BibleFormatter.getChapterCode(this.bookIndex+1, this.chapterIndex+1) + '.html'
+				now = new Date();
+			
+			
+			status.html('elapsed: ' + ((now - this.startTime) / 1000) + ' s; found: ' + this.resultCount.toString() + ' :: ' + bible.Books[ this.bookIndex ].names[0] + ' ' + (this.chapterIndex+1).toString() 	);
+			
+			// REGEX
+
+				
+			$.ajax({
+				url: chapterUrl,
+				dataType: 'html',
+				success: function(data) {
+					
+				
+					// (1) no formatting
+					/*
+						$(data)
+							.find("span.verse:contains('" + s.searchText + "')")
+							.appendTo(results);
+					
+					}
+					*/
+					
+					
+					// (2) replace
+					/*
+						$(data)
+							.find("span.verse:contains('" + s.searchText + "')")
+							.each(function(index, node) {
+									
+								node.innerHTML = node.innerHTML.replace(s.searchText, '<span class="highlight">' + s.searchText + '</span>');
+								
+								// WRAP
+								var n = $(node),
+									verse = BibleFormatter.parseVerseCode( n.attr('data-verse') ),
+									r = $('<div class="search-result"><span class="search-verse">' + verse + '</span></div>').append(n);
+									
+								results.append( r );
+								
+								s.resultCount++;
+							});
+					*/
+					
+					
+					// (3) regex
+					
+					$(data)
+						.find("span.verse")
+						.each(function(index, node) {
+								
+							if (node.innerHTML.match(s.searchRegExp) ) {
+								
+								node.innerHTML = node.innerHTML.replace(s.searchRegExp, function(match) {
+									return '<span class="highlight">' + match + '</span>';
+								})
+						
+								//node.innerHTML = node.innerHTML.replace(s.searchText, '<span class="highlight">' + s.searchText + '</span>');
+								
+								// WRAP
+								var n = $(node),
+									verse = BibleFormatter.parseVerseCode( n.attr('data-verse') ),
+									r = $('<div class="search-result"><span class="search-verse">' + verse + '</span></div>').append(n);
+									
+								results.append( r );
+								
+								s.resultCount++;
+							}
+						});					
+					
+					
+					
+					if (!s.canceled) {
+						s.nextChapter();
+					} else {
+						s.ended();
+					}
+				},
+				error: function(e) {
+					s.nextChapter();
+				}
+			});			
+		},
+		
+		nextChapter: function() {
+			
+			// more chapters?
+			if (this.chapterIndex < bible.Books[this.bookIndex].verses.length-1 ) {
+				this.chapterIndex++;
+			} else {
+				this.bookIndex++;
+				this.chapterIndex = 0;
+				
+				// check for last book!
+				if (this.bookIndex > bible.Books.length-1) {
+					this.ended();
+					return;
+				}
+			}
+			
+			this.loadChapter();
+			
+		},
+		
+		ended: function() {
+			console.log('done!');
+			
+			this.isSearching = false;
+			
+			searchButton.prop('disabled', false);
+			searchText.prop('disbled', false);
+			
+			status.html('elapsed: ' + ((new Date() - this.startTime) / 1000) + ' s; found: ' + this.resultCount.toString()  + ' :: done');
+		}
+	};
+	
+	var BibleFormatter = {
+		padLeft: function(input, length, s) {
+			while (input.length < length)
+				input = s + input;
+			return input;
+		},
+	
+		getChapterCode: function(bookNumber, chapterNumber) {
+			return 'c' + this.padLeft((bookNumber).toString(), 3, '0') + this.padLeft((chapterNumber).toString(), 3, '0');
+		},
+		
+		parseVerseCode: function(verseCode) {
+			if (verseCode.length != 10)
+				return 'unknown';
+			
+			var bookNumber = parseInt(verseCode.substring(1,4),10),
+				chapterNumber = parseInt(verseCode.substring(4,7),10),
+				verseNumber = parseInt(verseCode.substring(7,10),10);
+			
+			return bible.Books[bookNumber-1].names[2] + ' ' + chapterNumber + ':' + verseNumber;
+		}
+		
+	};
+	
+});
+
+</script>
+</body>
+</html>

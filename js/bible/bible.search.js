@@ -69,8 +69,6 @@ bible.BibleSearch = {
 		
 		this.chapterCallback(this.bookIndex, this.chapterIndex, this.resultCount, this.startTime);
 		
-		//status.html('elapsed: ' + ((now - this.startTime) / 1000) + ' s; found: ' + this.resultCount.toString() + ' :: ' + bible.Books[ this.bookIndex ].names[0] + ' ' + (this.chapterIndex+1).toString() 	);
-		
 		$.ajax({
 			url: chapterUrl,
 			dataType: 'html',

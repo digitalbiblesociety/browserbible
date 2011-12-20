@@ -1,4 +1,10 @@
-﻿var bible = {};
+﻿/**
+ * Bible namespace, bible book names and chapter/verse statistics
+ *
+ * @author John Dyer (http://j.hn/)
+ */
+
+var bible = {};
 bible.Books = [
 {
 	names: ['Genesis', 'Ge', 'Gen'],

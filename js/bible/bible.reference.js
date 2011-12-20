@@ -1,4 +1,9 @@
-﻿
+﻿/**
+ * Bible reference parser
+ *
+ * @author John Dyer (http://j.hn/)
+ */
+
 bible.parseReference = function (textReference) {
 
 	var 

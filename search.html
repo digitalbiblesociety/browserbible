@@ -157,6 +157,8 @@ jQuery(function($) {
 			showFeedback = showFeedbackCheckbox.is(':checked');
 				
 		bible.BibleSearch.search( searchText.val(), 'en_kjv',
+			
+			// chapter progress
 			function(bookIndex, chapterIndex, resultsCount, startDate) {
 				
 				if (showFeedback) {
@@ -165,6 +167,8 @@ jQuery(function($) {
 				}
 				
 			},
+			
+			// ended
 			function(resultHtml, resultsCount, startDate) {
 				
 				results.html(resultHtml);
@@ -173,7 +177,8 @@ jQuery(function($) {
 				
 				searchButton.prop('disabled', false);
 				searchText.prop('disbled', false);	
-			});
+			}
+		);
 	});
 	
 	cancelButton.click(function() {

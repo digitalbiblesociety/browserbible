@@ -16,14 +16,17 @@ bible.BibleFormatter = {
 		return 'c' + this.padLeft((bookNumber).toString(), 3, '0') + this.padLeft((chapterNumber).toString(), 3, '0');
 	},
 	
-	parseVerseCode: function(verseCode) {
+	parseVerseCode: function(verseCode, bookNameIndex) {
 		if (verseCode.length != 10)
 			return 'unknown';
+		
+		if (typeof bookNameIndex == 'undefined')
+			bookNameIndex = 2;
 		
 		var bookNumber = parseInt(verseCode.substring(1,4),10),
 			chapterNumber = parseInt(verseCode.substring(4,7),10),
 			verseNumber = parseInt(verseCode.substring(7,10),10);
 		
-		return bible.Books[bookNumber-1].names[2] + ' ' + chapterNumber + ':' + verseNumber;
+		return bible.Books[bookNumber-1].names[bookNameIndex] + ' ' + chapterNumber + ':' + verseNumber;
 	}	
 };

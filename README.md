@@ -6,7 +6,7 @@
 
 ## Goals
 
-100% HTML and JavaScript based Bible software that can run off and media (SD, HD, CD, etc.) on any device on any browser.
+HTML and JavaScript based Bible software that can run on any media on any device on any browser in any nation.
 
 ### Mobile Version
 

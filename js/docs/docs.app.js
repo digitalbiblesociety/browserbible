@@ -1,5 +1,9 @@
+/**
+ * App to run all files
+ *
+ * @author John Dyer (http://j.hn/)
+ */
 
-/* App */
 jQuery(document).ready(function() {
 	var docManager = new DocumentManager('#content');
 	

@@ -1,3 +1,9 @@
+/**
+ * Master navigation
+ *
+ * @author John Dyer (http://j.hn/)
+ */
+
 var DocumentManager = function (id) {
 	this.id;
 	this.node = $(id);

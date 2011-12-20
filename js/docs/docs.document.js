@@ -1,5 +1,8 @@
-
-
+/**
+ * Document holder
+ *
+ * @author John Dyer (http://j.hn/)
+ */
 
 docs.Document = function(id, navigator, docNode) {
 	var t = this;

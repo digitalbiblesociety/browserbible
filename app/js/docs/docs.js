@@ -6,6 +6,12 @@
 
 var docs = {};
 
+
+/**
+ * Document manager for Bible app
+ *
+ * @author John Dyer (http://j.hn/)
+ */
 docs.DocManager = {
 	
 	init: function(header, footer, content, window) {
@@ -79,7 +85,8 @@ docs.DocManager = {
 			
 			if (sourceDocument.id != document.id // make sure this isn't the one that generated the request
 				&& sourceDocument.navigator.name == document.navigator.name // same type (i.e. bible)
-				&& sourceDocument.sync.val() == document.sync.val() // does the user want this one synced?
+				//&& sourceDocument.syncList.val() == document.syncList.val() // does the user want this one synced?
+				&& document.syncCheckbox.is(':checked')
 				) {
 				
 				document.navigateById(visibleFragmentInfo.fragmentId, false, visibleFragmentInfo.offset);
@@ -125,7 +132,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					'<input type="text" class="document-input" />' +
 					'<input type="button" value="GO" class="document-button" />' +
 					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
-					'<select class="document-sync"><option seleced>A</option><option>B</option><option>C</option></select>' +
+					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
+					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
 				'</div>' +
 				'<div class="document-content">' +
 					'<div class="document-wrapper">' +
@@ -142,7 +150,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.input = this.container.find('.document-input');
 	this.button = this.container.find('.document-button');
 	this.selector = this.container.find('.document-selector').val(selectedDocumentId);
-	this.sync = this.container.find('.document-sync');
+	this.syncList = this.container.find('.document-sync-list');
+	this.syncCheckbox = this.container.find('.document-sync-checkbox');
 	
 	this.content = this.container.find('.document-content');
 	this.wrapper = this.container.find('.document-wrapper');
@@ -489,7 +498,7 @@ docs.Document.prototype = {
 			t.input.val( navigationInput );
 			
 			// sync to other like panes
-			if (this.hasFocus) {
+			if (this.hasFocus && this.syncCheckbox.is(':checked')) {
 				t.manager.sync(this, visibleFragmentInfo);
 			}
 		}
@@ -509,199 +518,3 @@ docs.Document.prototype = {
 		//this.ignoreScrollEvent = false;
 	}		
 };
-
-bible.BibleNavigator = {
-	
-	name: 'bible',
-	
-	sectionSelector: 'div.chapter',
-	
-	sectionIdAttr: 'data-chapter',
-	
-	fragmentSelector: 'span.verse',
-	
-	fragmentIdAttr: 'data-verse',
-	
-	selectorData: {
-		'en' : {
-			languageName: 'English',
-			versions: {
-				'en_kjv': {
-					abbreviation: 'KJV',
-					name: 'King James Version',
-					copyright: 'Public Domain'
-				},
-				/*
-				'en_net': {
-					abbreviation: 'NET',
-					name: 'New English Translation',
-					copyright: 'Copyright bible.org'
-				},
-				*/
-				'en_nasb': {
-					abbreviation: 'NASB',
-					name: 'New American Standard',
-					copyright: 'Copyright bible.org'
-				}					
-			}
-		},
-		'el' : {
-			languageName: 'Greek',
-			versions: {
-				'el_tisch': {
-					abbreviation: 'TISCH',
-					name: 'Tischendorf',
-					copyright: 'Public Domain'
-				}				
-			}
-		},			
-		'ar' : {
-			languageName: 'Arabic',
-			versions: {
-				'ar_kjv': {
-					abbreviation: 'ARR',
-					name: 'King James Version',
-					copyright: 'Public Domain'
-				},
-				'ar_net': {
-					abbreviation: 'AR2',
-					name: 'New English Translation',
-					copyright: 'Copyright bible.org'
-				}				
-			}
-		}		
-	},
-	
-	getOptions: function() {
-		var html = '',
-			langCode,
-			language,
-			versionCode,
-			version;
-		
-		for (langCode in this.selectorData) {
-			language = this.selectorData[langCode];
-			
-			html += '<optgroup label="' + language.languageName + '">';
-			
-			for (versionCode in language.versions) {
-				version = language.versions[versionCode];
-				
-				html += '<option value="' + versionCode + '">' + version.abbreviation + ' - ' + version.name + '</option>';
-				
-			}
-			
-			html += '</optgroup>';
-		}
-	
-		return html;
-	},
-	
-	formatNavigation: function(fragmentId) {
-		return bible.BibleFormatter.verseCodeToReferenceString(fragmentId, 0);
-	},
-	
-	findFragment: function(fragmentId, content) {
-		return content.find('span.verse[data-verse=' + fragmentId + ']');
-	},
-	
-	parseString: function(input) {
-		var reference = new bible.Reference(input);
-		
-		if (reference != null) {
-			return reference.toVerseCode();
-		} else {
-			return null;
-		}
-	},
-	
-	convertFragmentIdToSectionId: function(fragmentId) {
-		return 'c' + fragmentId.substring(1,7);
-	},
-	
-	getNextSectionId: function(sectionId) {
-		
-		return bible.BibleFormatter.getNextChapterCode(sectionId);
-	},
-	
-	getPrevSectionId: function(sectionId) {
-		
-		return bible.BibleFormatter.getPrevChapterCode(sectionId);
-	}	
-	
-}
-
-
-// startup
-jQuery(function($) {
-	
-	// setup main site areas
-	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window))
-
-	docs.DocManager.addDocument(bible.BibleNavigator, 'en_kjv');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'en_nasb');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'el_tisch');
-	
-	docs.DocManager.documents[0].navigateById('v048001001', true);
-	
-	
-	// add-on VERSE
-	var verseClass = 'verse-highlight';
-	$('#content').delegate('span.verse', 'mouseover', function() {
-		
-		var verse = $(this),
-			verseId = verse.attr('data-verse');
-			
-		$('.' + verseClass).removeClass( verseClass );
-		
-		$('span.verse[data-verse="' + verseId + '"]').addClass(verseClass);
-		
-	}).delegate('span.verse', 'mouseout', function() {
-		
-		$(this).removeClass(verseClass);
-		
-	});
-	
-	// add-on WORDS
-	var wordClass = 'word-highlight';
-	$('#content').delegate('span.word', 'mouseover', function() {
-		
-		var word = $(this),
-			verse = word.closest('.verse'),
-			verseId = verse.attr('data-verse'),
-			lexId = word.attr('data-lex');
-
-			
-		$('.' + wordClass).removeClass( wordClass );
-		
-		$('span.verse[data-verse="' + verseId + '"] span.word[data-lex="' + lexId + '"]').addClass(wordClass);
-		
-	}).delegate('span.word', 'mouseout', function() {
-		//$('.' + wordClass).removeClass( wordClass );
-		
-		$(this).removeClass(wordClass);
-	});
-	
-	
-	var coolstuff = [
-		{
-			verse: 'v001001001',
-			type: 'audio',
-			stuff: 'creation.mp3'
-		},
-		{
-			verse: 'v066022005',
-			type: 'video',
-			stuff: 'return_of_jc_Sweetness.mp4'
-		}
-	];
-	
-	$('#content').delegate('span.verse', 'mouseover', function() {
-		
-		if ( $(this).attr('data-verse') == 'v048001004' ) {
-			alert('There is cool stuff here!');
-		}
-		
-	});
-	
-});

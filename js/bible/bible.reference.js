@@ -201,11 +201,11 @@ bible.Reference = function () {
 		},
 		toChapterCode: function () {
 			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
-			return 'c' + padLeft(this.bookIndex.toString(), 3, '0') + padLeft(this.chapter1.toString(), 3, '0');
+			return 'c' + padLeft((this.bookIndex+1).toString(), 3, '0') + padLeft(this.chapter1.toString(), 3, '0');
 		},
 		toVerseCode: function () {
 			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
-			return 'v' + padLeft(this.bookIndex.toString(), 3, '0') + padLeft(this.chapter1.toString(), 3, '0') + padLeft(this.verse1.toString(), 3, '0');
+			return 'v' + padLeft((this.bookIndex+1).toString(), 3, '0') + padLeft(this.chapter1.toString(), 3, '0') + padLeft((this.verse1 <= 0 ? 1 : this.verse1).toString(), 3, '0');
 		},
 		prevChapter: function () {
 			this.verse1 = 1;

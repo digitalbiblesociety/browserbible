@@ -99,6 +99,8 @@ In the middle is HTML marking up the chapter and each verse number
 * Change theme colors
 * Change font size within the reader
 * Add/delete columns
+* Footnotes in the footer?
+* About page for each 
 
 ## Known Issues
 

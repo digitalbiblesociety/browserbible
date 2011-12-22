@@ -86,3 +86,18 @@ In the middle is HTML marking up the chapter and each verse number
 	<span class="verse" data-verse="v023064012"><span class="verse-num">12&nbsp;</span><span class="word" data-lex="sn:H0662">Wilt thou refrain</span> <span class="word" data-lex="sn:H2814">wilt thou hold thy peace</span> <span class="word" data-lex="sn:H6031">and afflict</span> <span class="word" data-lex="sn:H3966">us very sore</span> </span>
 </div>
 ```
+
+## Todo List
+
+* Build search into application
+* Add Audio player
+* Add video launcher
+* Add original language tools (highlighting tense/voice/freq)
+* Change theme colors
+* Change font size within the reader
+* Add/delete columns
+
+## Known Issues
+
+* Word/verse highlighting is wonky when the document loses focus
+

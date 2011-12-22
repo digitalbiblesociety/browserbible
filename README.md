@@ -1,5 +1,6 @@
 # HTML Bible Study App
 
+* Created by: [http://www.dbsbible.org](Digital Bible Society)
 * Project Leader: John Dyer [http://j.hn/](http://j.hn/)
 * Code License: GPLv2/MIT
 * Content License: See each content folder for a license
@@ -89,9 +90,11 @@ In the middle is HTML marking up the chapter and each verse number
 
 ## Todo List
 
+* Chapter/verse Navigation Dropdown
 * Build search into application
 * Add Audio player
 * Add video launcher
+* Add maps/images links
 * Add original language tools (highlighting tense/voice/freq)
 * Change theme colors
 * Change font size within the reader

@@ -1,3 +1,12 @@
+/* titles */
+h1.book-name {
+	text-align: center;
+	margin: 10px 0;
+}
+h3 {
+	margin: 10px 0 5px;
+}
+
 
 /* Chapter:Verse number styling */
 .chapter-num {
@@ -11,4 +20,22 @@
 }
 .verse-1 {
     display: none;
+}
+
+/* NASB */
+.version-nasb span.verse {
+	display: block;
+}
+
+.version-nasb span.note,
+.version-nasb span.cf {
+	display: none;
+}
+
+
+/* search */
+
+#search-results span.note,
+#search-results span.cf {
+	display: none;
 }

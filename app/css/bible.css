@@ -25,6 +25,7 @@ h3 {
 /* NASB */
 .version-nasb span.verse {
 	display: block;
+	text-indent: 10px;
 }
 
 .version-nasb span.note,

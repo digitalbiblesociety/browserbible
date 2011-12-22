@@ -106,7 +106,7 @@ bible.BibleSearch = {
 				});
 				
 				// find and format verse
-				verse = bible.BibleFormatter.parseVerseCode( matches[i].match( this.verseRegExp)[0] );
+				verse = bible.BibleFormatter.verseCodeToReferenceString( matches[i].match( this.verseRegExp)[0] );
 				
 				// put it altogether for a row
 				html = '<div class="search-result"><span class="search-verse">' + verse + '</span>' + html + '</div>';

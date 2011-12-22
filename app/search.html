@@ -10,6 +10,8 @@
 	<script src="js/bible/bible.formatter.js"></script>
 	<script src="js/bible/bible.search.js"></script>
 	
+	<link href="css/bible.css" rel="stylesheet" />
+	
 	<style>
 	html, body {
 		margin: 0;
@@ -92,6 +94,11 @@
 		-->
 		
 		<input type="text" id="search" placeholder="Paul, Jesus, etc." />
+		<select id="version">
+			<option value="en_kjv" selected>KJV</option>
+			<option value="en_nasb">NASB</option>
+			<option value="el_tisch">Tisch</option>
+		</select>
 		<input type="button" id="search-button" value="Search" />
 		<input type="button" id="cancel-button" value="Cancel" />
 		<input type="checkbox" id="show-feedback" checked /><label for="show-feedback">Show Feedback</label>
@@ -108,7 +115,7 @@
 	
 
 		
-		<div id="results">
+		<div id="search-results">
 			
 		</div>
 	
@@ -139,7 +146,8 @@ jQuery(function($) {
 	// SEARCH code
 	
 	var status = $('#status'),
-		results = $('#results'),
+		version = $('#version'),
+		results = $('#search-results'),
 		searchButton = $('#search-button').prop('disabled', false)	,
 		cancelButton = $('#cancel-button'),
 		searchText = $('#search'),
@@ -153,10 +161,12 @@ jQuery(function($) {
 		searchButton.prop('disabled', true);
 		searchText.prop('disbled', true);
 		
+		results.empty();
+		
 		var sbw = searchBar.width(),
 			showFeedback = showFeedbackCheckbox.is(':checked');
 				
-		bible.BibleSearch.search( searchText.val(), 'en_kjv',
+		bible.BibleSearch.search( searchText.val(), version.val(),
 			
 			// chapter progress
 			function(bookIndex, chapterIndex, resultsCount, startDate) {

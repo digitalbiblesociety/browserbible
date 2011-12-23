@@ -6,10 +6,11 @@
 
 docs.plugins.push({
 
-	init: function() {
+	init: function(content) {
 		// add-on WORDS
 		var wordClass = 'word-highlight';
-		$('#content').delegate('span.word', 'mouseover', function() {
+		
+		content.delegate('span.word', 'mouseover', function() {
 			
 			var word = $(this),
 				verse = word.closest('.verse'),

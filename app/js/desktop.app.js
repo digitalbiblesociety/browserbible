@@ -17,7 +17,7 @@ jQuery(function($) {
 	
 	// startup plugins
 	for (var i=0, il=docs.plugins.length; i<il; i++) {
-		docs.plugins[i].init();
+		docs.plugins[i].init($('#content'));
 	}
 	
 });

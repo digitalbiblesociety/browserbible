@@ -9,20 +9,28 @@ docs.plugins.push({
 
 	init: function(content) { 	
 	
-		content.delegate('span.note', 'mouseover', function() {
+		content.delegate('span.note, span.cf', 'mouseover', function() {
 			
-			var word = $(this),
-				lex = word.attr('data-lex'),
-				morph = word.attr('data-morph');
+			var note = $(this),
+				definition = note.find('dfn');
+				
+			console.log(definition);
 				
 			// shown in footer
-			if (lex != null && morph != null && lex.substring(0,4) == 'sn:G') {	
-				word
+			if (definition.length > 0) {	
+				note
 					.closest('.document-container')
 					.find('.document-footer')
-					.html('Morph:' + bible.morphology.Greek.getMorphology( morph ) );
+					.empty()
+					.append(note.clone());
 			}			
 			
+		}).delegate('span.note, span.cf', 'mouseout', function() {
+			
+			$(this)
+				.closest('.document-container')
+				.find('.document-footer')
+				.empty();
 		});
 		
 	}

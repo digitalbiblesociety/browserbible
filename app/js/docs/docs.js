@@ -40,18 +40,14 @@ docs.DocManager = {
 		this.resizeDocuments();	
 	},
 	
-	docIndex: 0,
-	
 	documents: [],
 	
 	addDocument: function(navigator, selectedDocumentId) {
 		
-		var document = new docs.Document(this, 'doc-' + this.docIndex, navigator, selectedDocumentId);	
-		this.documents[this.docIndex] = document;
+		var document = new docs.Document(this, 'doc-' + this.documents.length.toString(), navigator, selectedDocumentId);	
+		this.documents.push ( document );
 		
 		this.content.append(document.container);
-		
-		this.docIndex++;
 		
 		this.resizeDocuments();
 	},
@@ -66,9 +62,12 @@ docs.DocManager = {
 		
 		for (var i=0, il=this.documents.length; i<il; i++) {
 			
-			var document = this.documents[i];
+			var document = this.documents[i],
+				newWidth = contentWidth/il - documentMargin;
 			
-			document.content.width( contentWidth/il - documentMargin	);
+			document.content.width( newWidth );
+			document.header.width( newWidth - parseInt(document.header.css('padding-left'),10) - parseInt(document.header.css('padding-right'),10));
+			document.footer.width( newWidth - parseInt(document.footer.css('padding-left'),10) - parseInt(document.footer.css('padding-right'),10));
 			
 			document.resize();
 			
@@ -131,16 +130,17 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 				'<div class="document-header">' +
 					'<input type="text" class="document-input" />' +
 					'<input type="button" value="GO" class="document-button" />' +
-					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
 					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
 					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
+					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
+					//'<input type="text" class="document-search" />' +
 				'</div>' +
 				'<div class="document-content">' +
 					'<div class="document-wrapper">' +
 					'</div>' +					
 				'</div>' +
 				'<div class="document-footer">' +
-					'Footer' + 
+					'&nbsp;' + 
 				'</div>' +
 			'</div>'
 		);
@@ -152,6 +152,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.selector = this.container.find('.document-selector').val(selectedDocumentId);
 	this.syncList = this.container.find('.document-sync-list');
 	this.syncCheckbox = this.container.find('.document-sync-checkbox');
+	this.search = this.container.find('.document-search');
 	
 	this.content = this.container.find('.document-content');
 	this.wrapper = this.container.find('.document-wrapper');
@@ -170,6 +171,11 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			t.navigateToUserInput();
 		}
 	});
+	this.search.on('keyup', function(e) {
+		if (e.keyCode == 13) {
+			t.search();
+		}
+	});	
 	this.wrapper.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
 	});	
@@ -516,5 +522,13 @@ docs.Document.prototype = {
 		//this.ignoreScrollEvent = true;
 		this.content.scrollTop(nodeTopAdjusted + (offset || 0));
 		//this.ignoreScrollEvent = false;
-	}		
+	},
+	
+	search: function() {
+		var t = this,
+			searchText = t.search.val();
+			
+		
+		
+	}
 };

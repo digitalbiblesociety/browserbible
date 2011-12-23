@@ -6,10 +6,10 @@
  
 docs.plugins.push({
 
-	init: function() { 
+	init: function( content ) { 
 	
 		var verseClass = 'verse-highlight';
-		$('#content').delegate('span.verse', 'mouseover', function() {
+		content.delegate('span.verse', 'mouseover', function() {
 			
 			var verse = $(this),
 				verseId = verse.attr('data-verse');

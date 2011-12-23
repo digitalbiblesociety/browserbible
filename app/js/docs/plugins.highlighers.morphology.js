@@ -20,7 +20,7 @@ docs.plugins.push({
 				word
 					.closest('.document-container')
 					.find('.document-footer')
-					.html('Morph:' + bible.morphology.Greek.getMorphology( morph ) );
+					.html('' + bible.morphology.Greek.getMorphology( morph ) );
 			}			
 			
 		});

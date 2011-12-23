@@ -24,7 +24,7 @@ docs.plugins.push({
 			]
 		};
 		
-		$('#content').delegate('span.verse', 'mouseover', function() {
+		content.delegate('span.verse', 'mouseover', function() {
 			
 			var verseId = $(this).attr('data-verse'),
 				data = coolstuff[verseId];

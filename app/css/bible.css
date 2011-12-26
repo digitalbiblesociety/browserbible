@@ -17,6 +17,15 @@ h3 {
     font-weight: bold;
     font-size: 80%;
     vertical-align: top;
+	color: #cc6666;
+	/*
+	display: inline-block;
+	border: solid 1px #666;
+	background: #eee;
+	color: #555;
+	padding: 2px;
+	line-height: 1;
+	*/
 }
 .verse-1 {
     display: none;
@@ -28,9 +37,26 @@ h3 {
 	text-indent: 10px;
 }
 
+
+.version-nasb span.note dfn,
+.version-nasb span.cf dfn {
+	display: none;
+}
+
 .version-nasb span.note,
 .version-nasb span.cf {
-	display: none;
+	vertical-align: top;
+	font-size: 60%;
+	font-weight: bold;
+	color: #3333cc;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
+
+.version-nasb span.note:hover,
+.version-nasb span.cf:hover {
+	color: #fff;
+	background: #3333cc;
 }
 
 

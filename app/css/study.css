@@ -10,6 +10,9 @@
 	color: #fff;
 }
 
+#header, #footer, #content {
+	font-family: Helvetica, Arial;
+}
 
 .document-container {
 	margin: 10px;
@@ -25,7 +28,7 @@
 		display: none;
 	}
 	.document-header .document-selector {
-		width: 50px;
+		width: 60px;
 	}	
 
 .document-content {
@@ -42,6 +45,11 @@
 .document-footer {
 	padding: 5px;
 	background: #666;
+	color: #fff;
+	height: 30px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 80%;
 }
 
 .document-focused {

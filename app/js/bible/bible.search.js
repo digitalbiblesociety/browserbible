@@ -23,6 +23,10 @@ bible.BibleSearch = {
 	
 	verseRegExp: new RegExp('v[0-9]{9}','gi'),
 	
+	stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
+	
+	replaceLexRegExp: new RegExp('<span class="word"[^>]+>(.+?)</span>','gi'),
+	
 	resultCount: 0,
 	
 	startTime: null,
@@ -76,6 +80,9 @@ bible.BibleSearch = {
 				
 				s.textSearch(data);
 				
+				//s.ended();
+				//return;
+				
 				// move on or cancel
 				if (!s.canceled) {
 					s.nextChapter();
@@ -91,6 +98,16 @@ bible.BibleSearch = {
 	
 	textSearch: function(data) {
 
+		
+		// remove notes
+		// <span class="note"></span>
+		// <span class="cf"></span>
+		data = data.replace( this.stripNotesRegExp, '' );
+		
+		// remove Lex/Morph data
+		// <span class="word" data-morph="">XXX</span>
+		data = data.replace( this.replaceLexRegExp, '$1');
+		
 		// find words
 		var matches = data.match(this.searchRegExp),
 			i, il,

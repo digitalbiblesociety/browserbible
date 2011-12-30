@@ -72,3 +72,29 @@
 .word-highlight {
 	background: #aaf;
 }
+
+/* modal */
+.modal-window {
+	font-family: arial;
+	position: absolute;
+	width: 600px;
+	height: 400px;
+	top: 50%;
+	left: 50%;
+	margin-left: -300px;
+	margin-top: -200px;
+	background: #fff;
+	border: solid 1px #333;
+}
+.modal-window-header {
+	background: #333;
+	color: #fff;
+	padding: 4px;
+	margin: 10px 10px 0 10px;
+}
+.modal-window-body {
+	overflow: auto;
+	height: 350px;
+	margin: 10px;
+	border: solid 1px #ccc;
+}

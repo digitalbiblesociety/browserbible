@@ -10,19 +10,19 @@ docs.plugins.push({
 		// add-on WORDS
 		var wordClass = 'word-highlight';
 		
-		content.delegate('span.word', 'mouseover', function() {
+		content.on('mouseover', 'span.word', function() {
 			
 			var word = $(this),
 				verse = word.closest('.verse'),
-				verseId = verse.attr('data-verse'),
+				verseId = verse.attr('data-osis'),
 				lexId = word.attr('data-lex');
 	
 				
 			$('.' + wordClass).removeClass( wordClass );
 			
-			$('span.verse[data-verse="' + verseId + '"] span.word[data-lex="' + lexId + '"]').addClass(wordClass);
+			$('span.verse[data-osis="' + verseId + '"] span.word[data-lex="' + lexId + '"]').addClass(wordClass);
 			
-		}).delegate('span.word', 'mouseout', function() {
+		}).on('mouseout', 'span.word', function() {
 			//$('.' + wordClass).removeClass( wordClass );
 			
 			$(this).removeClass(wordClass);

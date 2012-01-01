@@ -210,6 +210,8 @@ docs.Document.prototype = {
 	
 	load: function(fragmentId, action) {
 		
+		
+		
 		var t = this,
 			sectionId = t.navigator.convertFragmentIdToSectionId( fragmentId ),
 			url = 'content/bibles/' + this.selector.val() + '/';
@@ -235,6 +237,8 @@ docs.Document.prototype = {
 				url += prevSectionId + '.html';
 				break;			
 		}
+		
+		console.log(this.id, fragmentId, action, url);
 		
 		// load the URL and insert, append, prepend the content
 		$.ajax({
@@ -448,13 +452,16 @@ docs.Document.prototype = {
 		
 		this.setFocus(getFocus);
 		
+		console.log(this.id, 'navigateById', fragmentId, fragmentNode);
+		
 		if (fragmentNode.length > 0) {
 
 			// scroll to this one
 			this.scrollToFragmentNode(fragmentNode, offset);
 			
 		} else {
-								
+			
+			
 			// load the section (chapter)
 			this.load(fragmentId);
 			

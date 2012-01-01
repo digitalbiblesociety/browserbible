@@ -43,18 +43,21 @@ bible.BibleNavigator = {
 	},
 	
 	formatNavigation: function(fragmentId) {
-		return bible.BibleFormatter.verseCodeToReferenceString(fragmentId, 0);
+		
+		return new bible.Reference(fragmentId).toString();
+		
+		//return bible.BibleFormatter.verseCodeToReferenceString(fragmentId, 0);
 	},
 	
 	findFragment: function(fragmentId, content) {
-		return content.find('span.verse[data-osis=' + fragmentId + ']');
+		return content.find('span.verse[data-osis="' + fragmentId + '"]');
 	},
 	
 	parseString: function(input) {
 		var reference = new bible.Reference(input);
 		
 		if (reference != null) {
-			return reference.toVerseCode();
+			return reference.toOsisVerse(); // not to chapter, to verse
 		} else {
 			return null;
 		}
@@ -71,13 +74,26 @@ bible.BibleNavigator = {
 	},
 	
 	getNextSectionId: function(sectionId) {
-		
-		return bible.BibleFormatter.getNextChapterCode(sectionId);
+		var reference = new bible.Reference(sectionId),
+			nextChapterReference = reference.nextChapter();
+			
+		if (nextChapterReference !== null) {
+			return nextChapterReference.toOsisChapter();
+		} else {
+			return null;
+		}
+		//return bible.BibleFormatter.getNextChapterCode(sectionId);
 	},
 	
 	getPrevSectionId: function(sectionId) {
-		
-		return bible.BibleFormatter.getPrevChapterCode(sectionId);
+		var reference = new bible.Reference(sectionId),
+			prevChapterReference = reference.prevChapter();
+			
+		if (prevChapterReference !== null) {
+			return prevChapterReference.toOsisChapter();
+		} else {
+			return null;
+		}
 	}	
 	
 };

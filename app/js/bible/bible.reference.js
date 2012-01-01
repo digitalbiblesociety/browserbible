@@ -190,7 +190,7 @@ bible.Reference = function () {
 		chapter2: _chapter2,
 		verse2: _verse2,
 		language: _language,
-		bookList: DEFAULT_BIBLE,
+		bookList: bible.DEFAULT_BIBLE,
 
 		isValid: function () {
 			return (osisBookID != null && _chapter1 > 0);
@@ -224,8 +224,20 @@ bible.Reference = function () {
 		toOsis: function () {
 			if (this.osisBookID == null) return "invalid";
 			
-			return this.osisBookID + '.' + this.chapter1 + '.' + this.verse1;
+			return this.osisBookID + '.' + this.chapter1 + (this.verse1 > 0 ? '.' + this.verse1 : '');
 		},
+		
+		toOsisChapter: function () {
+			if (this.osisBookID == null) return "invalid";
+			
+			return this.osisBookID + '.' + this.chapter1;
+		},
+		
+		toOsisVerse: function () {
+			if (this.osisBookID == null) return "invalid";
+			
+			return this.osisBookID + '.' + this.chapter1 + '.' + (this.verse1 > 0 ? this.verse1 : '0');
+		},			
 		
 		prevChapter: function () {
 			this.verse1 = 1;
@@ -236,7 +248,7 @@ bible.Reference = function () {
 			} else {
 				if (this.chapter1 == 1) {
 					// get the previous book
-					this.osisBookID = this.bookList[this.bookList[this.osisBookID]-1];
+					this.osisBookID = this.bookList[this.bookList.indexOf(this.osisBookID)-1];
 					
 					// get the last chapter in this book
 					this.chapter1 = bible.BOOK_DATA[this.osisBookID].chapters.length;
@@ -257,11 +269,11 @@ bible.Reference = function () {
 			this.verse2 = -1;
 			
 			// check for the last chapter in the last book
-			if (this.bookList[this.osisBookID] == this.bookList.length-1 && bible.BOOK_DATA[this.osisBookId].chapters.length == this.chapter1) {
+			if (this.bookList[this.osisBookID] == this.bookList.length-1 && bible.BOOK_DATA[this.osisBookID].chapters.length == this.chapter1) {
 				return null;
 			} else {	
 				
-				if (this.chapter1 < bible.BOOK_DATA[this.osisBookId].chapters.length) {
+				if (this.chapter1 < bible.BOOK_DATA[this.osisBookID].chapters.length) {
 					// just go up one chapter
 					this.chapter1++;
 				} else if (this.bookIndex < bible.Books.length - 1) {

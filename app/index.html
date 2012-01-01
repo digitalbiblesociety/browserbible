@@ -7,11 +7,12 @@
 	<script src="js/jquery.js"></script>
 	
 	<!-- Bible related data -->
-	<script src="js/bible/bible.js"></script>
+	<script src="js/bible/bible.data.js"></script>
 	<script src="js/bible/bible.reference.js"></script>
 	<script src="js/bible/bible.formatter.js"></script>
 	<script src="js/bible/bible.search.js"></script>
-	<script src="js/bible/bible.versions.js"></script>
+	<script src="js/bible/bible.versions.js"></script> <!-- <-- update me to change versions -->
+	<script src="js/bible/bible.morphology.js"></script>
 	
 	<!-- Documents and windows -->
 	<script src="js/docs/docs.js"></script>
@@ -21,6 +22,8 @@
 	<script src="js/docs/docs.plugins.js"></script>
 	<script src="js/docs/plugins.highlighers.verses.js"></script>
 	<script src="js/docs/plugins.highlighers.words.js"></script>
+	<script src="js/docs/plugins.highlighers.morphology.js"></script>
+	<script src="js/docs/plugins.notes.js"></script>
 	
 	<!-- main launcher -->
 	<script src="js/desktop.app.js"></script>
@@ -32,6 +35,8 @@
 <body>	
 	<div id="header">
 		<h1>Title</h1>
+		<input type="search" id="bible-search-input" placeholder="Jesus, light, saved" />
+		<input type="button" id="bible-search-button" value="Search" />
 	</div>
 	<div id="content">
 	

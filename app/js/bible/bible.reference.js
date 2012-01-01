@@ -13,7 +13,11 @@ bible.parseReference = function (textReference) {
 		chapter2 = -1,
 		verse2 = -1,
 		input = new String(textReference),
-		i, j,
+		i,
+		lang,
+		osisBookId,
+		matchingOsisBookID = null,
+		matchingLanguage = null,
 		afterRange = false,
 		afterSeparator = false,
 		startedNumber = false,
@@ -23,24 +27,43 @@ bible.parseReference = function (textReference) {
 
 
 	// go through all books and test all names
-	for (i = bible.Books.length - 1; i >= 0; i--) {
-		// test each name starting with the full name, then short code, then abbreviation, then alternates
-		for (j = 0; j < bible.Books[i].names.length; j++) {
-			name = new String(bible.Books[i].names[j]).toLowerCase();
-			possibleMatch = input.substring(0, Math.floor(name.length, input.length)).toLowerCase();
-
-			if (possibleMatch == name) {
-				bookIndex = i;
-				input = input.substring(name.length);
-				break;
+	for (osisBookId in bible.BOOK_DATA) {
+		
+		// match OSIS id?
+		possibleMatch = input.substring(0, Math.floor(osisBookId.length, input.length)).toLowerCase();
+		if (possibleMatch == osisBookId) {
+			matchingOsisBookID = osisBookId;
+			input = input.substring(osisBookId.length);
+			matchingLanguage = 'en';
+			break;
+		}		
+		
+		// if no direct match on OSIS id, then go through names in each language
+		for (lang in bible.BOOK_DATA[osisBookId].names) {	
+		
+			// test each name starting with the full name, then short code, then abbreviation, then alternates
+			for (var i=0, il=bible.BOOK_DATA[osisBookId].names[lang].length; i<il; i++) {
+				
+				name = new String(bible.BOOK_DATA[osisBookId].names[lang][i]).toLowerCase();
+				possibleMatch = input.substring(0, Math.floor(name.length, input.length)).toLowerCase();
+	
+				if (possibleMatch == name) {
+					matchingOsisBookID = osisBookId;
+					matchingLanguage = lang;
+					input = input.substring(name.length);
+					break; // out of names
+				}				
 			}
+		
+			if (matchingOsisBookID != null)
+				break;	// out of languages
 
 		}
-		if (bookIndex > -1)
-			break;
+		if (matchingOsisBookID != null)
+			break; // out of books
 	}
 
-	if (bookIndex < 0)
+	if (matchingOsisBookID  == null)
 		return null;
 
 
@@ -103,8 +126,8 @@ bible.parseReference = function (textReference) {
 	// validate max chapter
 	if (chapter1 == -1) {
 		chapter1 = 1;
-	} else if (chapter1 > bible.Books[bookIndex].verses.length) {
-		chapter1 = bible.Books[bookIndex].verses.length;
+	} else if (chapter1 > bible.BOOK_DATA[matchingOsisBookID].chapters.length) {
+		chapter1 = bible.BOOK_DATA[matchingOsisBookID].chapters.length;
 		if (verse1 > 0)
 			verse1 = 1;
 	}
@@ -115,8 +138,8 @@ bible.parseReference = function (textReference) {
 	verse1 = 1;
 	} else 
 	*/
-	if (verse1 > bible.Books[bookIndex].verses[chapter1 - 1]) {
-		verse1 = bible.Books[bookIndex].verses[chapter1 - 1];
+	if (verse1 > bible.BOOK_DATA[matchingOsisBookID].chapters[chapter1 - 1]) {
+		verse1 = bible.BOOK_DATA[matchingOsisBookID].chapters[chapter1 - 1];
 	}
 	if (verse2 <= verse1) {
 		chapter2 = -1;
@@ -124,18 +147,19 @@ bible.parseReference = function (textReference) {
 	}
 
 	// finalize
-	return bible.Reference(bookIndex, chapter1, verse1, chapter2, verse2);
+	return bible.Reference(matchingOsisBookID, chapter1, verse1, chapter2, verse2);
 
 }
 
 bible.Reference = function () {
 
 	var 
-		_bookIndex = -1,
+		_osisBookID = -1,
 		_chapter1 = -1,
 		_verse1 = -1,
 		_chapter2 = -1,
-		_verse2 = -1;
+		_verse2 = -1,
+		_language = 'en';
 
 	if (arguments.length == 0) {
 		// error		
@@ -144,7 +168,7 @@ bible.Reference = function () {
 	} else if (arguments.length == 1) { // unknonw
 		return null;
 	} else {
-		_bookIndex = arguments[0];
+		_osisBookID = arguments[0];
 		_chapter1 = arguments[1];
 		if (arguments.length >= 3) _verse1 = arguments[2];
 		if (arguments.length >= 4) _chapter2 = arguments[3];
@@ -158,16 +182,18 @@ bible.Reference = function () {
 	}
 
 	return {
-		bookIndex: _bookIndex,
+		osisBookID: _osisBookID,
 		chapter: _chapter1,
 		verse: _verse1,
 		chapter1: _chapter1,
 		verse1: _verse1,
 		chapter2: _chapter2,
 		verse2: _verse2,
+		language: _language,
+		bookList: DEFAULT_BIBLE,
 
 		isValid: function () {
-			return (_bookIndex > -1 && _bookIndex < bible.Books.length && _chapter1 > 0);
+			return (osisBookID != null && _chapter1 > 0);
 		},
 
 		chapterAndVerse: function (cvSeparator, vvSeparator, ccSeparator) {
@@ -190,53 +216,69 @@ bible.Reference = function () {
 		},
 
 		toString: function () {
-			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
+			if (this.osisBookID == null) return "invalid";
 
-			return bible.Books[this.bookIndex].names[0] + ' ' + this.chapterAndVerse();
+			return bible.BOOK_DATA[this.osisBookID].names[this.language][0] + ' ' + this.chapterAndVerse();
 		},
 
 		toOsis: function () {
-			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
-			return bible.Books[this.bookIndex].names[2] + '.' + this.chapter1 + '.' + this.verse1;
+			if (this.osisBookID == null) return "invalid";
+			
+			return this.osisBookID + '.' + this.chapter1 + '.' + this.verse1;
 		},
-		toChapterCode: function () {
-			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
-			return 'c' + padLeft((this.bookIndex+1).toString(), 3, '0') + padLeft(this.chapter1.toString(), 3, '0');
-		},
-		toVerseCode: function () {
-			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
-			return 'v' + padLeft((this.bookIndex+1).toString(), 3, '0') + padLeft(this.chapter1.toString(), 3, '0') + padLeft((this.verse1 <= 0 ? 1 : this.verse1).toString(), 3, '0');
-		},
+		
 		prevChapter: function () {
 			this.verse1 = 1;
 			this.chapter2 = -1;
 			this.verse2 = -1;
-			if (this.chapter1 == 1 && this.bookIndex > -1) {
-				this.bookIndex--;
-				this.chapter1 = bible.Books[this.bookIndex].verses.length;
+			if (this.chapter1 == 1 && this.bookList[this.osisBookID] == 0) {
+				return null;
+			} else {
+				if (this.chapter1 == 1) {
+					// get the previous book
+					this.osisBookID = this.bookList[this.bookList[this.osisBookID]-1];
+					
+					// get the last chapter in this book
+					this.chapter1 = bible.BOOK_DATA[this.osisBookID].chapters.length;
+				} else {
+					// just go back a chapter
+					this.chapter1--;
+				}
+				
 			}
-			else {
-				this.chapter1--;
-			}
+			
+			// return the object ()
 			return this;
 		},
+		
 		nextChapter: function () {
 			this.verse1 = 1;
 			this.chapter2 = -1;
 			this.verse2 = -1;
-			if (this.chapter1 < bible.Books[this.bookIndex].verses.length) {
-				this.chapter1++;
-			} else if (this.bookIndex < bible.Books.length - 1) {
-				this.bookIndex++;
-				this.chapter1 = 1;
+			
+			// check for the last chapter in the last book
+			if (this.bookList[this.osisBookID] == this.bookList.length-1 && bible.BOOK_DATA[this.osisBookId].chapters.length == this.chapter1) {
+				return null;
+			} else {	
+				
+				if (this.chapter1 < bible.BOOK_DATA[this.osisBookId].chapters.length) {
+					// just go up one chapter
+					this.chapter1++;
+				} else if (this.bookIndex < bible.Books.length - 1) {
+					// go to the next book, first chapter
+					this.bookIndex++;
+					this.chapter1 = 1;
+				}
+				
 			}
 
 			return this;
-		}
-		,
+		},
+		
 		isFirstChapter: function () {
 			return (this.bookIndex == 0 && this.chapter1 == 1); //  && this.verse1 == 1);
 		},
+		
 		isLastChapter: function () {
 			return (this.bookIndex == bible.Books.length - 1 && this.chapter1 == v.length); //  && 	this.verse1 == v[v.length-1]);
 		}

@@ -16,7 +16,7 @@
 
 .document-container {
 	margin: 10px;
-	border: solid 1px #666;
+	-x-border: solid 1px #666;
 	float: left;
 }
 
@@ -38,7 +38,7 @@
 
 	.document-wrapper {
 		position: absolute;
-		padding: 0 15px;
+		padding: 10px ;
 		line-height: 1.25;
 	}	
 
@@ -53,7 +53,7 @@
 }
 
 .document-focused {
-	border: solid 1px #333;
+	-x-border: solid 1px #333;
 }
 
 .document-focused .document-header {
@@ -64,11 +64,15 @@
 	background: #333;
 }
 
+/* basic */
+.chapter {
+	margin: 5px 0;
+}
 
 /* highlighting */
 .verse-highlight {
-	background: #ddf;
+	background: #efefff;
 }
 .word-highlight {
-	background: #aaf;
+	background: #aaaaff;
 }

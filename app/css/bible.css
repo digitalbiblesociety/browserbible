@@ -11,6 +11,8 @@ h3 {
 /* Chapter:Verse number styling */
 .chapter-num {
     float: left;
+	font-size: 1.6em;
+	line-height: 1;
     margin: 0 .5em .5em 0;
 }
 .verse-num {

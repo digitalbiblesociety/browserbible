@@ -262,10 +262,10 @@ docs.Document.prototype = {
 						t.wrapper.append(newSectionNode);
 						
 						// TODO: scroll to individual verse (not just the chapter)
-						console.log( t.id, fragmentId, newSectionNode.attr('data-chapter') );
+						console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );
 						
 						if (fragmentId.substring(7,10) != '001') {
-							t.scrollToFragmentNode(t.wrapper.find('span.verse[data-verse=' + fragmentId + ']'), 0);
+							t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);
 						} else {
 							t.content.scrollTop(0);
 						}

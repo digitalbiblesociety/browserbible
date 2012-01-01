@@ -11,11 +11,11 @@ bible.BibleNavigator = {
 	
 	sectionSelector: 'div.chapter',
 	
-	sectionIdAttr: 'data-chapter',
+	sectionIdAttr: 'data-osis',
 	
 	fragmentSelector: 'span.verse',
 	
-	fragmentIdAttr: 'data-verse',
+	fragmentIdAttr: 'data-osis',
 	
 	getOptions: function() {
 		var html = '',
@@ -47,7 +47,7 @@ bible.BibleNavigator = {
 	},
 	
 	findFragment: function(fragmentId, content) {
-		return content.find('span.verse[data-verse=' + fragmentId + ']');
+		return content.find('span.verse[data-osis=' + fragmentId + ']');
 	},
 	
 	parseString: function(input) {
@@ -61,7 +61,13 @@ bible.BibleNavigator = {
 	},
 	
 	convertFragmentIdToSectionId: function(fragmentId) {
-		return 'c' + fragmentId.substring(1,7);
+		
+		//
+		var parts = fragmentId.split('.'),
+			chapter = parts[0] + '.' + parts[1];
+			
+		
+		return chapter;
 	},
 	
 	getNextSectionId: function(sectionId) {

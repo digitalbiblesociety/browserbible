@@ -403,17 +403,19 @@ bible.addNames = function(lang, bookList, namesData) {
 	}
 }
 
+// spanish
 bible.addNames("es", bible.DEFAULT_BIBLE, [
 	"Génesis","Exodo","Levítico","Números","Deuteronomio","Josué","Jueces","Rut","1 Samuel","2 Samuel","1 Reyes","2 Reyes","1 Crónicas","2 Crónicas","Esdras","Nehemías","Ester","Job","Salmos","Proverbios","Eclesiastés","Cantares","Isaías","Jeremías","Lamentaciones","Ezequiel","Daniel","Oseas","Joel","Amós","Abdías","Jonás","Miqueas","Nahúm","Habacuc","Sofonías","Hageo","Zacarías","Malaquías",
 	"Mateo","Marcos","Lucas","Juan","Hechos","Romanos","1 Corintios","2 Corintios","Gálatas","Efesios","Filipenses","Colosenses","1 Tesalonicenses","2 Tesalonicenses","1 Timoteo","2 Timoteo","Tito","Filemón","Hebreos","Santiago","1 Pedro","2 Pedro","1 Juan","2 Juan","3 Juan","Judas","Apocalipsis"
 ]);
 
-
+// French
 bible.addNames("fr",bible.DEFAULT_BIBLE,[
 	"Genèse","Exode","Lévitique","Nombres","Deutéronome","Josué","Juges","Ruth","1 Samuel","2 Samuel","1 Rois","2 Rois","1 Chroniques","2 Chroniques","Esdras","Néhémie","Esther","Job","Psaumes","Proverbes","Ecclésiaste","Cantique","Esaïe","Jérémie","Lamentations","Ezéchiel","Daniel","Osée","Joël","Amos","Abdias","Jonas","Michée","Nahum","Habacuc","Sophonie","Aggée","Zacharie","Malachie",
 	"Matthieu","Marc","Luc","Jean","Actes","Romains","1 Corinthiens","2 Corinthiens","Galates","Ephésiens","Philippiens","Colossiens","1 Thessalonicien","2 Thessalonicien","1 Timothée","2 Timothée","Tite","Philemon","Hébreux","Jacques","1 Pierre","2 Pierre","1 Jean","2 Jean","3 Jean","Jude","Apocalypse"
 ]);
 
+// German
 bible.addNames("de",bible.DEFAULT_BIBLE,[
 	"Genesis","Exodus","Levitikus","Numeri","Deuteronomium","Josua","Richter","Rut","1 Samuel","2 Samuel","1 Könige","2 Könige","1 Chronik","2 Chronik","Esra","Nehemia","Ester",["Hiob","Ijob"],"Psalter","Sprichwörter","Kohelet","Hohelied Salmos","Jesaja","Jeremia",["Klagelieder","Jeremias"],["Hesekiel","Ezechiel"],"Daniel","Hosea","Joel","Amos","Obadja","Jona","Micha","Nahum","Habakuk","Zefanja","Haggai","Sacharja","Maleachi",
 	"Matthäus","Markus","Lukas","Johannes","Apostelgeschichte des Lukas","Römer","1 Korinther","2 Korinther","Galater","Epheser","Philipper","Kolosser","1 Thessalonicher","2 Thessalonicher","1 Timotheus","2 Timotheus","Titus","Philemon","Hebräer","Jakobus","1 Petrus","2 Petrus","1 Johannes","2 Johannes","3 Johannes","Judas","Offenbarung des Johannes"
@@ -433,4 +435,14 @@ bible.addNames("il", bible.OT_BOOKS, [
 bible.addNames('ru', bible.DEFAULT_BIBLE, [
 	"Бытие","Исход","Левит","Числа","Второзаконие","Иисус Навин","Книга Судей","Руфь","1-я Царств","2-я Царств","3-я Царств","4-я Царств","1-я Паралипоменон","2-я Паралипоменон","Ездра","Неемия","Есфирь","Иов","Псалтирь","Притчи","Екклесиаст","Песни Песней","Исаия","Иеремия","Плач Иеремии","Иезекииль","Даниил","Осия","Иоиль","Амос","Авдия","Иона","Михей","Наум","Аввакум","Софония","Аггей","Захария","Малахия",
 	"От Матфея","От Марка","От Луки","От Иоанна","Деяния","К Римлянам","1-е Коринфянам","2-е Коринфянам","К Галатам","К Ефесянам","К Филиппийцам","К Колоссянам","1-е Фессалоникийцам","2-е Фессалоникийцам","1-е Тимофею","2-е Тимофею","К Титу","К Филимону","К Евреям","Иакова","1-e Петра","2-e Петра","1-e Иоанна","2-e Иоанна","3-e Иоанна","Иуда","Откровение"
+]);
+
+// Chinese (Simplified)
+bible.addNames('zh-CN', bible.DEFAULT_BIBLE, [
+	"創 世 記","出 埃 及 記","利 未 記","民 數 記","申 命 記","約 書 亞 記","士 師 記","路 得 記","撒 母 耳 記 上","撒 母 耳 記 下","列 王 紀 上","列 王 紀 下","歷 代 志 上","歷 代 志 下","以 斯 拉 記","尼 希 米 記","以 斯 帖 記","約 伯 記","詩 篇","箴 言","傳 道 書","雅 歌","以 賽 亞 書","耶 利 米 書","耶 利 米 哀 歌","以 西 結 書","但 以 理 書","何 西 阿 書","約 珥 書","阿 摩 司 書","俄 巴 底 亞 書","約 拿 書","彌 迦 書","那 鴻 書","哈 巴 谷 書","西 番 雅 書","哈 該 書","撒 迦 利 亞","瑪 拉 基 書","馬 太 福 音","馬 可 福 音","路 加 福 音","約 翰 福 音","使 徒 行 傳","羅 馬 書","歌 林 多 前 書","歌 林 多 後 書","加 拉 太 書","以 弗 所 書","腓 立 比 書","歌 羅 西 書","帖 撒 羅 尼 迦 前 書","帖 撒 羅 尼 迦 後 書","提 摩 太 前 書","提 摩 太 後 書","提 多 書","腓 利 門 書","希 伯 來 書","雅 各 書","彼 得 前 書","彼 得 後 書","約 翰 一 書","約 翰 二 書","約 翰 三 書","猶 大 書","启 示 录"
+]);
+
+// Chinese (Traditional)
+bible.addNames('zh-TW', bible.DEFAULT_BIBLE, [
+	"創 世 記","出 埃 及 記","利 未 記","民 數 記","申 命 記","約 書 亞 記","士 師 記","路 得 記","撒 母 耳 記 上","撒 母 耳 記 下","列 王 紀 上","列 王 紀 下","歷 代 志 上","歷 代 志 下","以 斯 拉 記","尼 希 米 記","以 斯 帖 記","約 伯 記","詩 篇","箴 言","傳 道 書","雅 歌","以 賽 亞 書","耶 利 米 書","耶 利 米 哀 歌","以 西 結 書","但 以 理 書","何 西 阿 書","約 珥 書","阿 摩 司 書","俄 巴 底 亞 書","約 拿 書","彌 迦 書","那 鴻 書","哈 巴 谷 書","西 番 雅 書","哈 該 書","撒 迦 利 亞","瑪 拉 基 書","馬 太 福 音","馬 可 福 音","路 加 福 音","約 翰 福 音","使 徒 行 傳","羅 馬 書","歌 林 多 前 書","歌 林 多 後 書","加 拉 太 書","以 弗 所 書","腓 立 比 書","歌 羅 西 書","帖 撒 羅 尼 迦 前 書","帖 撒 羅 尼 迦 後 書","提 摩 太 前 書","提 摩 太 後 書","提 多 書","腓 利 門 書","希 伯 來 書","雅 各 書","彼 得 前 書","彼 得 後 書","約 翰 一 書","約 翰 二 書","約 翰 三 書","猶 大 書","启 示 录"
 ]);

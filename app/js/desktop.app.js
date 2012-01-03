@@ -12,6 +12,8 @@ jQuery(function($) {
 	docs.DocManager.addDocument(bible.BibleNavigator, 'en_kjv');
 	docs.DocManager.addDocument(bible.BibleNavigator, 'es_rv');
 	docs.DocManager.addDocument(bible.BibleNavigator, 'ar_svd');
+	docs.DocManager.addDocument(bible.BibleNavigator, 'zhcn_ncv');
+	
 	
 	docs.DocManager.documents[0].navigateById('Rom.1.1', true);
 	

@@ -30,19 +30,24 @@ bible.versions = {
 				copyright: 'Public Domain'
 			}				
 		}
-	},			
+	},
+	'es' : {
+		languageName: 'Spanish',
+		versions: {
+			'es_rv': {
+				abbreviation: 'RV',
+				name: 'Reina Valera (1909)',
+				copyright: 'Public Domain'
+			}				
+		}
+	},
 	'ar' : {
 		languageName: 'Arabic',
 		versions: {
-			'ar_kjv': {
-				abbreviation: 'ARR',
-				name: 'King James Version',
+			'ar_svd': {
+				abbreviation: 'SVD',
+				name: 'Smith & Van Dyke (1895)',
 				copyright: 'Public Domain'
-			},
-			'ar_net': {
-				abbreviation: 'AR2',
-				name: 'New English Translation',
-				copyright: 'Copyright bible.org'
 			}				
 		}
 	}		

@@ -7,17 +7,36 @@ bible.versions = {
 				name: 'King James Version',
 				copyright: 'Public Domain'
 			},
-			/*
+			
 			'en_net': {
 				abbreviation: 'NET',
 				name: 'New English Translation',
 				copyright: 'Copyright bible.org'
 			},
-			*/
+			
+			
+			'en_esv': {
+				abbreviation: 'ESV',
+				name: 'English Standard Version',
+				copyright: 'Copyright Crossway'
+			},
+			
+			'en_oeb': {
+				abbreviation: 'OEB',
+				name: 'Open English Bible',
+				copyright: ''
+			},
+			
+			'en_web': {
+				abbreviation: 'WEB',
+				name: 'World English Bible',
+				copyright: ''
+			},				
+			
 			'en_nasb': {
 				abbreviation: 'NASB',
 				name: 'New American Standard',
-				copyright: 'Copyright bible.org'
+				copyright: 'Copyright Lockman'
 			}					
 		}
 	},
@@ -50,5 +69,25 @@ bible.versions = {
 				copyright: 'Public Domain'
 			}				
 		}
-	}		
+	},
+	'zh-CN' : {
+		languageName: 'Chinese Simplified',
+		versions: {
+			'zhcn_ncv': {
+				abbreviation: 'NVCs',
+				name: 'New Chinese Version',
+				copyright: 'Public Domain'
+			}				
+		}
+	},
+	'zh-TW' : {
+		languageName: 'Chinese Traditional',
+		versions: {
+			'zhtw_ncv': {
+				abbreviation: 'NVCt',
+				name: 'New Chinese Version',
+				copyright: 'Public Domain'
+			}				
+		}
+	}
 };

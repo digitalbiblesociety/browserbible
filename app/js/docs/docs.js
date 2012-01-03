@@ -182,6 +182,11 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.container.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
 	});	
+	this.selector.on('change', function(e) {
+		t.wrapper.empty();
+		t.navigateToUserInput();
+	});
+	
 	
 	// TODO: real loading
 	//this.load(fragmentId);

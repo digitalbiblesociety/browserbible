@@ -1,10 +1,14 @@
 /* titles */
 h1.book-name {
 	text-align: center;
-	margin: 10px 0;
+	margin: 1.2em 0;
 }
 h3 {
-	margin: 10px 0 5px;
+	margin: 1.0em 0;
+}
+
+.chapter p {
+	margin: 1.0em 0;
 }
 
 
@@ -15,6 +19,12 @@ h3 {
 	line-height: 1;
     margin: 0 .5em .5em 0;
 }
+
+.chapter[dir=rtl] .chapter-num {
+    float: right;
+	margin: 0 0 .5em .5em;
+}
+
 .verse-num {
     font-weight: bold;
     font-size: 80%;

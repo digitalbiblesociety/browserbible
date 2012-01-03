@@ -9,16 +9,17 @@ docs.plugins.push({
 	init: function( content ) { 
 	
 		var verseClass = 'verse-highlight';
-		content.delegate('span.verse', 'mouseover', function() {
+		
+		content.on('mouseover', 'span.verse', function() {
 			
 			var verse = $(this),
-				verseId = verse.attr('data-verse');
+				verseId = verse.attr('data-osis');
 				
 			$('.' + verseClass).removeClass( verseClass );
 			
-			$('span.verse[data-verse="' + verseId + '"]').addClass(verseClass);
+			$('span.verse[data-osis="' + verseId + '"]').addClass(verseClass);
 			
-		}).delegate('span.verse', 'mouseout', function() {
+		}).on('mouseout', 'span.verse', function() {
 			
 			$(this).removeClass(verseClass);
 			

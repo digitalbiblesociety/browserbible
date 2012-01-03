@@ -11,11 +11,11 @@ bible.BibleNavigator = {
 	
 	sectionSelector: 'div.chapter',
 	
-	sectionIdAttr: 'data-chapter',
+	sectionIdAttr: 'data-osis',
 	
 	fragmentSelector: 'span.verse',
 	
-	fragmentIdAttr: 'data-verse',
+	fragmentIdAttr: 'data-osis',
 	
 	getOptions: function() {
 		var html = '',
@@ -43,35 +43,57 @@ bible.BibleNavigator = {
 	},
 	
 	formatNavigation: function(fragmentId) {
-		return bible.BibleFormatter.verseCodeToReferenceString(fragmentId, 0);
+		
+		return new bible.Reference(fragmentId).toString();
+		
+		//return bible.BibleFormatter.verseCodeToReferenceString(fragmentId, 0);
 	},
 	
 	findFragment: function(fragmentId, content) {
-		return content.find('span.verse[data-verse=' + fragmentId + ']');
+		return content.find('span.verse[data-osis="' + fragmentId + '"]');
 	},
 	
 	parseString: function(input) {
 		var reference = new bible.Reference(input);
 		
 		if (reference != null) {
-			return reference.toVerseCode();
+			return reference.toOsisVerse(); // not to chapter, to verse
 		} else {
 			return null;
 		}
 	},
 	
 	convertFragmentIdToSectionId: function(fragmentId) {
-		return 'c' + fragmentId.substring(1,7);
+		
+		//
+		var parts = fragmentId.split('.'),
+			chapter = parts[0] + '.' + parts[1];
+			
+		
+		return chapter;
 	},
 	
 	getNextSectionId: function(sectionId) {
-		
-		return bible.BibleFormatter.getNextChapterCode(sectionId);
+		var reference = new bible.Reference(sectionId),
+			nextChapterReference = reference.nextChapter();
+			
+		if (nextChapterReference !== null) {
+			return nextChapterReference.toOsisChapter();
+		} else {
+			return null;
+		}
+		//return bible.BibleFormatter.getNextChapterCode(sectionId);
 	},
 	
 	getPrevSectionId: function(sectionId) {
-		
-		return bible.BibleFormatter.getPrevChapterCode(sectionId);
+		var reference = new bible.Reference(sectionId),
+			prevChapterReference = reference.prevChapter();
+			
+		if (prevChapterReference !== null) {
+			return prevChapterReference.toOsisChapter();
+		} else {
+			return null;
+		}
 	}	
 	
 };

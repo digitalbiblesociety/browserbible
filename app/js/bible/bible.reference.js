@@ -276,7 +276,7 @@ bible.Reference = function () {
 				if (this.chapter1 < bible.BOOK_DATA[this.osisBookID].chapters.length) {
 					// just go up one chapter
 					this.chapter1++;
-				} else if (this.bookIndex < bible.Books.length - 1) {
+				} else if (this.bookList.indexOf(this.osisBookID) < this.bookList.length-1) {
 					// go to the next book, first chapter
 					this.bookIndex++;
 					this.chapter1 = 1;

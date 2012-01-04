@@ -14,7 +14,6 @@ bible.versions = {
 				copyright: 'Copyright bible.org'
 			},
 			
-			
 			'en_esv': {
 				abbreviation: 'ESV',
 				name: 'English Standard Version',

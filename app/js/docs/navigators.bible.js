@@ -32,7 +32,7 @@ bible.BibleNavigator = {
 			for (versionCode in language.versions) {
 				version = language.versions[versionCode];
 				
-				html += '<option value="' + versionCode + '">' + version.abbreviation + ' - ' + version.name + '</option>';
+				html += '<option value="' + versionCode + '" data-language="' + langCode + '">' + version.abbreviation + ' - ' + version.name + '</option>';
 				
 			}
 			
@@ -42,9 +42,12 @@ bible.BibleNavigator = {
 		return html;
 	},
 	
-	formatNavigation: function(fragmentId) {
+	formatNavigation: function(fragmentId, language) {
 		
-		return new bible.Reference(fragmentId).toString();
+		var reference = new bible.Reference(fragmentId);
+		reference.language = language;
+		
+		return reference.toString();
 		
 		//return bible.BibleFormatter.verseCodeToReferenceString(fragmentId, 0);
 	},

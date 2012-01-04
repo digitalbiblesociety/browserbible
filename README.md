@@ -44,26 +44,6 @@ The document opens with links to core JavaScript and CSS files and basic navigat
 	<div data-role="content">
 ```
 
-### Footer
-
-The document closes with links a second set of navigation basic navigation in the `<body>`
-
-```
-	</div>
-	<div data-role="footer">	
-		<div data-role="navbar">
-			<ul>
-				<li><a href="Isa.63.html" data-icon="arrow-l">Isa 63</a></li>
-				<li><a href="index.html" data-icon="home">Books</a></li>
-				<li><a href="Isa.65.html" data-icon="arrow-r">Isa 65</a></li>
-			</ul>
-		</div>
-	</div>
-
-</div>
-</body>
-</html>
-```
 
 ### Content
 
@@ -87,6 +67,28 @@ In the middle is HTML marking up the chapter and each verse number
 	<span class="verse" data-osis="Isa.23.12"><span class="verse-num">12&nbsp;</span><span class="word" data-lemma="sn:H0662">Wilt thou refrain</span> <span class="word" data-lemma="sn:H2814">wilt thou hold thy peace</span> <span class="word" data-lemma="sn:H6031">and afflict</span> <span class="word" data-lemma="sn:H3966">us very sore</span> </span>
 </div>
 ```
+
+### Footer
+
+The document closes with links a second set of navigation basic navigation in the `<body>`
+
+```
+	</div>
+	<div data-role="footer">	
+		<div data-role="navbar">
+			<ul>
+				<li><a href="Isa.63.html" data-icon="arrow-l">Isa 63</a></li>
+				<li><a href="index.html" data-icon="home">Books</a></li>
+				<li><a href="Isa.65.html" data-icon="arrow-r">Isa 65</a></li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>
+```
+
 
 ## Todo List
 

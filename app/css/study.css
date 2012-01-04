@@ -18,6 +18,7 @@
 	margin: 10px;
 	-x-border: solid 1px #666;
 	float: left;
+	position: relative;
 }
 
 .document-header {
@@ -41,6 +42,16 @@
 		padding: 10px ;
 		line-height: 1.25;
 	}	
+
+.document-about {
+	position: absolute;
+	background: red;
+	top: 10px;
+	left: 10px;
+	width: 200px;
+	height: 200px;
+	display: none;
+}
 
 .document-footer {
 	padding: 5px;

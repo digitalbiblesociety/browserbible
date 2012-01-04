@@ -141,6 +141,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					'<div class="document-wrapper">' +
 					'</div>' +					
 				'</div>' +
+				'<div class="document-about"></div>' + 
 				'<div class="document-footer">' +
 					'&nbsp;' + 
 				'</div>' +
@@ -154,7 +155,10 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.selector = this.container.find('.document-selector').val(selectedDocumentId);
 	this.syncList = this.container.find('.document-sync-list'); // currently not being used
 	this.syncCheckbox = this.container.find('.document-sync-checkbox');
-	this.search = this.container.find('.document-search');
+	this.searchBtn = this.container.find('.document-search-button');
+	this.infoBtn = this.container.find('.document-info-button');
+	this.about = this.container.find('.document-about');
+	
 	
 	this.content = this.container.find('.document-content');
 	this.wrapper = this.container.find('.document-wrapper');
@@ -173,11 +177,13 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			t.navigateToUserInput();
 		}
 	});
+	/*
 	this.search.on('keyup', function(e) {
 		if (e.keyCode == 13) {
 			t.search();
 		}
-	});	
+	});
+	*/
 	this.wrapper.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
 	});	
@@ -187,6 +193,47 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.selector.on('change', function(e) {
 		t.wrapper.empty();
 		t.navigateToUserInput();
+	});
+	
+	// buttons
+	this.infoBtn.on('click', function(e) {
+		// load about page
+		
+		console.log('about!')
+		
+		if (t.about.is(':visible')) {
+			t.about.hide();
+		} else {
+			t.about
+				.empty()
+				.css('top', t.header.outerHeight(true))
+				.css('left', 0)
+				.width(t.content.width())
+				.height(t.content.height())
+				.show();
+				
+			$.ajax({
+				url: 'content/bibles/' + t.selector.val() + '/about.html',
+				dataType: 'html',
+				success: function(html) {
+					var doc = $(html),
+						about = doc.find('.about');
+					
+					t.about
+						.append(about);
+				},
+				error: function() {
+					t.about.append('Error loading about.html');
+				}
+			});
+			
+		}
+	});
+	this.searchBtn.on('click', function(e) {
+		// popup search
+		
+		
+		
 	});
 	
 	
@@ -539,10 +586,9 @@ docs.Document.prototype = {
 	},
 	
 	search: function() {
-		var t = this,
-			searchText = t.search.val();
-			
+		var t = this;
 		
+		//
 		
 	}
 };

@@ -11,7 +11,7 @@ bible.BibleSearch = {
 	
 	canceled: false,
 	
-	bookIndex: 0,
+	bookOsisID: '',
 	
 	chapterIndex: 0,
 	
@@ -21,7 +21,9 @@ bible.BibleSearch = {
 	
 	highlightRegExp: null,
 	
-	verseRegExp: new RegExp('v[0-9]{9}','gi'),
+	//verseRegExp: new RegExp('v[0-9]{9}','gi'),
+	
+	verseRegExp: new RegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
 	
 	stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
 	
@@ -50,7 +52,7 @@ bible.BibleSearch = {
 		this.highlightRegExp = new RegExp('\\b' + text + '\\b', 'gi');
 
 		// reset variables
-		this.bookIndex = 0;
+		this.bookOsisID = bible.DEFAULT_BIBLE[0];
 		this.chapterIndex = 0;
 		this.canceled = false;
 		this.resultCount = 0;
@@ -69,9 +71,9 @@ bible.BibleSearch = {
 	loadChapter: function() {
 		
 		var s = this,
-			chapterUrl = 'content/bibles/' + this.version + '/' + bible.BibleFormatter.getChapterCode(this.bookIndex+1, this.chapterIndex+1) + '.html';
+			chapterUrl = 'content/bibles/' + this.version + '/' + (this.bookOsisID + '.' + (this.chapterIndex+1)) + '.html';
 		
-		this.chapterCallback(this.bookIndex, this.chapterIndex, this.resultCount, this.startTime);
+		this.chapterCallback(this.bookOsisID, this.chapterIndex, this.resultCount, this.startTime);
 		
 		$.ajax({
 			url: chapterUrl,
@@ -123,7 +125,9 @@ bible.BibleSearch = {
 				});
 				
 				// find and format verse
-				verse = bible.BibleFormatter.verseCodeToReferenceString( matches[i].match( this.verseRegExp)[0] );
+				//console.log(matches[i].match( this.verseRegExp )[0]);
+				verse = new bible.Reference( matches[i].match( this.verseRegExp )[0] ); //.toString();
+				//console.log(verse);
 				
 				// put it altogether for a row
 				html = '<div class="search-result"><span class="search-verse">' + verse + '</span>' + html + '</div>';
@@ -138,16 +142,21 @@ bible.BibleSearch = {
 	nextChapter: function() {
 		
 		// more chapters?
-		if (this.chapterIndex < bible.Books[this.bookIndex].verses.length-1 ) {
+		if (this.chapterIndex < bible.BOOK_DATA[this.bookOsisID].chapters.length-1 ) {
 			this.chapterIndex++;
 		} else {
-			this.bookIndex++;
+			
 			this.chapterIndex = 0;
 			
 			// check for last book!
-			if (this.bookIndex > bible.Books.length-1) {
+			if ( bible.DEFAULT_BIBLE.indexOf( this.bookOsisID ) == bible.DEFAULT_BIBLE.length-1 ) {
 				this.ended();
 				return;
+			} else {
+				
+				// go forward one book
+				this.bookOsisID = bible.DEFAULT_BIBLE[ bible.DEFAULT_BIBLE.indexOf( this.bookOsisID )+1 ];
+				
 			}
 		}
 		

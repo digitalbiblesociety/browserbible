@@ -50,13 +50,13 @@ h3 {
 }
 
 
-.version-nasb span.note dfn,
-.version-nasb span.cf dfn {
+span.note dfn,
+span.cf dfn {
 	display: none;
 }
 
-.version-nasb span.note,
-.version-nasb span.cf {
+span.note,
+span.cf {
 	vertical-align: top;
 	font-size: 60%;
 	font-weight: bold;
@@ -65,8 +65,8 @@ h3 {
 	cursor: pointer;
 }
 
-.version-nasb span.note:hover,
-.version-nasb span.cf:hover {
+span.note:hover,
+span.cf:hover {
 	color: #fff;
 	background: #3333cc;
 }

@@ -21,7 +21,7 @@ docs.plugins.push({
 			
 		}).on('mouseout', 'span.verse', function() {
 			
-			$(this).removeClass(verseClass);
+			$('.' + verseClass).removeClass(verseClass);
 			
 		});
 	}

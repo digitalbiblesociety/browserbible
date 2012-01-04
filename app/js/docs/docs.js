@@ -131,8 +131,10 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					'<input type="text" class="document-input" />' +
 					'<input type="button" value="GO" class="document-button" />' +
 					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
-					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
 					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
+					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
+					'<input type=\"button\" class=\"document-search-button\" value="S" />' +
+					'<input type=\"button\" class=\"document-info-button\" value="i" />' +
 					//'<input type="text" class="document-search" />' +
 				'</div>' +
 				'<div class="document-content">' +
@@ -150,7 +152,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.input = this.container.find('.document-input');
 	this.button = this.container.find('.document-button');
 	this.selector = this.container.find('.document-selector').val(selectedDocumentId);
-	this.syncList = this.container.find('.document-sync-list');
+	this.syncList = this.container.find('.document-sync-list'); // currently not being used
 	this.syncCheckbox = this.container.find('.document-sync-checkbox');
 	this.search = this.container.find('.document-search');
 	
@@ -512,7 +514,7 @@ docs.Document.prototype = {
 		if (visibleFragmentInfo != null) {
 			
 			// turn the ID into a readable reference for the input
-			var navigationInput = t.navigator.formatNavigation(visibleFragmentInfo.fragmentId);	
+			var navigationInput = t.navigator.formatNavigation(visibleFragmentInfo.fragmentId, t.selector.find('option:selected').attr('data-language'));	
 			t.input.val( navigationInput );
 			
 			// sync to other like panes

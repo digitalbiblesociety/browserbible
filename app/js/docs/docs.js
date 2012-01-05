@@ -66,8 +66,12 @@ docs.DocManager = {
 				newWidth = contentWidth/il - documentMargin;
 			
 			document.content.width( newWidth );
-			document.header.width( newWidth - parseInt(document.header.css('padding-left'),10) - parseInt(document.header.css('padding-right'),10));
-			document.footer.width( newWidth - parseInt(document.footer.css('padding-left'),10) - parseInt(document.footer.css('padding-right'),10));
+			
+			document.header.width( newWidth - (document.header.outerWidth(true) - document.header.width()) );
+			document.footer.width( newWidth - (document.footer.outerWidth(true) - document.footer.width()) );
+			
+			//document.header.width( newWidth - parseInt(document.header.css('padding-left'),10) - parseInt(document.header.css('padding-right'),10));
+			//document.footer.width( newWidth - parseInt(document.footer.css('padding-left'),10) - parseInt(document.footer.css('padding-right'),10));
 			
 			document.resize();
 			
@@ -107,6 +111,7 @@ docs.DocManager = {
 				
 				document.hasFocus = false;
 				document.container.removeClass('document-focused');
+				document.footer.empty();
 				
 			}
 		
@@ -131,10 +136,12 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					'<input type="text" class="document-input" />' +
 					'<input type="button" value="GO" class="document-button" />' +
 					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
-					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
+					
 					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
 					'<input type=\"button\" class=\"document-search-button\" value="S" />' +
 					'<input type=\"button\" class=\"document-info-button\" value="i" />' +
+					'<br/>' +
+					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
 					//'<input type="text" class="document-search" />' +
 				'</div>' +
 				'<div class="document-content">' +
@@ -177,13 +184,16 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			t.navigateToUserInput();
 		}
 	});
-	/*
-	this.search.on('keyup', function(e) {
-		if (e.keyCode == 13) {
-			t.search();
-		}
+	
+	this.searchBtn.on('click', function(e) {
+		console.log('search cicked');
+		
+		docs.Search.searchVersion.val( t.selector.val() );
+		docs.Search.searchWindow.show();
+		docs.Search.searchInput.focus();
 	});
-	*/
+	
+	
 	this.wrapper.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
 	});	
@@ -199,7 +209,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.infoBtn.on('click', function(e) {
 		// load about page
 		
-		console.log('about!')
+		//console.log('about!')
 		
 		if (t.about.is(':visible')) {
 			t.about.hide();
@@ -208,8 +218,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 				.empty()
 				.css('top', t.header.outerHeight(true))
 				.css('left', 0)
-				.width(t.content.width())
-				.height(t.content.height())
+				.width(t.content.width() - (t.about.outerWidth(true) - t.about.width()) )
+				.height(t.content.height() - (t.about.outerHeight(true) - t.about.height()) )
 				.show();
 				
 			$.ajax({
@@ -292,12 +302,16 @@ docs.Document.prototype = {
 				break;			
 		}
 		
-		console.log(this.id, fragmentId, action, url);
+		//console.log(this.id, fragmentId, action, url);
 		
 		// load the URL and insert, append, prepend the content
 		$.ajax({
 			url: url,
 			dataType: 'html',
+			error: function() {
+				console.log('failed', url)
+				
+			},
 			success: function(data) {
 				
 				var newSectionNode = $(data).find(t.navigator.sectionSelector),
@@ -320,7 +334,7 @@ docs.Document.prototype = {
 						t.wrapper.append(newSectionNode);
 						
 						// TODO: scroll to individual verse (not just the chapter)
-						console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );
+						//console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );
 						
 						if (fragmentId.substring(7,10) != '001') {
 							t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);
@@ -487,7 +501,7 @@ docs.Document.prototype = {
 		// parse into fragmentId
 		var fragmentId = this.navigator.parseString(someString);
 		
-		console.log(this.id, 'navigateByString', someString, fragmentId);
+		//console.log(this.id, 'navigateByString', someString, fragmentId);
 		
 		// load if needed
 		if (fragmentId != null) {
@@ -506,7 +520,7 @@ docs.Document.prototype = {
 		
 		this.setFocus(getFocus);
 		
-		console.log(this.id, 'navigateById', fragmentId, fragmentNode);
+		//console.log(this.id, 'navigateById', fragmentId, fragmentNode);
 		
 		if (fragmentNode.length > 0) {
 

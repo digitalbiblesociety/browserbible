@@ -31,7 +31,7 @@ docs.plugins.push({
 				.empty();
 		});
 		
-		
+		var hadNote = false;
 		content.on('mouseover', 'span.verse', function() {
 			
 			var verse = $(this),
@@ -44,9 +44,11 @@ docs.plugins.push({
 					.find('.document-footer')
 					.empty()
 					.append(notes.clone());
+					
+				//hadNote = true;
 			}			
 			
-		}).delegate('mouseout', 'span.verse', function() {
+		}).on('mouseout', 'span.verse', function() {
 			
 			$(this)
 				.closest('.document-container')

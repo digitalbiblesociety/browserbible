@@ -272,6 +272,8 @@ docs.Document.prototype = {
 		// TODO save scroll
 	},
 	
+	switchingOver: false,
+	
 	load: function(fragmentId, action) {
 		
 		
@@ -302,17 +304,52 @@ docs.Document.prototype = {
 				break;			
 		}
 		
-		//console.log(this.id, fragmentId, action, url);
+		console.log(this.id, fragmentId, action, url);
 		
 		// load the URL and insert, append, prepend the content
 		$.ajax({
 			url: url,
 			dataType: 'html',
 			error: function() {
-				console.log('failed', url)
+				console.log('failed', url);
+				
+				if (!t.switchingOver) {
+					t.switchingOver = true;
+					
+					var currentVersion = t.selector.val(),
+						switchToVersion = '';
+					
+					if (currentVersion == 'el_tisch') {
+						switchToVersion = 'he_wlc';
+					} else if (currentVersion == 'he_wlc') {
+						switchToVersion = 'el_tisch';
+					}
+					
+					if (switchToVersion != '') {
+						console.log('switch to ', switchToVersion);
+						
+						t.selector.find('option').each(function(index, opt) {
+							
+							if ($(opt).attr('value') == switchToVersion) {
+								t.selector[0].selectedIndex = index;
+							}
+							
+						});
+						
+						//t.selector[0].selectedIndex = 0;
+						//t.selector.val('he_wlc');
+						t.load(fragmentId, action);
+					}
+						
+				}
+				
+		
 				
 			},
 			success: function(data) {
+				
+				if (t.switchingOver == true)
+					t.switchingOver = false;
 				
 				var newSectionNode = $(data).find(t.navigator.sectionSelector),
 					newSectionId = newSectionNode.attr(t.navigator.sectionIdAttr);

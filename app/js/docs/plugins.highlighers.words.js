@@ -19,7 +19,13 @@ docs.plugins.push({
 	
 			$('.' + wordClass).removeClass( wordClass );
 			
-			$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma="' + lemmaInfo + '"]').addClass(wordClass);
+			$(lemmaInfo.split(' ')).each(function(i, lemma) {
+				console.log(lemmaInfo, i, lemma);
+				if (lemma != 'strong:G3588')
+					$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
+			})
+			
+			
 			
 			verse
 				.closest('.document-container')

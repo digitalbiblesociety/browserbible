@@ -1,6 +1,7 @@
 /* titles */
 h1.book-name {
 	text-align: center;
+	font-size: 2.0em;
 	margin: 1.2em 0;
 }
 h3 {
@@ -9,6 +10,9 @@ h3 {
 
 .chapter p {
 	margin: 1.0em 0;
+}
+.chapter[lang=he] {
+	font-size: 120%;
 }
 
 
@@ -27,9 +31,10 @@ h3 {
 
 .verse-num {
     font-weight: bold;
-    font-size: 80%;
+    font-size: 90%;
     vertical-align: top;
-	color: #cc6666;
+	-x-color: #cc6666;
+	color: #aaa;
 	/*
 	display: inline-block;
 	border: solid 1px #666;
@@ -50,13 +55,13 @@ h3 {
 }
 
 
-span.note dfn,
-span.cf dfn {
+.chapter span.note dfn,
+.chapter span.cf dfn {
 	display: none;
 }
 
-span.note,
-span.cf {
+.chapter span.note,
+.chapter span.cf {
 	vertical-align: top;
 	font-size: 60%;
 	font-weight: bold;
@@ -65,12 +70,21 @@ span.cf {
 	cursor: pointer;
 }
 
-span.note:hover,
-span.cf:hover {
+.chapter span.note:hover,
+.chapter span.cf:hover {
 	color: #fff;
 	background: #3333cc;
 }
 
+.document-footer span.note dfn,
+.document-footer span.cf dfn {
+	display: inline;
+	color: #000;
+}
+
+span.woc {
+	color: #aa0000;
+}
 
 /* search */
 

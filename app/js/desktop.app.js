@@ -10,59 +10,77 @@ jQuery(function($) {
 	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window))
 
 	docs.DocManager.addDocument(bible.BibleNavigator, 'en_kjv');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'es_rv');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'ar_svd');
+	docs.DocManager.addDocument(bible.BibleNavigator, 'en_web');
+	//docs.DocManager.addDocument(bible.BibleNavigator, 'ar_svd');
 	docs.DocManager.addDocument(bible.BibleNavigator, 'zhcn_ncv');
 	
-	docs.DocManager.documents[0].navigateById('Rom.1.1', true);
+	docs.DocManager.documents[0].navigateById('John.3.1', true);
 	
 	// startup plugins
+	var content = $('#content');
 	for (var i=0, il=docs.plugins.length; i<il; i++) {
-		docs.plugins[i].init($('#content'));
+		docs.plugins[i].init( content, docs.DocManager);
 	}
 	
 	// search
-	(function() {
+	docs.Search = (function() {
 		
 		var searchWindow = $(
-			'<div id="search-results" class="modal-window">' +
-				'<div id="search-header" class="modal-window-header"></div>' +
-				'<div id="search-body" class="modal-window-body"></div>' +
-			'</div>').appendTo( $(document.body) ).hide(), //.center(),
+			'<div id="search-window" class="modal-window">' +
+				'<div class="modal-window-header">' +
+					'<input type="text" class="search-text" />' +
+					'<select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>' +
+					'<input type="button" class="search-button" value="Search" />' +
+					'<input type="button" class="modal-window-close" value="Close" />' +
+					//'<input type="button" class="search-cancel" value="Cancel" />' + 
+				'</div>' +
+				'<div class="modal-window-body"></div>' +
+				'<div class="modal-window-footer"></div>' +
+			'</div>').appendTo( $(document.body) ).hide(), 
 			searchHeader = searchWindow.find('.modal-window-header'),
 			searchBody = searchWindow.find('.modal-window-body'),
-			searchText = $('#bible-search-input'),
-			searchButton = $('#bible-search-button');
-		
-		searchText.keyup(function(e) {
-			if (e.keyCode === 13)
-				doSearch
+			searchFooter = searchWindow.find('.modal-window-footer'),
+			searchClose = searchWindow.find('.modal-window-close'),
+			searchInput = searchWindow.find('.search-text'),
+			searchVersion = searchWindow.find('.search-version'),
+			searchButton = searchWindow.find('.search-button');
+			
+		searchClose.on('click', function() {
+			searchWindow.hide();
 		});
-		searchButton.click(function() {
+		
+		searchInput.on('keyup', function(e) {
+			if (e.keyCode === 13)
+				doSearch();
+		});
+		searchButton.on('click', function() {
 			doSearch();	
 		});
 		
-		searchBody.delegate('span.verse', 'click', function() {
+		searchWindow.on('click', 'span.verse', function() {		
 			
-			console.log( $(this).attr('data-verse')  );
-			
+			docs.DocManager.documents[0].navigateById($(this).attr('data-osis') , true);
+	
+			searchWindow.hide();
 		});
+		
+		
 		
 		function doSearch() {
 			console.log('doing search');
 			
-			var input = searchText.val(),
-				version = 'en_kjv';
+			var input = searchInput.val(),
+				version = searchVersion.val();
 				
-			searchWindow.show();
+			searchBody.empty();
 			
 			bible.BibleSearch.search( input, version,
 				
 				// chapter progress
-				function(bookIndex, chapterIndex, resultsCount, startDate) {
+				function(bookOsisID, chapterIndex, resultsCount, startDate) {
 					
 					//if (showFeedback) {
-						searchHeader.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '; searching: ' + bible.Books[ bookIndex ].names[0] + ' ' + (chapterIndex+1).toString() )
+						searchFooter.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '; searching: ' + bible.BOOK_DATA[ bookOsisID ].names['en'][0] + ' ' + (chapterIndex+1).toString() )
 						//searchProgress.width( (bookIndex+1)/66 * sbw );
 					//}
 					
@@ -73,12 +91,19 @@ jQuery(function($) {
 					
 					searchBody.html(resultHtml);
 					
-					searchHeader.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '');
+					searchFooter.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '');
 					
 					//searchButton.prop('disabled', false);
 					//searchText.prop('disbled', false);	
 				}
 			);	
+		}
+		
+		return {
+			searchVersion: searchVersion,
+			searchWindow: searchWindow,
+			searchInput: searchInput,
+			doSearch: doSearch
 		}
 		
 	})();

@@ -10,9 +10,9 @@ jQuery(function($) {
 	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window))
 
 	docs.DocManager.addDocument(bible.BibleNavigator, 'en_kjv');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'en_web');
+	docs.DocManager.addDocument(bible.BibleNavigator, 'el_tisch');
 	//docs.DocManager.addDocument(bible.BibleNavigator, 'ar_svd');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'zhcn_ncv');
+	docs.DocManager.addDocument(bible.BibleNavigator, 'tr_turk');
 	
 	docs.DocManager.documents[0].navigateById('John.3.1', true);
 	

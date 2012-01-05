@@ -28,7 +28,7 @@ Each Bible lives in the `/content/bibles/` directory in a folder named for it's 
 The document opens with links to core JavaScript and CSS files and basic navigation in the `<body>`
 
 ```html
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Isaiah 64 (KJV)</title>
@@ -51,7 +51,7 @@ The document opens with links to core JavaScript and CSS files and basic navigat
 
 In the middle is HTML marking up the chapter and each verse number
 
-```html
+```xml
 <div class="chapter version-kjv" data-osis="Isa.64" dir="ltr" lang="en">
 	<h2 class="chapter-num">64</h2>
 	<p>

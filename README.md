@@ -9,7 +9,17 @@ A browser based Bible Study Application built with the holy trinity of HTML, CSS
 
 ## Goals
 
-HTML and JavaScript based Bible software that can run on any media on any device on any browser in any nation.
+HTML and JavaScript based Bible software that can run
+
+* on any browser
+* on any device
+* in any nation
+
+The application has full search and highlighting features but requires
+
+* no install
+* no server
+* no trace
 
 ### Mobile Version
 
@@ -102,6 +112,7 @@ The document closes with links a second set of navigation basic navigation in th
 
 ## 0.2 Todo List
 
+* Store user preferences
 * Chapter/verse Navigation Dropdown
 * Add/delete columns
 * Put version info into version.json within folder, then load dynamically

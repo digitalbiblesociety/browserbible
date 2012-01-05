@@ -1,4 +1,6 @@
-# HTML Bible Study App
+# Browser Bible 
+
+A browser based Bible Study Application built with the holy trinity of HTML, CSS, and JavaScript.
 
 * Created by: [http://www.dbsbible.org](Digital Bible Society)
 * Project Leader: John Dyer [http://j.hn/](http://j.hn/)
@@ -97,15 +99,19 @@ The document closes with links a second set of navigation basic navigation in th
 
 ## Todo List
 
+* Build Tisch, NASB inporters
+* Add/delete columns
+* Put version info into version.json within folder, then load dynamically
+* Allow version to switch if a book is missing (WLC -> tisch)
+* handle missing books
+* handle apocrypha
 * Chapter/verse Navigation Dropdown
-* Build search into application
 * Add Audio player
 * Add video launcher
 * Add maps/images links
 * Add original language tools (highlighting tense/voice/freq)
 * Change theme colors
 * Change font size within the reader
-* Add/delete columns
 
 ## Done
 
@@ -113,3 +119,11 @@ The document closes with links a second set of navigation basic navigation in th
 * about.html page for each version (loads with 'i' button)
 * Switched from `v001001001` to OSIS style `Gen.1.1`
 * Rebuilt exporters for OSIS/XML, USMF, Unbound.
+* Build search into application
+* Build WLC importer
+
+## Known Issues
+
+* Notes and CF needs work
+* OSIS quotes span over verses
+* USMF doesn't handle quote lines

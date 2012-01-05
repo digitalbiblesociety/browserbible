@@ -11,3 +11,8 @@ hgroup, menu, nav, section, audio, video {
     vertical-align:baseline;
     background:transparent;
 }
+
+dfn {
+	font-style: normal;
+	
+}

@@ -1,42 +1,47 @@
 bible.versions = {
+	'ar' : {
+		languageName: 'Arabic',
+		versions: {
+			'ar_svd': {
+				abbreviation: 'SVD',
+				name: 'Smith & Van Dyke (1895)',
+				copyright: '?'
+			}				
+		}
+	},
 	'en' : {
 		languageName: 'English',
 		versions: {
+			'en_esv': {
+				abbreviation: 'ESV',
+				name: 'English Standard Version',
+				copyright: 'Copyright Crossway'
+			},			
 			'en_kjv': {
 				abbreviation: 'KJV',
 				name: 'King James Version',
-				copyright: 'Public Domain'
+				copyright: '?'
 			},
-			
+			'en_nasb': {
+				abbreviation: 'NASB',
+				name: 'New American Standard',
+				copyright: 'Copyright Lockman'
+			},			
 			'en_net': {
 				abbreviation: 'NET',
 				name: 'New English Translation',
 				copyright: 'Copyright bible.org'
 			},
-			
-			'en_esv': {
-				abbreviation: 'ESV',
-				name: 'English Standard Version',
-				copyright: 'Copyright Crossway'
-			},
-			
 			'en_oeb': {
 				abbreviation: 'OEB',
 				name: 'Open English Bible',
 				copyright: ''
-			},
-			
+			},			
 			'en_web': {
 				abbreviation: 'WEB',
 				name: 'World English Bible',
 				copyright: ''
-			},				
-			
-			'en_nasb': {
-				abbreviation: 'NASB',
-				name: 'New American Standard',
-				copyright: 'Copyright Lockman'
-			}					
+			}			
 		}
 	},
 	'el' : {
@@ -45,7 +50,7 @@ bible.versions = {
 			'el_tisch': {
 				abbreviation: 'TISCH',
 				name: 'Tischendorf',
-				copyright: 'Public Domain'
+				copyright: '?'
 			}				
 		}
 	},
@@ -55,18 +60,43 @@ bible.versions = {
 			'es_rv': {
 				abbreviation: 'RV',
 				name: 'Reina Valera (1909)',
-				copyright: 'Public Domain'
+				copyright: '?'
 			}				
 		}
 	},
-	'ar' : {
-		languageName: 'Arabic',
+	'he' : {
+		languageName: 'Hebrew',
 		versions: {
-			'ar_svd': {
-				abbreviation: 'SVD',
-				name: 'Smith & Van Dyke (1895)',
-				copyright: 'Public Domain'
+			'he_wlc': {
+				abbreviation: 'WLC',
+				name: 'Westminster Lenigradex Codex',
+				copyright: '?'
 			}				
+		}
+	},	
+	'ru' : {
+		languageName: 'Russian',
+		versions: {
+			'ru_syn': {
+				abbreviation: 'SYN',
+				name: 'Russian Synodal (1876)',
+				copyright: ''
+			}
+		}
+	},
+	'tr' : {
+		languageName: 'Turkish',
+		versions: {
+			'tr_turk': {
+				abbreviation: 'TURK',
+				name: 'Turkish',
+				copyright: ''
+			},
+			'tr_turknt': {
+				abbreviation: 'TURKNT',
+				name: 'Turkish New Testament',
+				copyright: ''
+			}			
 		}
 	},
 	'zh-CN' : {
@@ -75,7 +105,7 @@ bible.versions = {
 			'zhcn_ncv': {
 				abbreviation: 'NVCs',
 				name: 'New Chinese Version',
-				copyright: 'Public Domain'
+				copyright: '?'
 			}				
 		}
 	},
@@ -85,7 +115,7 @@ bible.versions = {
 			'zhtw_ncv': {
 				abbreviation: 'NVCt',
 				name: 'New Chinese Version',
-				copyright: 'Public Domain'
+				copyright: '?'
 			}				
 		}
 	}

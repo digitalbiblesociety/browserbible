@@ -91,12 +91,14 @@ bible.versions = {
 				abbreviation: 'TURK',
 				name: 'Turkish',
 				copyright: ''
-			},
+			}
+			/*,
 			'tr_turknt': {
 				abbreviation: 'TURKNT',
 				name: 'Turkish New Testament',
 				copyright: ''
-			}			
+			}
+			*/
 		}
 	},
 	'zh-CN' : {

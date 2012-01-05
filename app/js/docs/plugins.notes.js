@@ -9,13 +9,11 @@ docs.plugins.push({
 
 	init: function(content) { 	
 	
-		content.delegate('span.note, span.cf', 'mouseover', function() {
+		content.on('mouseover', 'span.note, span.cf', function() {
 			
 			var note = $(this),
 				definition = note.find('dfn');
-				
-			console.log(definition);
-				
+						
 			// shown in footer
 			if (definition.length > 0) {	
 				note
@@ -25,13 +23,36 @@ docs.plugins.push({
 					.append(note.clone());
 			}			
 			
-		}).delegate('span.note, span.cf', 'mouseout', function() {
+		}).on('mouseout', 'span.note, span.cf', function() {
 			
 			$(this)
 				.closest('.document-container')
 				.find('.document-footer')
 				.empty();
 		});
+		
+		
+		content.on('mouseover', 'span.verse', function() {
+			
+			var verse = $(this),
+				notes = verse.find('span.note, span.cf');
+			
+			// shown in footer
+			if (notes.length > 0) {	
+				verse
+					.closest('.document-container')
+					.find('.document-footer')
+					.empty()
+					.append(notes.clone());
+			}			
+			
+		}).delegate('mouseout', 'span.verse', function() {
+			
+			$(this)
+				.closest('.document-container')
+				.find('.document-footer')
+				.empty();
+		});		
 		
 	}
 });

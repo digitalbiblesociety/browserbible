@@ -15,17 +15,22 @@ docs.plugins.push({
 			var word = $(this),
 				verse = word.closest('.verse'),
 				verseId = verse.attr('data-osis'),
-				lexId = word.attr('data-lex');
+				lemmaInfo = word.attr('data-lemma');
 	
-				
 			$('.' + wordClass).removeClass( wordClass );
 			
-			$('span.verse[data-osis="' + verseId + '"] span.word[data-lex="' + lexId + '"]').addClass(wordClass);
+			$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma="' + lemmaInfo + '"]').addClass(wordClass);
+			
+			verse
+				.closest('.document-container')
+				.find('.document-footer')
+				.empty()
+				.append( lemmaInfo );
 			
 		}).on('mouseout', 'span.word', function() {
-			//$('.' + wordClass).removeClass( wordClass );
+			$('.' + wordClass).removeClass( wordClass );
 			
-			$(this).removeClass(wordClass);
+			//$(this).removeClass(wordClass);
 		});
 	}
 });

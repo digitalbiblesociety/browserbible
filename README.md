@@ -27,7 +27,7 @@ Each Bible lives in the `/content/bibles/` directory in a folder named for it's 
 
 The document opens with links to core JavaScript and CSS files and basic navigation in the `<body>`
 
-```
+```html
 !DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +51,7 @@ The document opens with links to core JavaScript and CSS files and basic navigat
 
 In the middle is HTML marking up the chapter and each verse number
 
-```
+```html
 <div class="chapter version-kjv" data-osis="Isa.64" dir="ltr" lang="en">
 	<h2 class="chapter-num">64</h2>
 	<p>
@@ -79,7 +79,7 @@ In the middle is HTML marking up the chapter and each verse number
 
 The document closes with links a second set of navigation basic navigation in the `<body>`
 
-```
+```html
 	</div>
 	<div data-role="footer">	
 		<div data-role="navbar">
@@ -96,16 +96,21 @@ The document closes with links a second set of navigation basic navigation in th
 </html>
 ```
 
+## v0.1 Todo List
 
-## Todo List
+* Build Tisch, NASB importers
+* Allow version to switch if a book is missing (WLC -> tisch)
 
-* Build Tisch, NASB inporters
+## 0.2 Todo List
+
+* Chapter/verse Navigation Dropdown
 * Add/delete columns
 * Put version info into version.json within folder, then load dynamically
-* Allow version to switch if a book is missing (WLC -> tisch)
-* handle missing books
+* handle missing books (e.g. Psalms and NT)
 * handle apocrypha
-* Chapter/verse Navigation Dropdown
+
+## 0.3 Todo List
+
 * Add Audio player
 * Add video launcher
 * Add maps/images links

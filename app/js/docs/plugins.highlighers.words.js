@@ -23,20 +23,11 @@ docs.plugins.push({
 				console.log(lemmaInfo, i, lemma);
 				if (lemma != 'strong:G3588')
 					$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
-			})
-			
-			
-			
-			verse
-				.closest('.document-container')
-				.find('.document-footer')
-				.empty()
-				.append( lemmaInfo );
-			
+			});
+				
 		}).on('mouseout', 'span.word', function() {
 			$('.' + wordClass).removeClass( wordClass );
 			
-			//$(this).removeClass(wordClass);
 		});
 	}
 });

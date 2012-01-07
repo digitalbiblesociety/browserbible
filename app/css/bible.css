@@ -1,3 +1,29 @@
+/* fonts */
+@font-face {
+	font-family: 'GentiumPlus';
+    src: url('fonts/gentiumplus-r-webfont.eot');
+    src: url('fonts/gentiumplus-r-webfont.eot?#iefix') format('eot'),
+         url('fonts/gentiumplus-r-webfont.woff') format('woff'),
+         url('fonts/gentiumplus-r-webfont.ttf') format('truetype'),
+         url('fonts/gentiumplus-r-webfont.svg#webfontVIEluHTz') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'EzraSILRegular';
+    src: url('fonts/sileot-webfont.eot');
+    src: url('fonts/sileot-webfont.eot?#iefix') format('eot'),
+         url('fonts/sileot-webfont.woff') format('woff'),
+         url('fonts/sileot-webfont.ttf') format('truetype'),
+         url('fonts/sileot-webfont.svg#webfontVIEluHTx') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+
 /* titles */
 h1.book-name {
 	text-align: center;
@@ -12,7 +38,13 @@ h3 {
 	margin: 1.0em 0;
 }
 .chapter[lang=he] {
-	font-size: 120%;
+	font-size: 20px;
+	font-family: 'EzraSILRegular';
+}
+.chapter[lang=el] {
+	font-family: 'GentiumPlus';
+	font-size: 16px;
+	line-height: 1.8;
 }
 
 
@@ -31,7 +63,8 @@ h3 {
 
 .verse-num {
     font-weight: bold;
-    font-size: 90%;
+    font-size: 12px;
+	font-family: Helvetica, Arial;
     vertical-align: top;
 	-x-color: #cc6666;
 	color: #aaa;

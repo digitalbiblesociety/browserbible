@@ -1,3 +1,7 @@
+body {
+	background: #fff;
+}
+
 #header {
 	height: 40px;
 	background: #333;
@@ -7,6 +11,9 @@
 	text-align: center;
 	padding: 10px 0 ;
 	font-size: 18px;
+}
+#content {
+	background: #fff;
 }
 
 #footer {
@@ -31,7 +38,7 @@
 
 .document-header {
 	-x-background: #bbb;
-	padding: 5px 15px;
+	padding: 5px 20px;
 	-x-border-radius: 5px 5px 0 0;
 	border: solid 1px #aaa;
 	border-width: 1px 1px 1px 0;
@@ -51,13 +58,35 @@
 		display: none;
 	}
 	.document-header .document-input {
-		width: 200px;
+		width: 180px;
 		height: 28px;
 		font-size: 120%;
 		padding: 0 6px;
 	}
 	.document-header .document-selector {
-		width: 210px;
+		width: 190px;
+	}
+	
+	.document-header .document-search-button,
+	.document-header .document-info-button {
+		background: transparent url(images/icons-dark-small.png) 0 0  no-repeat;
+		border: solid 1px #999;
+		border-radius: 5px;
+		text-indent: -9999px;
+		width: 22px;
+		height: 22px;
+		margin: 0 2px;	
+	}
+	.document-header .document-search-button:hover,
+	.document-header .document-info-button:hover {
+		background-color: #ccccff;
+		cursor: pointer;
+	}
+	.document-header .document-search-button {	
+		background-position: -58px -186px;
+	}
+	.document-header .document-info-button {
+		background-position:  -35px -28px;
 	}	
 
 .document-content {
@@ -72,8 +101,8 @@
 
 	.document-wrapper {
 		position: absolute;
-		padding: 10px 15px;
-		line-height: 1.4;
+		padding: 10px 20px;
+		line-height: 1.6;
 		font-size: 14px;
 		font-family: Helvetica, Arial;
 	}	
@@ -97,6 +126,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 12px;
+	line-height: 1.2;
 	-x-border-radius: 0 0 5px 5px ;
 	
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeedeb), color-stop(100%, #dddcda));
@@ -192,9 +222,15 @@
 
 	.search-result {
 		overflow: hidden;
-		margin: 0 0 10px 0;
+		margin: 0 0 6px 0;
 		font-size: 13px;
 		line-height: 1.3;
+		padding: 4px 0;
+	}
+	
+	.search-result:hover {
+		background: #ccccff;
+		cursor: pointer;
 	}
 	
 	.search-result .verse {

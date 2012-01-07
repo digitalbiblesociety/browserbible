@@ -22,6 +22,11 @@ jQuery(function($) {
 		docs.plugins[i].init( content, docs.DocManager);
 	}
 	
+	$('#header').on('click', function() {
+		$('body')[0].webkitRequestFullScreen();
+		
+	})
+	
 	// search
 	docs.Search = (function() {
 		

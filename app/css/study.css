@@ -110,6 +110,7 @@ body {
 .document-about {
 	position: absolute;
 	background: #fefefe;
+	background: rgba(250,250,250,0.9);
 	top: 10px;
 	left: 10px;
 	width: 200px;
@@ -117,6 +118,16 @@ body {
 	height: 200px;
 	display: none;
 }
+
+	.document-about h1 {
+		margin: 0 0 15px 0;
+		line-height: 1;
+	}
+	
+	.document-about p {
+		margin: 15px 0;
+		line-height: 1.5;
+	}
 
 .document-footer {
 	padding: 5px 15px;

@@ -21,13 +21,29 @@ The application has full search and highlighting features but requires
 * no server
 * no trace
 
-### Mobile Version
+## Versions
 
-The mobile version uses [http://www.jquerymobile.com/](jQuery Mobile) to navigate through the Bible chapter by chapter
+* *Mobile Version* - The mobile version uses [http://www.jquerymobile.com/](jQuery Mobile) to navigate through the Bible chapter by chapter
+* *Desktop Version* - The desktop version is a multipane application based off ideas at [http://biblewebapp.com/](http://biblewebapp.com/)
 
-### Desktop Version
+## Credits
 
-The desktop version is a multipane application based off ideas at [http://biblewebapp.com/](http://biblewebapp.com/)
+Many of the texts are the product of the hard work of many individuals dedicated to open
+source work including [http://openscriptures.org](Open Scriptures) and [http://www.crosswire.org/](CrossWire). Thanks for the great work!
+
+* *KJV text* - [http://www.crosswire.org/~dmsmith/kjv2006/index.html](KJV2006 project) from Crosswire
+* *Tischendorf* - [https://github.com/morphgnt/tischendorf-data](MorphNT) from Ulrik Sandborg-Petersen 
+* *WLC* - [https://github.com/openscriptures/morphhb](MorphHB) project from Open Scriptures and David Troidl
+* *Strongs* - [https://github.com/openscriptures/strongs](strong database) in JSON format
+
+### English Versions
+
+* [http://openenglishbible.org/](Open English Version)
+* [http://ebible.org](World English Bible)
+
+### Non-English Verions
+
+* The remaining versions in this repository were downloaded from [http://www.unboundbible.org](Unbound Bible)
 
 ## File Formats
 

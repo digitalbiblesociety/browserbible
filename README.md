@@ -21,7 +21,7 @@ The application has full search and highlighting features but requires
 * no server
 * no trace
 
-## Versions
+To make this happen, there are two ways to view the same biblical content
 
 * *Mobile Version* - The mobile version uses [http://www.jquerymobile.com/](jQuery Mobile) to navigate through the Bible chapter by chapter
 * *Desktop Version* - The desktop version is a multipane application based off ideas at [http://biblewebapp.com/](http://biblewebapp.com/)

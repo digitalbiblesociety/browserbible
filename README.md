@@ -28,6 +28,8 @@ To make this happen, there are two ways to view the same biblical content
 
 ## Credits
 
+### Original Language Data
+
 Many of the texts are the product of the hard work of many individuals dedicated to open
 source work including [http://openscriptures.org](Open Scriptures) and [http://www.crosswire.org/](CrossWire). Thanks for the great work!
 

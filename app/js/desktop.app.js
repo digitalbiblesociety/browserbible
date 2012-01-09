@@ -6,26 +6,80 @@
 
 jQuery(function($) {
 	
+	
+	
 	// setup main site areas
-	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window))
+	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window));
 
-	docs.DocManager.addDocument(bible.BibleNavigator, 'en_kjv');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'el_tisch');
-	//docs.DocManager.addDocument(bible.BibleNavigator, 'ar_svd');
-	docs.DocManager.addDocument(bible.BibleNavigator, 'tr_turk');
-	
-	docs.DocManager.documents[0].navigateById('John.3.1', true);
-	
-	// startup plugins
-	var content = $('#content');
-	for (var i=0, il=docs.plugins.length; i<il; i++) {
-		docs.plugins[i].init( content, docs.DocManager);
-	}
-	
-	$('#header').on('click', function() {
-		$('body')[0].webkitRequestFullScreen();
+	// load versions, then start doing other stuff
+	bible.versions.getVersions(function(versions) {
+
+		var defaultDocSettings = {
+			docs: [
+			{
+				version: 'en_kjv',
+				location: 'John.3.1',
+				linked: true
+			},
+			{
+				version: 'el_tisch',
+				location: 'John.15.1',
+				linked: false
+			},
+			{
+				version: 'tr_turk',
+				location: 'John.3.1',
+				linked: true
+			}			
+			]
+		};
+
+		var docSettings = $.jStorage.get('docs-settings', defaultDocSettings);
 		
-	})
+		console.log(docSettings);
+		
+		
+		// setup all documents and load content
+		for (var i=0, il=docSettings.docs.length; i<il; i++) {
+			var docSetting = docSettings.docs[i],
+				document = docs.DocManager.addDocument(bible.BibleNavigator, docSetting.version);
+			
+			document.syncCheckbox.prop('checked', docSetting.linked);
+			document.navigateById(docSetting.location, false);
+		}
+		
+		docs.DocManager.addEventListener('navigation', function(e) {
+			
+			// save the state of all?
+			//console.log('nav event');
+			var docSettings = {docs:[]};
+			for (var i=0, il=docs.DocManager.documents.length; i<il; i++) {
+				var document = docs.DocManager.documents[i];
+				docSettings.docs.push({
+					version: document.selector.val(),
+					//location: document.input.val(),
+					location: document.fragmentId,
+					linked: document.syncCheckbox.prop('checked')
+				});
+			}
+			
+			//console.log(docSettings);
+			$.jStorage.set('docs-settings', docSettings);
+		});
+
+
+		
+		// startup plugins
+		var content = $('#content');
+		for (var i=0, il=docs.plugins.length; i<il; i++) {
+			docs.plugins[i].init( content, docs.DocManager);
+		}
+		
+		// fullscren button
+		$('#docs-fullscreen').on('click', function() {
+			$('body')[0].webkitRequestFullScreen();
+		});
+	});
 	
 	// search
 	docs.Search = (function() {

@@ -50,6 +50,8 @@ docs.DocManager = {
 		this.content.append(document.container);
 		
 		this.resizeDocuments();
+		
+		return document;
 	},
 	
 	resizeDocuments: function() {
@@ -117,7 +119,40 @@ docs.DocManager = {
 		
 		}		
 		
-	}	
+	},
+	
+	// start: fake events
+	events: {},
+	addEventListener: function (eventName, callback, bubble) {
+		this.events[eventName] = this.events[eventName] || [];
+		this.events[eventName].push(callback);
+	},
+	removeEventListener: function (eventName, callback) {
+		if (!eventName) { this.events = {}; return true; }
+		var callbacks = this.events[eventName];
+		if (!callbacks) return true;
+		if (!callback) { this.events[eventName] = []; return true; }
+		for (i = 0; i < callbacks.length; i++) {
+			if (callbacks[i] === callback) {
+				this.events[eventName].splice(i, 1);
+				return true;
+			}
+		}
+		return false;
+	},	
+	dispatchEvent: function (eventName) {
+		var i,
+			args,
+			callbacks = this.events[eventName];
+
+		if (callbacks) {
+			args = Array.prototype.slice.call(arguments, 1);
+			for (i = 0; i < callbacks.length; i++) {
+				callbacks[i].apply(null, args);
+			}
+		}
+	}
+	// end: fake events
 	
 	
 };
@@ -127,7 +162,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	// store
 	this.manager = manager;
 	this.id = id;
-	this.navigator = navigator;	
+	this.navigator = navigator;
+	this.fragmentId = null;
 	
 	// create pane
 	this.container = $(
@@ -319,9 +355,9 @@ docs.Document.prototype = {
 					var currentVersion = t.selector.val(),
 						switchToVersion = '';
 					
-					if (currentVersion == 'el_tisch') {
+					if (currentVersion === 'el_tisch') {
 						switchToVersion = 'he_wlc';
-					} else if (currentVersion == 'he_wlc') {
+					} else if (currentVersion === 'he_wlc') {
 						switchToVersion = 'el_tisch';
 					}
 					
@@ -330,7 +366,7 @@ docs.Document.prototype = {
 						
 						t.selector.find('option').each(function(index, opt) {
 							
-							if ($(opt).attr('value') == switchToVersion) {
+							if ($(opt).attr('value') === switchToVersion) {
 								t.selector[0].selectedIndex = index;
 							}
 							
@@ -611,6 +647,8 @@ docs.Document.prototype = {
 		// found a fragment
 		if (visibleFragmentInfo != null) {
 			
+			t.fragmentId = visibleFragmentInfo.fragmentId;
+			
 			// turn the ID into a readable reference for the input
 			var navigationInput = t.navigator.formatNavigation(visibleFragmentInfo.fragmentId, t.selector.find('option:selected').attr('data-language'));	
 			t.input.val( navigationInput );
@@ -619,6 +657,8 @@ docs.Document.prototype = {
 			if (this.hasFocus && this.syncCheckbox.is(':checked')) {
 				t.manager.sync(this, visibleFragmentInfo);
 			}
+			
+			t.manager.dispatchEvent('navigation', {document: t});
 		}
 	},
 	

@@ -36,7 +36,11 @@ docs.plugins.push({
 				
 			$('.' + verseClass).removeClass( verseClass );
 			
-			$('span.verse[data-osis="' + verseId + '"]').addClass(verseClass);
+			//$('span.verse[data-osis="' + verseId + '"]').addClass(verseClass);
+			
+			$('span.' + verseId.replace(/\./gi,'_') ).addClass(verseClass);
+			
+			
 			
 		}).on('mouseout', 'span.verse', function() {
 			

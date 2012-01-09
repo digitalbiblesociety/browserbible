@@ -20,8 +20,10 @@ docs.plugins.push({
 			$('.' + wordClass).removeClass( wordClass );
 			
 			$(lemmaInfo.split(' ')).each(function(i, lemma) {
-				if (lemma != 'strong:G3588')
-					$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
+				if (lemma != 'strong:G3588') {
+					//$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
+					$('span.' + verseId.replace(/\./gi,'_') + ' span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
+				}
 			});
 				
 		}).on('mouseout', 'span.word', function() {

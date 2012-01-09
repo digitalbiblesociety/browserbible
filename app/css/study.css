@@ -8,10 +8,18 @@ body {
 	color: #fff;
 }
 #header h1 {
-	text-align: center;
-	padding: 10px 0 ;
+	float: left;
+	width: 300px;
+	padding: 10px 0 10px 20px;
 	font-size: 18px;
 }
+
+#header #header-nav {
+	float: right;
+	text-align: right;
+	padding: 10px 10px 0 0 ;
+}
+
 #content {
 	background: #fff;
 }
@@ -27,6 +35,25 @@ body {
 
 #header, #footer, #content {
 	font-family: Helvetica, Arial;
+}
+
+#docs-fullscreen, #docs-config {
+	background: transparent url(images/icons-light-small.png) 0 0  no-repeat;
+	border: solid 1px #999;
+	border-radius: 5px;
+	-x-text-indent: -9999px;
+	width: 22px;
+	height: 22px;
+	margin: 0 2px;		
+}
+
+
+#docs-fullscreen {
+	background-position: -102px -276px;
+}
+
+#docs-config {
+	background-position: -102px -117px;
 }
 
 .document-container {
@@ -110,7 +137,7 @@ body {
 .document-about {
 	position: absolute;
 	background: #fefefe;
-	background: rgba(250,250,250,0.9);
+	background: rgba(221, 220, 218, 0.9);
 	top: 10px;
 	left: 10px;
 	width: 200px;

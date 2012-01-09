@@ -24,8 +24,8 @@ bible.BibleNavigator = {
 			versionCode,
 			version;
 		
-		for (langCode in bible.versions) {
-			language = bible.versions[langCode];
+		for (langCode in bible.versions.versionData) {
+			language = bible.versions.versionData[langCode];
 			
 			html += '<optgroup label="' + language.languageName + '">';
 			

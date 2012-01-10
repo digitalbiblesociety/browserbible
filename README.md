@@ -49,16 +49,12 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 
 ## Road Map
 
-### v0.1 Todo List
-
-* index.html, about.html for all languages/versions
-
 ### 0.2 Todo List
 
-* Store user preferences
+* ~~Put version info into version.json within folder, then load dynamically~~
+* ~~Store current state / preferences~~
+* ~~Add/delete columns~~
 * Chapter/verse Navigation Dropdown
-* Add/delete columns
-* Put version info into version.json within folder, then load dynamically
 * handle missing books (e.g. Psalms and NT)
 * handle apocrypha
 * Allow version to switch if a book is missing (WLC -> tisch is hardcoded)
@@ -75,12 +71,14 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 
 ### Done
 
+* Basis strongs numbers and greek parsing
 * Footnotes now display in the footer
 * about.html page for each version (loads with 'i' button)
 * Switched from `v001001001` to OSIS style `Gen.1.1`
 * Rebuilt exporters for OSIS/XML, USMF, Unbound.
 * Build search into application
 * Build WLC, Tischendorf importers
+* index.html, about.html for all languages/versions
 
 ### Known Issues
 

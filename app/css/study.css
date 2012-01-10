@@ -37,7 +37,7 @@ body {
 	font-family: Helvetica, Arial;
 }
 
-#docs-fullscreen, #docs-config {
+#docs-fullscreen, #docs-config, #docs-add-document {
 	background: transparent url(images/icons-light-small.png) 0 0  no-repeat;
 	border: solid 1px #999;
 	border-radius: 5px;
@@ -51,10 +51,13 @@ body {
 #docs-fullscreen {
 	background-position: -102px -276px;
 }
-
 #docs-config {
 	background-position: -102px -117px;
 }
+#docs-add-document {
+	background-position: -102px -5px;
+}
+
 
 .document-container {
 	margin: 0;
@@ -95,7 +98,8 @@ body {
 	}
 	
 	.document-header .document-search-button,
-	.document-header .document-info-button {
+	.document-header .document-info-button,
+	.document-header .document-close-button {
 		background: transparent url(images/icons-dark-small.png) 0 0  no-repeat;
 		border: solid 1px #999;
 		border-radius: 5px;
@@ -105,7 +109,8 @@ body {
 		margin: 0 2px;	
 	}
 	.document-header .document-search-button:hover,
-	.document-header .document-info-button:hover {
+	.document-header .document-info-button:hover,
+	.document-header .document-close-button:hover{
 		background-color: #ccccff;
 		cursor: pointer;
 	}
@@ -114,7 +119,11 @@ body {
 	}
 	.document-header .document-info-button {
 		background-position:  -35px -28px;
-	}	
+	}
+	.document-header .document-close-button {
+		background-position:  -125px -185px;
+		-x-background-position:  -80px -5px
+	}		
 
 .document-content {
 	position: relative;

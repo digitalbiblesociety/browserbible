@@ -41,17 +41,70 @@ docs.DocManager = {
 	},
 	
 	documents: [],
+
+	docIndex: 0,
 	
 	addDocument: function(navigator, selectedDocumentId) {
 		
-		var document = new docs.Document(this, 'doc-' + this.documents.length.toString(), navigator, selectedDocumentId);	
+		var document = new docs.Document(this, 'doc-' + this.docIndex.toString(), navigator, selectedDocumentId);	
 		this.documents.push ( document );
 		
 		this.content.append(document.container);
 		
 		this.resizeDocuments();
+		this.docIndex++;
 		
 		return document;
+	},
+	
+	loadSettings: function(defaultSettings) {
+		
+		var docSettings = $.jStorage.get('docs-settings', defaultSettings);				
+		
+		// setup all documents and load content
+		for (var i=0, il=docSettings.docs.length; i<il; i++) {
+			var docSetting = docSettings.docs[i],
+				document = docs.DocManager.addDocument(bible.BibleNavigator, docSetting.version);
+			
+			document.syncCheckbox.prop('checked', docSetting.linked);
+			document.navigateById(docSetting.location, false);
+		}
+				
+	},
+	
+	saveSettings: function() {
+		// save the state of all?
+		//console.log('nav event');
+		var docSettings = {docs:[]};
+		for (var i=0, il=docs.DocManager.documents.length; i<il; i++) {
+			var document = docs.DocManager.documents[i];
+			docSettings.docs.push({
+				version: document.selector.val(),
+				//location: document.input.val(),
+				location: document.fragmentId,
+				linked: document.syncCheckbox.prop('checked')
+			});
+		}
+		
+		//console.log(docSettings);
+		$.jStorage.set('docs-settings', docSettings);		
+	},
+	
+	remove: function(document) {
+		var docIndex = 0;
+		
+		for (var i=0, il=this.documents.length; i<il; i++) {
+			var doc = this.documents[i];
+			if (doc.id === document.id) {
+				docIndex = i;
+				break;
+			}
+		}
+		
+		this.documents.splice(docIndex, 1);
+		
+		this.resizeDocuments();
+		this.saveSettings();
 	},
 	
 	resizeDocuments: function() {
@@ -176,6 +229,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
 					'<input type=\"button\" class=\"document-search-button\" value="S" />' +
 					'<input type=\"button\" class=\"document-info-button\" value="i" />' +
+					'<input type=\"button\" class=\"document-close-button\" value="X" />' +
 					'<br/>' +
 					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
 					//'<input type="text" class="document-search" />' +
@@ -200,6 +254,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	this.syncCheckbox = this.container.find('.document-sync-checkbox');
 	this.searchBtn = this.container.find('.document-search-button');
 	this.infoBtn = this.container.find('.document-info-button');
+	this.closeBtn = this.container.find('.document-close-button');
 	this.about = this.container.find('.document-about');
 	
 	
@@ -220,7 +275,6 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			t.navigateToUserInput();
 		}
 	});
-	
 	this.searchBtn.on('click', function(e) {
 		console.log('search cicked');
 		
@@ -228,7 +282,9 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 		docs.Search.searchWindow.show();
 		docs.Search.searchInput.focus();
 	});
-	
+	this.closeBtn.on('click', function(e) {
+		t.close();
+	});	
 	
 	this.wrapper.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
@@ -680,6 +736,13 @@ docs.Document.prototype = {
 		var t = this;
 		
 		//
+		
+	},
+	
+	close: function() {
+		
+		this.container.remove();
+		this.manager.remove(this);
 		
 	}
 };

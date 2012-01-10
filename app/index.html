@@ -2,9 +2,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Bible Browser</title>	
+	<title>Ephiphany Bible Browser</title>	
 	
 	<script src="js/jquery.js"></script>
+	
+	<!-- external libraries -->
+	<script src="js/utility/jquery.json.js"></script>
+	<script src="js/utility/jstorage.js"></script>
 	
 	<!-- Bible related data -->
 	<script src="js/bible/bible.data.js"></script>
@@ -39,13 +43,18 @@
 </head>
 <body>	
 	<div id="header">
-		<h1>Browser Bible</h1>
+		<h1>Ephiphany</h1>
+		<div id="header-nav">
+			<input type="button" class="button" id="docs-add-document" />
+			<input type="button" class="button" id="docs-config" />
+			<input type="button" class="button" id="docs-fullscreen" />
+		</div>
 	</div>
 	<div id="content">
 	
 	</div>
 	<div id="footer">
-		<p>Footer Info</p>
+		<p>Powered by Ephiphany Bible</p>
 	</div>
 </body>
 </html>

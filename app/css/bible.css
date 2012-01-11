@@ -87,30 +87,43 @@ h3 {
 	text-indent: 10px;
 }
 
-
-.chapter span.note dfn,
-.chapter span.cf dfn {
-	display: none;
+/* note letters, and CF numbers */
+dl.note ,
+dl.cf {
+	display: inline;
 }
 
-.chapter span.note,
-.chapter span.cf {
+dl.note dt,
+dl.cf dt {
 	vertical-align: top;
 	font-size: 60%;
 	font-weight: bold;
 	color: #3333cc;
 	letter-spacing: 1px;
 	cursor: pointer;
+	display: inline;
 }
-
-.chapter span.note:hover,
-.chapter span.cf:hover {
+.chapter dl.note dt:hover ,
+.chapter dl.cf dt:hover {
 	color: #fff;
 	background: #3333cc;
 }
 
-.document-footer span.note dfn,
-.document-footer span.cf dfn {
+/* don't diplsay the note text */
+.chapter dl.note dd,
+.chapter dl.cf dd {
+	display: none;
+}
+
+/* footer */
+.document-footer dt {
+	display: inline;
+	vertical-align: top;
+	font-size: 60%;
+	font-weight: bold;
+	color: #3333cc;	
+}
+.document-footer dd {
 	display: inline;
 	color: #000;
 }

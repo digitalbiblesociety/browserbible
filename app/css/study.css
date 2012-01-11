@@ -171,10 +171,10 @@ body {
 	}
 
 .document-footer {
-	padding: 5px 15px;
+	padding: 4px 15px;
 	-x-background: #bbb;
 	color: #333;
-	height: 40px;
+	height: 44px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 12px;
@@ -371,4 +371,24 @@ body {
 	border: solid 1px #aaa;
 	border-color: #ccc #333 #333 #ccc ;
 	text-align: center;
+}
+
+/* lexicon */
+.lex-entry {
+	
+}
+.lex-entry .greek {
+	font-family: 'GentiumPlus';
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.lex-entry .hebrew {
+	font-family: 'EzraSILRegular';
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.lex-entry .morphology {
+	font-style: italic;
 }

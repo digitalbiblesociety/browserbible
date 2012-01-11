@@ -9,7 +9,7 @@ docs.plugins.push({
 
 	init: function(content) { 	
 	
-		content.delegate('span.word', 'mouseover', function() {
+		content.delegate('span.w', 'mouseover', function() {
 			
 			var word = $(this),
 				lemma = word.attr('data-lemma'),
@@ -38,7 +38,7 @@ docs.plugins.push({
 						strongData = strongsGreekDictionary[strongKey];
 					
 					if (typeof strongData != 'undefined') {
-						displayTextArray.push( strongData.lemma + ' (' + strongKey + ') - ' + strongData.strongs_def + (strongLetter == 'G' ? ' [' + bible.morphology.Greek.getMorphology( morph ) + ']' : '') );
+						displayTextArray.push( '<span class="lex-entry"><span class="lemma ' + (strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + strongData.lemma + '</span> <span class="strongs-number">(' + strongKey + ')</span> - <span class="definition">' + strongData.strongs_def + '</span>' +(strongLetter == 'G' && morph != '' ? ' <span class="morphology">[' + bible.morphology.Greek.getMorphology( morph ) + ']</span>' : '') );
 					}
 					
 					

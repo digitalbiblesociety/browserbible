@@ -44,7 +44,12 @@ body {
 	-x-text-indent: -9999px;
 	width: 22px;
 	height: 22px;
-	margin: 0 2px;		
+	margin: 0 2px;
+	cursor: pointer;
+}
+#docs-fullscreen:hover, #docs-config:hover, #docs-add-document:hover {
+	background-color: #3333ff;
+	
 }
 
 
@@ -302,3 +307,68 @@ body {
 		background: yellow;
 		
 	}
+	
+/* nav drop down */
+.document-navigation-window {
+	position: absolute;
+	border: 2px solid #333;
+	background: #777;
+	border-radius: 5px;
+	width: 300px;
+	padding: 5px;
+	height: 300px;
+	top: 0;
+	left: 0;
+	display: none;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	color: #fff;
+}
+.document-navigation-window h3 {
+	color: #fff;
+	font-size: 14px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+}
+.document-navigation-list  .nav-scroller {
+	height: 280px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-x-border: solid 1px #222;
+}
+.document-navigation-list .nav-scroller li{
+	cursor: pointer;
+}
+.document-navigation-list .nav-scroller li:hover{
+	background: blue;
+}
+.book-list {
+	float: left;
+	width: 150px;
+}
+.book-list li {
+	display: block;
+	padding: 4px 1px;
+	border: solid 1px #aaa;
+	border-color: #ccc #333 #333 #ccc ;
+}
+.book-list li.selected {
+	background: #3333ff;
+}
+
+.chapter-list {
+	float: left;
+	width: 150px;
+}
+.chapter-list li {
+	font-size: 11px;
+	line-height: 1;
+	float: left;
+	width: 24px;
+	height: 16px;
+	padding: 5px 0 2px;
+	border: solid 1px #aaa;
+	border-color: #ccc #333 #333 #ccc ;
+	text-align: center;
+}

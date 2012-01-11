@@ -32,7 +32,7 @@ bible.BibleNavigator = {
 			for (versionCode in language.versions) {
 				version = language.versions[versionCode];
 				
-				html += '<option value="' + versionCode + '" data-language="' + langCode + '">' + version.abbreviation + ' - ' + version.name + '</option>';
+				html += '<option value="' + versionCode + '" data-language="' + langCode + '" data-version=\'' + JSON.stringify(version) + '\'>' + version.abbreviation + ' - ' + version.name + '</option>';
 				
 			}
 			
@@ -97,6 +97,89 @@ bible.BibleNavigator = {
 		} else {
 			return null;
 		}
-	}	
+	},
+	
+	setupNavigationList: function(document) {
+		document.navigationWindow.on('mouseleave', function() {
+			$(this).hide();
+		});
+		
+		document.navigationWindow.html(
+			'<div class="book-list document-navigation-list"><h3>Books</h3><div class="nav-scroller"><ul></ul></div></div>' +
+			'<div class="chapter-list document-navigation-list"><h3>Chapters</h3><div class="nav-scroller"><ul></ul></div></div>'
+		);
+		
+		// events!
+		document.navigationWindow.on('click', '.book-list li', function() {
+			
+			console.log('clicked', this);
+			
+			var li = $(this),
+				chapters =  parseInt(li.attr('data-chapters'), 10),
+				chaptersHtml = "";
+				
+			for (var i= 0; i<chapters; i++) {
+				chaptersHtml += '<li>' + (i+1) + '</li>';
+			}
+			
+			document.navigationWindow.find('.chapter-list ul').html(chaptersHtml);
+			
+			li.addClass('selected').siblings().removeClass('selected');
+		});
+		
+		document.navigationWindow.on('click', '.chapter-list li', function() {
+			
+			var li = $(this),
+				chapterNumber = parseInt(li.html(), 10),
+				bookOsis = li.closest('.document-navigation-window').find('.book-list li.selected').attr('data-osis');
+			
+			console.log(bookOsis + ' ' + chapterNumber);
+				
+			document.navigateByString(bookOsis + ' ' + chapterNumber);
+			document.navigationWindow.hide();
+		});			
+	},
+	
+	showNavigationList: function(document) {
+		
+
+		// get books
+		
+		var versionInfo = JSON.parse( document.selector.find('option:selected').attr('data-version') );
+			booksHtml = '';
+		
+		for (var i in versionInfo.books) {
+			//books += '<li data-osis="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' + versionInfo.bookNames[i] + '</li>';
+			booksHtml += '<li data-osis="' + versionInfo.books[i] + '" data-chapters="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' +
+				//versionInfo.bookNames[i] +
+				bible.BOOK_DATA[ versionInfo.books[i] ].names[versionInfo.language][0] + 
+			'</li>';
+		}
+		document.navigationWindow.find('.book-list ul').html(booksHtml);
+		
+		
+		// show
+		var inputPos = document.input.offset(),
+			inputHeight = document.input.outerHeight();
+		
+		document.navigationWindow.css({
+			'top': (inputPos.top + inputHeight) + 'px',
+			'left': (inputPos.left) + 'px'
+		})
+		.show();
+		
+		var reference = new bible.Reference(document.input.val()),
+			bookToSelect = document.navigationWindow.find('.book-list li[data-osis="' + reference.osisBookID + '"]'),
+			selectedBookOffset = bookToSelect.offset(),
+			scroller = document.navigationWindow.find('.book-list .nav-scroller'),
+			scrollerOffset = scroller.offset();
+			
+		scroller.scrollTop( selectedBookOffset.top - scrollerOffset.top - scroller.scrollTop() - 10);
+			
+		bookToSelect.click();
+		
+		console.log(bookToSelect, offset);
+				
+	}
 	
 };

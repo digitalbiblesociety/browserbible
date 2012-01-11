@@ -4,6 +4,8 @@
 "code":"el_tisch",
 "language":"el",
 "direction":"ltr",
+"errorSwitchToVersion":"he_wlc",
+"hasLemma":true,
 "books":["Matt","Mark","Luke","John","Acts","Rom","1Cor","2Cor","Gal","Eph","Phil","Col","1Thess","2Thess","1Tim","2Tim","Titus","Phlm","Heb","Jas","1Pet","2Pet","1John","2John","3John","Jude","Rev"],
-"bookNames":["Matt","Mark","Luke","John","Acts","Rom","1Cor","2Cor","Gal","Eph","Phil","Col","1Thess","2Thess","1Tim","2Tim","Titus","Phlm","Heb","Jas","1Pet","2Pet","1John","2John","3John","Jude","Rev"]
+"bookNames":["ΚΑΤΑ ΜΑΤΘΑΙΟΝ","ΚΑΤΑ ΜΑΡΚΟΝ","ΚΑΤΑ ΛΟΥΚΑΝ","ΚΑΤΑ ΙΩΑΝΝΗΝ","ΠΡΑΞΕΙΣ","ΠΡΟΣ ΡΩΜΑΙΟΥΣ","ΠΡΟΣ ΚΟΡΙΝΘΙΟΥΣ Α΄","ΠΡΟΣ ΚΟΡΙΝΘΙΟΥΣ Β΄","ΠΡΟΣ ΓΑΛΑΤΑΣ","ΠΡΟΣ ΕΦΕΣΙΟΥΣ","ΠΡΟΣ ΦΙΛΙΠΠΗΣΙΟΥΣ","ΠΡΟΣ ΚΟΛΟΣΣΑΕΙΣ","ΘΕΣΣΑΛΟΝΙΚΕΙΣ Α΄","ΘΕΣΣΑΛΟΝΙΚΕΙΣ Β΄","ΠΡΟΣ ΤΙΜΟΘΕΟΝ Α΄","ΠΡΟΣ ΤΙΜΟΘΕΟΝ Β΄","ΠΡΟΣ ΤΙΤΟΝ","ΠΡΟΣ ΦΙΛΗΜΟΝΑ","ΠΡΟΣ ΕΒΡΑΙΟΥΣ","ΙΑΚΩΒΟΥ","ΠΕΤΡΟΥ Α΄","ΠΕΤΡΟΥ Β΄","ΙΩΑΝΝΟΥ Α΄","ΙΩΑΝΝΟΥ Β΄","ΙΩΑΝΝΟΥ Γ΄","ΙΟΥΔΑ","ΑΠΟΚΑΛΥΨΙΣ ΙΩΑΝΝΟΥ"]
 }

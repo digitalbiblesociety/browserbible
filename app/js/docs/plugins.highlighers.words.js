@@ -10,7 +10,7 @@ docs.plugins.push({
 		// add-on WORDS
 		var wordClass = 'word-highlight';
 		
-		content.on('mouseover', 'span.word', function() {
+		content.on('mouseover', 'span.w', function() {
 			
 			var word = $(this),
 				verse = word.closest('.verse'),
@@ -20,9 +20,10 @@ docs.plugins.push({
 			$('.' + wordClass).removeClass( wordClass );
 			
 			$(lemmaInfo.split(' ')).each(function(i, lemma) {
-				if (lemma != 'strong:G3588') {
+				if (lemma != 'G3588') {
 					//$('span.verse[data-osis="' + verseId + '"] span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
-					$('span.' + verseId.replace(/\./gi,'_') + ' span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
+					//$('span.' + verseId.replace(/\./gi,'_') + ' span.word[data-lemma*="' + lemma + '"]').addClass(wordClass);
+					$('.' + verseId.replace(/\./gi,'_')).find('.' + lemma + '').addClass(wordClass);
 				}
 			});
 				

@@ -6,7 +6,8 @@
 
 jQuery(function($) {
 	
-	
+	if (typeof window.console == 'undefined')
+		window.console = {log:function() {}};
 	
 	// setup main site areas
 	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window));

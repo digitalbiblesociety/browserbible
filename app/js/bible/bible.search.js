@@ -25,7 +25,8 @@ bible.BibleSearch = {
 	
 	verseRegExp: new RegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
 	
-	stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
+	//stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
+	stripNotesRegExp: new RegExp('<dl class="(note|cf)">.+?</dl>','gi'),
 	
 	replaceLexRegExp: new RegExp('<span class="word"[^>]+>(.+?)</span>','gi'),
 	
@@ -102,9 +103,11 @@ bible.BibleSearch = {
 
 		
 		// remove notes
-		// <span class="note"></span>
-		// <span class="cf"></span>
-		//data = data.replace( this.stripNotesRegExp, '' );
+		// <dl class="note"></dl>
+		// <dl class="cf"></dl>
+		data = data.replace( this.stripNotesRegExp, '' );
+		
+		data = data.replace( new RegExp('<br>','gi'), '');
 		
 		// remove Lex/Morph data
 		// <span class="word" data-morph="">XXX</span>

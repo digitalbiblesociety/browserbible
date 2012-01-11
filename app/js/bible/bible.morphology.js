@@ -109,7 +109,7 @@ bible.morphology.Greek = {
                 var c = this.nounCases[info.substring(0, 1)];
                 var n = this.wordNumber[info.substring(1, 2)];
                 var g = this.wordGender[info.substring(2, 3)];
-                return c + ((n) ? ',' + n + ((g) ? ', ' + g : '') : '');
+                return c + ((n) ? ', ' + n + ((g) ? ', ' + g : '') : '');
             case 'A':
                 var c = this.nounCases[info.substring(0, 1)];
                 var n = this.wordNumber[info.substring(1, 2)];

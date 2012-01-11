@@ -9,10 +9,11 @@ docs.plugins.push({
 
 	init: function(content) { 	
 	
-		content.on('mouseover', 'span.note, span.cf', function() {
+		// SHOW specific note in the footer
+		content.on('mouseover', 'dl.note, dl.cf', function() {
 			
 			var note = $(this),
-				definition = note.find('dfn');
+				definition = note.find('dt');
 						
 			// shown in footer
 			if (definition.length > 0) {	
@@ -20,7 +21,7 @@ docs.plugins.push({
 					.closest('.document-container')
 					.find('.document-footer')
 					.empty()
-					.append(note.clone());
+					.append(note.children().clone());
 			}			
 			
 		}).on('mouseout', 'span.note, span.cf', function() {
@@ -31,11 +32,12 @@ docs.plugins.push({
 				.empty();
 		});
 		
+		// SHOW all notes from a verse in the footer
 		var hadNote = false;
 		content.on('mouseover', 'span.verse', function() {
 			
 			var verse = $(this),
-				notes = verse.find('span.note, span.cf');
+				notes = verse.find('dl.note, dl.cf');
 			
 			// shown in footer
 			if (notes.length > 0) {	
@@ -43,7 +45,7 @@ docs.plugins.push({
 					.closest('.document-container')
 					.find('.document-footer')
 					.empty()
-					.append(notes.clone());
+					.append(notes.children().clone());
 					
 				//hadNote = true;
 			}			

@@ -212,14 +212,16 @@ docs.DocManager = {
 
 docs.Document = function(manager, id, navigator, selectedDocumentId) {
 
+	var t = this;
+
 	// store
-	this.manager = manager;
-	this.id = id;
-	this.navigator = navigator;
-	this.fragmentId = null;
+	t.manager = manager;
+	t.id = id;
+	t.navigator = navigator;
+	t.fragmentId = null;
 	
 	// create pane
-	this.container = $(
+	t.container = $(
 			'<div class="document-container" id="' + id + '">' +
 				'<div class="document-header">' +
 					'<input type="text" class="document-input" />' +
@@ -231,7 +233,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					'<input type=\"button\" class=\"document-info-button\" value="i" />' +
 					'<input type=\"button\" class=\"document-close-button\" value="X" />' +
 					'<br/>' +
-					'<select class="document-selector">' + this.navigator.getOptions() + '</select>' +
+					'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
 					//'<input type="text" class="document-search" />' +
 				'</div>' +
 				'<div class="document-content">' +
@@ -245,60 +247,76 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			'</div>'
 		);
 	
+	
+	
 	// find DOM elements
-	this.header = this.container.find('.document-header');
-	this.input = this.container.find('.document-input');
-	this.button = this.container.find('.document-button');
-	this.selector = this.container.find('.document-selector').val(selectedDocumentId);
-	this.syncList = this.container.find('.document-sync-list'); // currently not being used
-	this.syncCheckbox = this.container.find('.document-sync-checkbox');
-	this.searchBtn = this.container.find('.document-search-button');
-	this.infoBtn = this.container.find('.document-info-button');
-	this.closeBtn = this.container.find('.document-close-button');
-	this.about = this.container.find('.document-about');
+	t.header = t.container.find('.document-header');
+	t.input = t.container.find('.document-input');
+	t.button = t.container.find('.document-button');
+	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
+	t.syncList = t.container.find('.document-sync-list'); // currently not being used
+	t.syncCheckbox = t.container.find('.document-sync-checkbox');
+	t.searchBtn = t.container.find('.document-search-button');
+	t.infoBtn = t.container.find('.document-info-button');
+	t.closeBtn = t.container.find('.document-close-button');
+	t.about = t.container.find('.document-about');
 	
 	
-	this.content = this.container.find('.document-content');
-	this.wrapper = this.container.find('.document-wrapper');
+	t.content = t.container.find('.document-content');
+	t.wrapper = t.container.find('.document-wrapper');
 	
-	this.footer = this.container.find('.document-footer');
+	t.footer = t.container.find('.document-footer');
+	
+	t.navigationWindow = $(
+		'<div class="document-navigation-window">' +
+		'</div>'
+	).appendTo(document.body);
+	t.navigator.setupNavigationList(t);	
 	
 	
 	// setup events
-	var t = this;
-	this.content.on('scroll', function(e) { t.handleScroll(e); });
-	this.button.on('click', function(e) {
+	
+	t.content.on('scroll', function(e) { t.handleScroll(e); });
+	t.button.on('click', function(e) {
 		t.navigateToUserInput();
 	});
-	this.input.on('keyup', function(e) {
+	t.input.on('keyup', function(e) {
 		if (e.keyCode == 13) {
 			t.navigateToUserInput();
+			t.navigationWindow.hide();
 		}
+	}).on('click', function(e) {
+		
+		// show the navigation list
+		t.navigator.showNavigationList(t);	
+		
+	}).on('blur', function(e) {
+		//t.navigationWindow.hide();
 	});
-	this.searchBtn.on('click', function(e) {
+	t.searchBtn.on('click', function(e) {
 		console.log('search cicked');
 		
 		docs.Search.searchVersion.val( t.selector.val() );
 		docs.Search.searchWindow.show();
 		docs.Search.searchInput.focus();
 	});
-	this.closeBtn.on('click', function(e) {
+	t.closeBtn.on('click', function(e) {
 		t.close();
 	});	
 	
-	this.wrapper.on('mouseenter mouseover', function(e) {
+	t.wrapper.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
 	});	
-	this.container.on('mouseenter mouseover', function(e) {
+	t.container.on('mouseenter mouseover', function(e) {
 		t.setFocus(true);
 	});	
-	this.selector.on('change', function(e) {
+	t.selector.on('change', function(e) {
 		t.wrapper.empty();
 		t.navigateToUserInput();
 	});
 	
 	// buttons
-	this.infoBtn.on('click', function(e) {
+	t.infoBtn.on('click', function(e) {
 		// load about page
 		
 		//console.log('about!')
@@ -331,7 +349,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			
 		}
 	});
-	this.searchBtn.on('click', function(e) {
+	t.searchBtn.on('click', function(e) {
 		// popup search
 		
 		

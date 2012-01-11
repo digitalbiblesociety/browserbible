@@ -48,7 +48,7 @@ bible.BibleSearch = {
 		this.endedCallback = endedCallback;
 		
 		// compile regexp
-		this.searchRegExp = new RegExp('<span class="verse"(.)*\\b' + text + '\\b(.)*</span>', 'gi');
+		this.searchRegExp = new RegExp('<span class="verse(.)*\\b' + text + '\\b(.)*</span>\r', 'gi');
 		this.highlightRegExp = new RegExp('\\b' + text + '\\b', 'gi');
 
 		// reset variables
@@ -104,11 +104,11 @@ bible.BibleSearch = {
 		// remove notes
 		// <span class="note"></span>
 		// <span class="cf"></span>
-		data = data.replace( this.stripNotesRegExp, '' );
+		//data = data.replace( this.stripNotesRegExp, '' );
 		
 		// remove Lex/Morph data
 		// <span class="word" data-morph="">XXX</span>
-		data = data.replace( this.replaceLexRegExp, '$1');
+		//data = data.replace( this.replaceLexRegExp, '$1');
 		
 		// find words
 		var matches = data.match(this.searchRegExp),

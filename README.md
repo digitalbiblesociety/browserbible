@@ -54,20 +54,27 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 * ~~Put version info into version.json within folder, then load dynamically~~
 * ~~Store current state / preferences~~
 * ~~Add/delete columns~~
-* Chapter/verse Navigation Dropdown
+* ~~Chapter/verse Navigation Dropdown~~
+* ~~Add original language tools (highlighting tense/voice/freq)~~
+* Change theme colors
+* Change font size within the reader
+
+### 0.3 Todo List
+
 * handle missing books (e.g. Psalms and NT)
 * handle apocrypha
 * Allow version to switch if a book is missing (WLC -> tisch is hardcoded)
 * Build NASB importer
-
-### 0.3 Todo List
-
 * Add Audio player
 * Add video launcher
 * Add maps/images links
-* Add original language tools (highlighting tense/voice/freq)
-* Change theme colors
-* Change font size within the reader
+
+### Wish List
+
+* Strong's based searching
+* Strong's/Thayer/BDB popups
+* Compare versions
+* 
 
 ### Done
 

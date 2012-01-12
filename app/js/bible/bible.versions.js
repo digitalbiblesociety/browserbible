@@ -52,8 +52,8 @@ bible.versions = {
 					
 					t.loadNextVersion();
 				},
-				error: function() {
-					
+				error: function(error) {
+					console.log(error);
 					t.loadNextVersion();
 				}
 			});

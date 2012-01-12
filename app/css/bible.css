@@ -88,13 +88,12 @@ h3 {
 }
 
 /* note letters, and CF numbers */
-dl.note ,
-dl.cf {
+.note,
+.cf {
 	display: inline;
 }
-
-dl.note dt,
-dl.cf dt {
+.note .key,
+.cf .key {
 	vertical-align: top;
 	font-size: 60%;
 	font-weight: bold;
@@ -103,29 +102,36 @@ dl.cf dt {
 	cursor: pointer;
 	display: inline;
 }
-.chapter dl.note dt:hover ,
-.chapter dl.cf dt:hover {
+.chapter .note .key:hover ,
+.chapter .cf.key:hover {
 	color: #fff;
 	background: #3333cc;
 }
 
 /* don't diplsay the note text */
-.chapter dl.note dd,
-.chapter dl.cf dd {
+.chapter .note .text,
+.chapter .cf .text {
 	display: none;
 }
 
 /* footer */
-.document-footer dt {
+.document-footer .cf .key,
+.document-footer .note .key {
 	display: inline;
 	vertical-align: top;
-	font-size: 60%;
+	font-size: 8px;
 	font-weight: bold;
 	color: #3333cc;	
 }
-.document-footer dd {
+.document-footer .cf .text,
+.document-footer .note .text {
 	display: inline;
 	color: #000;
+}
+
+.document-footer .cf:after,
+.document-footer .note:after {
+	content: '  ';
 }
 
 span.woc {

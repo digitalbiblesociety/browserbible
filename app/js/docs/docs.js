@@ -465,7 +465,8 @@ docs.Document.prototype = {
 					newSectionId = newSectionNode.attr(t.navigator.sectionIdAttr);
 				
 				// Check if the content is already here!
-				if (t.wrapper.find( t.navigator.sectionSelector + '[' + t.navigator.sectionIdAttr + '="' + newSectionId + '"]').length > 0) {
+				//if (t.wrapper.find( t.navigator.sectionSelector + '[' + t.navigator.sectionIdAttr + '="' + newSectionId + '"]').length > 0) {
+				if (t.wrapper.find( 'div.' + newSectionId.replace(/\./gi,'_') + '').length > 0) {
 					return;
 				}
 				
@@ -484,7 +485,8 @@ docs.Document.prototype = {
 						//console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );
 						
 						if (fragmentId.substring(7,10) != '001') {
-							t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);
+							//t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);
+							t.scrollToFragmentNode(t.wrapper.find('span.' + fragmentId.replace(/\./gi,'_') + ''), 0);
 						} else {
 							t.content.scrollTop(0);
 						}

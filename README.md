@@ -49,6 +49,17 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 
 ## Road Map
 
+### 0.1 Todo List
+
+* ~~Main windows and scrolling~~
+* ~~Basic strongs numbers and greek parsing~~
+* ~~Basic search functionality~~
+* ~~Footnotes display in the footer~~
+* ~~Switched from `rel=v001001001` to `data-osis=Gen.1.1` and `Gen_1_1` classes~~
+* ~~Built exporters for OSIS/XML, USMF, Unbound~~
+* ~~Built WLC, Tischendorf importers~~
+* ~~index.html, about.html for all languages/versions~~
+
 ### 0.2 Todo List
 
 * ~~Put version info into version.json within folder, then load dynamically~~
@@ -56,6 +67,7 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 * ~~Add/delete columns~~
 * ~~Chapter/verse Navigation Dropdown~~
 * ~~Add original language tools (highlighting tense/voice/freq)~~
+* ~~Improve selector speed using classes rather than attributes~~
 * Change theme colors
 * Change font size within the reader
 
@@ -73,22 +85,14 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 
 * Strong's based searching
 * Strong's/Thayer/BDB popups
+* Search stemmer
+* Original language conceptual searches (love => hesed, agape, phileo, etc. => lovingkindness)
 * Compare versions
-* 
-
-### Done
-
-* Basis strongs numbers and greek parsing
-* Footnotes now display in the footer
-* about.html page for each version (loads with 'i' button)
-* Switched from `v001001001` to OSIS style `Gen.1.1`
-* Rebuilt exporters for OSIS/XML, USMF, Unbound.
-* Build search into application
-* Build WLC, Tischendorf importers
-* index.html, about.html for all languages/versions
+* Exegetical Guide
+* Audio read along
 
 ### Known Issues
 
-* Notes and CF needs work
-* OSIS quotes span over verses
+* ~~Notes and CF needs work~~
+* ~~OSIS quotes span over verses~~
 * USMF doesn't handle quote lines (OEB, WEB)

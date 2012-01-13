@@ -6,7 +6,7 @@
  
 docs.plugins.push({
 
-	init: function( content ) { 
+	init: function( docManager ) { 
 	
 		var verseClass = 'verse-highlight',
 			highlightTimer = null,
@@ -26,7 +26,7 @@ docs.plugins.push({
 				$('.' + verseClass).removeClass(verseClass);
 			}
 		
-		content.on('mouseover', 'span.verse', function() {
+		docManager.content.on('mouseover', 'span.verse', function() {
 			
 			removeHighlights();
 			clearTimer();

@@ -7,7 +7,7 @@
  
 docs.plugins.push({
 
-	init: function() { 	
+	init: function(docManager) { 	
 	
 		var coolstuff = {
 			'v001001001' : [
@@ -24,7 +24,7 @@ docs.plugins.push({
 			]
 		};
 		
-		content.delegate('span.verse', 'mouseover', function() {
+		docManager.delegate('span.verse', 'mouseover', function() {
 			
 			var verseId = $(this).attr('data-verse'),
 				data = coolstuff[verseId];

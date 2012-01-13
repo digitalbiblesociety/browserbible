@@ -6,11 +6,11 @@
 
 docs.plugins.push({
 
-	init: function(content) {
+	init: function(docManager) {
 		// add-on WORDS
 		var wordClass = 'word-highlight';
 		
-		content.on('mouseover', 'span.w', function() {
+		docManager.content.on('mouseover', 'span.w', function() {
 			
 			var word = $(this),
 				verse = word.closest('.verse'),
@@ -27,7 +27,7 @@ docs.plugins.push({
 				}
 			});
 				
-		}).on('mouseout', 'span.word', function() {
+		}).on('mouseout', 'span.w', function() {
 			$('.' + wordClass).removeClass( wordClass );
 			
 		});

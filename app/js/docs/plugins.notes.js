@@ -7,10 +7,10 @@
  
 docs.plugins.push({
 
-	init: function(content) { 	
+	init: function(docManager) { 	
 	
 		// SHOW specific note in the footer
-		content.on('mouseover', 'span.note, span.cf', function() {
+		docManager.content.on('mouseover', 'span.note, span.cf', function() {
 			
 			var note = $(this);
 						
@@ -30,7 +30,7 @@ docs.plugins.push({
 		
 		// SHOW all notes from a verse in the footer
 		var hadNote = false;
-		content.on('mouseover', 'span.verse', function() {
+		docManager.content.on('mouseover', 'span.verse', function() {
 			
 			var verse = $(this),
 				notes = verse.find('span.note, span.cf');

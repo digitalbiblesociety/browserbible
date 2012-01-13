@@ -589,9 +589,11 @@ docs.Document.prototype = {
 			distFromTop = t.content.scrollTop(),
 			distFromBottom = totalHeight - paneHeight - distFromTop,
 			fragmentId;
+			
+		console.log(t.id, distFromTop, distFromBottom, sections.length);
 
 		// check if we need to load the prev or next one
-		if (distFromTop < 750) {
+		if (distFromTop < 750 || sections.length === 2) {
 			//console.log(t.id, 'load prev');
 
 			fragmentId = sections
@@ -601,7 +603,7 @@ docs.Document.prototype = {
 
 			this.load(fragmentId, 'prev');
 
-		} else if (distFromBottom < 750) {
+		} else if (distFromBottom < 750 || sections.length === 1) {
 			//console.log(t.id, 'load next');
 
 			fragmentId = sections

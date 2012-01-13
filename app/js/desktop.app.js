@@ -41,7 +41,7 @@ jQuery(function($) {
 					{
 						version: 'el_tisch',
 						location: 'John.15.1',
-						linked: false
+						linked: true
 					}		
 					]
 				};
@@ -52,26 +52,9 @@ jQuery(function($) {
 				});
 				
 				// startup plugins
-				var content = $('#content');
 				for (var i=0, il=docs.plugins.length; i<il; i++) {
-					docs.plugins[i].init( content, docs.DocManager);
+					docs.plugins[i].init( docs.DocManager);
 				}
-				
-				// fullscren button
-				$('#docs-fullscreen').on('click', function() {
-					//$('body')[0].webkitRequestFullScreen();
-					$('body')[0].webkitRequestFullScreen();
-					
-				});
-				
-				// fullscren button
-				$('#docs-add-document').on('click', function() {
-					
-					docs.DocManager.addDocument(bible.BibleNavigator, 'en_kjv');
-					docs.DocManager.documents[docs.DocManager.documents.length-1].navigateByString(docs.DocManager.documents[0].input.val());
-					docs.DocManager.saveSettings();
-				});
-				
 				
 				// search
 				docs.Search = (function() {

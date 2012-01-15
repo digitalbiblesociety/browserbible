@@ -21,9 +21,9 @@ bible.BibleSearch = {
 	
 	highlightRegExp: null,
 	
-	//verseRegExp: new RegExp('v[0-9]{9}','gi'),
+	verseRegExp: new RegExp('<span class="verse[^>]*?>(.)*?</span>\r', 'gi'),
 	
-	verseRegExp: new RegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
+	verseNumRegExp: new RegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
 	
 	//stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
 	stripNotesRegExp: new RegExp('<dl class="(note|cf)">.+?</dl>','gi'),
@@ -38,6 +38,10 @@ bible.BibleSearch = {
 	
 	version: '',
 	
+	isLemmaSearch: false,
+	
+	basePath: 'content/bibles/',
+	
 	search: function(text, version, chapterCallback, endedCallback) {
 		if (this.isSearching)
 			return;
@@ -47,18 +51,35 @@ bible.BibleSearch = {
 		this.version = version;
 		this.chapterCallback = chapterCallback;
 		this.endedCallback = endedCallback;
-		
-		// compile regexp
-		this.searchRegExp = new RegExp('<span class="verse(.)*\\b' + text + '\\b(.)*</span>\r', 'gi');
-		this.highlightRegExp = new RegExp('\\b' + text + '\\b', 'gi');
-
+	
 		// reset variables
-		this.bookOsisID = bible.DEFAULT_BIBLE[0];
 		this.chapterIndex = 0;
 		this.canceled = false;
 		this.resultCount = 0;
 		this.startTime = new Date();
 		this.searchResultsArray = [];
+		this.bookOsisID = bible.DEFAULT_BIBLE[0];
+		
+		// compile regexp
+		this.isLemmaSearch = /(G|H)\d{1,5}/.test(text);
+		
+		if (this.isLemmaSearch) {
+			this.searchRegExp = new RegExp('(<span class="[^"]*?' + text + '[^"]*?"[^>]*?>.*?</span>)', 'gi');
+			
+			if (text.substring(0,1) == 'H')
+				this.bookOsisID = bible.DEFAULT_BIBLE[0];
+			else 
+				this.bookOsisID = bible.DEFAULT_BIBLE[40];
+			
+		} else {
+			this.searchRegExp = new RegExp('\\b' + text + '\\b', 'gi');
+		}
+		
+		this.searchRegExp = new RegExp('\\b' + text + '\\b', 'gi');
+		// <span class="[^"]*?G3056[^"]*?"[^>]*?>(.*?)</span> = Strong's
+		//this.highlightRegExp = new RegExp('\\b' + text + '\\b', 'gi');
+
+
 		
 		this.isSearching = true;
 		this.loadChapter();
@@ -72,7 +93,7 @@ bible.BibleSearch = {
 	loadChapter: function() {
 		
 		var s = this,
-			chapterUrl = 'content/bibles/' + this.version + '/' + (this.bookOsisID + '.' + (this.chapterIndex+1)) + '.html';
+			chapterUrl = this.basePath + this.version + '/' + (this.bookOsisID + '.' + (this.chapterIndex+1)) + '.html';
 		
 		this.chapterCallback(this.bookOsisID, this.chapterIndex, this.resultCount, this.startTime);
 		
@@ -105,14 +126,91 @@ bible.BibleSearch = {
 		// remove notes
 		// <dl class="note"></dl>
 		// <dl class="cf"></dl>
-		data = data.replace( this.stripNotesRegExp, '' );
+		//data = data.replace( this.stripNotesRegExp, '' );
 		
-		data = data.replace( new RegExp('<br>','gi'), '');
+		//data = data.replace( new RegExp('<br>','gi'), '');
 		
 		// remove Lex/Morph data
 		// <span class="word" data-morph="">XXX</span>
 		//data = data.replace( this.replaceLexRegExp, '$1');
 		
+		
+		var verses = data.match(this.verseRegExp),
+			i=0, il = verses.length,
+			verseSpan,
+			verseReferenceText,
+			foundMatch = false,
+			matches,
+			j, jl;
+			
+		// go through all the verses
+		for (i=0, il=verses.length; i<il; i++) {
+			
+			// TODO: remove extra HTML to allow searches for "Jesus Wept"
+			verseSpan = verses[i];
+			foundMatch = false;
+			
+			// do highlighting
+			if (this.isLemmaSearch) {
+				verseSpan = verseSpan.replace(this.searchRegExp, function(str, p1, p2, offset, s) {
+					foundMatch = true;
+					//console.log(match, match);
+					//throw match;
+					return '' + str + ' highlight';
+				});				
+				
+			} else {
+				verseSpan = verseSpan.replace(this.searchRegExp, function(match) {
+					foundMatch = true;
+					return '<span class="highlight">' + match + '</span>';
+				});
+			}
+			
+			if (foundMatch) {
+				verseReferenceText = new bible.Reference( verseSpan.match( this.verseNumRegExp )[0] ); //.toString();
+				//console.log(verse);
+				
+				// put it altogether for a row
+				html = '<div class="search-result"><span class="search-verse">' + verseReferenceText + '</span>' + verseSpan + '</div>';
+				
+				// store results
+				this.searchResultsArray.push( html );
+				this.resultCount++;
+			}
+ 
+			/*
+			matches = verses[i].match(this.searchRegExp);
+			
+			if (matches != null && matches.length > 0) {
+				// go through each match
+				for (j=0, jl=matches.length; j<jl; j++) {
+					// hightlight text
+					html = matches[j].replace(this.highlightRegExp, function(match) {
+						return '<span class="highlight">' + match + '</span>';
+					});
+					
+					// find and format verse
+					//console.log(matches[i].match( this.verseNumRegExp )[0]);
+					verse = ''; // new bible.Reference( matches[j].match( this.verseNumRegExp )[0] ); //.toString();
+					//console.log(verse);
+					
+					// put it altogether for a row
+					html = '<div class="search-result"><span class="search-verse">' + verse + '</span>' + html + '</div>';
+					
+					// store results
+					this.searchResultsArray.push(  html );
+					this.resultCount++;				
+					
+				}
+			}
+			*/
+			
+			
+		}
+		
+		
+		
+		/*
 		// find words
 		var matches = data.match(this.searchRegExp),
 			i, il,
@@ -128,8 +226,8 @@ bible.BibleSearch = {
 				});
 				
 				// find and format verse
-				//console.log(matches[i].match( this.verseRegExp )[0]);
-				verse = new bible.Reference( matches[i].match( this.verseRegExp )[0] ); //.toString();
+				//console.log(matches[i].match( this.verseNumRegExp )[0]);
+				verse = new bible.Reference( matches[i].match( this.verseNumRegExp )[0] ); //.toString();
 				//console.log(verse);
 				
 				// put it altogether for a row
@@ -140,6 +238,7 @@ bible.BibleSearch = {
 				this.resultCount++;
 			}
 		}
+		*/
 	},
 	
 	nextChapter: function() {

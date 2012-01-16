@@ -31,11 +31,12 @@ h1.book-name {
 	margin: 1.2em 0;
 }
 h3 {
-	margin: 1.0em 0;
+	margin: 1.0em 0 0 0;
 }
 
 .chapter p {
-	margin: 1.0em 0;
+	-x-margin: 1.0em 0;
+	text-indent: 1.0em;
 }
 .chapter[lang=he] {
 	font-size: 20px;
@@ -51,9 +52,9 @@ h3 {
 /* Chapter:Verse number styling */
 .chapter-num {
     float: left;
-	font-size: 1.6em;
+	font-size: 2.0em;
 	line-height: 1;
-    margin: 0 .5em .5em 0;
+    margin: 0 .25em .5em 0;
 }
 
 .chapter[dir=rtl] .chapter-num {
@@ -82,10 +83,17 @@ h3 {
 }
 
 /* NASB */
-.version-nasb span.verse {
+.nasb span.verse {
 	display: block;
 	text-indent: 10px;
 }
+.nasb .ot-quote {
+	font-variant: small-caps;
+}
+.nasb .chapter p {
+	margin: 0 0 1em 0;
+}
+
 
 /* note letters, and CF numbers */
 .note,

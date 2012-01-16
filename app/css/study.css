@@ -394,6 +394,10 @@ body {
 	font-style: italic;
 }
 
+.lex-entry .strongs-number {
+	cursor: pointer;
+}
+
 /* popups */
 .popup-window {
 	position: absolute;
@@ -431,4 +435,30 @@ body {
 }
 .config-large .document-wrapper .chapter {
 	font-size: 20px;
+}
+
+
+.config-font-georgia .chapter {
+	font-family: georgia;
+}
+
+.config-font-tahoma .chapter {
+	font-family: tahoma;
+}
+
+/* TAN */
+.config-theme-tan #header {
+	background: #4f2e00;
+}
+.config-theme-tan .document-content {
+	background: #eeebe7;
+}
+.config-theme-tan .document-header {
+	background: #d3c9b8;
+}
+.config-theme-tan .document-footer {
+	background: #d3c9b8;
+}
+.config-theme-tan .chapter {
+	color: #4f2e00;
 }

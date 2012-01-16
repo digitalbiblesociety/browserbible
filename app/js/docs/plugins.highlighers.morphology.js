@@ -10,7 +10,8 @@ docs.plugins.push({
 	init: function(docManager) {
 		
 		// create popup
-		var morphPopup = $('<div class="popup-window">' +
+		var selectedWord = null,
+			morphPopup = $('<div class="popup-window">' +
 								'<div class="popup-header">Word Details<span class="popup-close">Close</span></div>' +
 								'<div class="popup-content"></div>' +
 							'</div>')
@@ -46,6 +47,15 @@ docs.plugins.push({
 				console.log('mouseover');
 				stopTimer();	
 			})
+			.on('click', '.strongs-number', function() {
+				
+				//console.log('lemma clikc');
+				
+				docs.Search.searchVersion.val( selectedWord.closest('.document-container').find('.document-header select').val() );
+				docs.Search.searchInput.val( $(this).html() );
+				docs.Search.searchWindow.show();
+				docs.Search.doSearch();
+			})			
 			.find('.popup-close')
 				.on('click', function() {
 					stopTimer();
@@ -82,7 +92,7 @@ docs.plugins.push({
 							strongData = strongsGreekDictionary[strongKey];
 						
 						if (typeof strongData != 'undefined') {
-							displayTextArray.push( '<span class="lex-entry"><span class="lemma ' + (strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + strongData.lemma + '</span> <span class="strongs-number">(' + strongKey + ')</span> - <span class="definition">' + strongData.strongs_def + '</span>' + (strongLetter == 'G' && morph != '' ? ' <span class="morphology">[' + bible.morphology.Greek.getMorphology( morph ) + ']</span>' : '') );
+							displayTextArray.push( '<span class="lex-entry"><span class="lemma ' + (strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + strongData.lemma + '</span> (<span class="strongs-number">' + strongKey + '</span>) - <span class="definition">' + strongData.strongs_def + '</span>' + (strongLetter == 'G' && morph != '' ? ' <span class="morphology">[' + bible.morphology.Greek.getMorphology( morph ) + ']</span>' : '') );
 						}
 					}
 				}
@@ -113,7 +123,12 @@ docs.plugins.push({
 			var word = $(this),
 				morphArray = formatMorphData(word);
 				
+			
+				
 			if (morphArray.length > 0) {
+				
+				// store for lemma search
+				selectedWord = word;
 				
 				// put the content inside
 				morphContent.html( morphArray.join('<br><br>') );

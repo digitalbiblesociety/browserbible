@@ -53,7 +53,7 @@ bible.versions = {
 					t.loadNextVersion();
 				},
 				error: function(error) {
-					console.log(error);
+					console.log(error)
 					t.loadNextVersion();
 				}
 			});
@@ -107,6 +107,7 @@ bible.language = {
 		el:'Greek',
 		ht:'Haitian Creole',
 		iw:'Hebrew',
+		he:'Hebrew',
 		hi:'Hindi',
 		hu:'Hungarian',
 		is:'Icelandic',

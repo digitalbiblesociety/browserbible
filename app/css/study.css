@@ -87,6 +87,11 @@ body {
 	background-color: #DDDCDA;
 	-x-border: 1px solid #CBC9CF;	
 }
+	.document-header-buttons {
+		float: right;
+		width: 100px;
+		text-align: right;
+	}
 
 	.document-header .document-button {
 		display: none;
@@ -461,4 +466,17 @@ body {
 }
 .config-theme-tan .chapter {
 	color: #4f2e00;
+}
+
+/* font size */
+.config-size-small .chapter {
+	font-size: 10px;
+}
+
+.config-size-large .chapter {
+	font-size: 18px;
+}
+
+.config-size-jumbo .chapter {
+	font-size: 22px;
 }

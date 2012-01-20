@@ -224,15 +224,17 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.container = $(
 			'<div class="document-container" id="' + id + '">' +
 				'<div class="document-header">' +
+					'<div class="document-header-buttons">' +
+						'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
+						'<input type=\"button\" class=\"document-search-button\" value="S" />' +
+						'<input type=\"button\" class=\"document-info-button\" value="i" />' +
+						'<input type=\"button\" class=\"document-close-button\" value="X" />' +
+					'</div>' +
 					'<input type="text" class="document-input" />' +
+					
 					'<input type="button" value="GO" class="document-button" />' +
 					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
 					
-					'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
-					'<input type=\"button\" class=\"document-search-button\" value="S" />' +
-					'<input type=\"button\" class=\"document-info-button\" value="i" />' +
-					'<input type=\"button\" class=\"document-close-button\" value="X" />' +
-					'<br/>' +
 					'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
 					//'<input type="text" class="document-search" />' +
 				'</div>' +

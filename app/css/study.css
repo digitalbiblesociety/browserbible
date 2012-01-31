@@ -15,7 +15,9 @@ body {
 }
 
 #header #header-nav {
-	float: right;
+	position: absolute;
+	top: 0;
+	right: 0;
 	text-align: right;
 	padding: 10px 10px 0 0 ;
 }
@@ -61,6 +63,9 @@ body {
 #header-nav #docs-add-document {
 	background-position: -102px -5px;
 }
+#header-nav #docs-morphology {
+	background-position: -102px -208px;
+}
 
 
 .document-container {
@@ -101,6 +106,7 @@ body {
 		height: 28px;
 		font-size: 120%;
 		padding: 0 6px;
+		color: #bbb;
 	}
 	.document-header .document-selector {
 		width: 190px;
@@ -202,6 +208,10 @@ body {
 	-x-border: solid 1px #333;
 }
 
+.document-focused .document-input {
+	color: #000;
+}
+
 .document-focused .document-header {
 	-x-background: #999;
 }
@@ -221,6 +231,7 @@ body {
 }
 .word-highlight {
 	background: #aaf;
+	outline: solid 1px #aaf;
 }
 
 /* modal */
@@ -292,7 +303,7 @@ body {
 	.search-result .verse {
 		display: block;
 		float: left;
-		width: 450px;
+		width: 420px;
 	}
 	
 	
@@ -311,6 +322,10 @@ body {
 		background: yellow;
 		
 	}
+	
+	.search-result .cf, .search-result .note  {
+		display: none;
+	}	
 	
 /* nav drop down */
 .document-navigation-window {
@@ -400,7 +415,22 @@ body {
 }
 
 .lex-entry .strongs-number {
+}
+.lex-entry .strong-search {
+	display: inline-block;
 	cursor: pointer;
+	color: #0000cc;
+}
+.lex-entry .strong-search:hover {
+	background: #0000cc;
+	color: #fff;
+}
+.lex-entry.lemma-popup .definition {
+	display: block;
+}
+.lemma-selected {
+	background: #333;
+	color: #fff;
 }
 
 /* popups */
@@ -420,6 +450,10 @@ body {
 		padding: 7px 7px 0 7px;
 		position: relative;
 	}
+	.popup-window .popup-title {
+		pointer-events: none;
+		user-select: none;
+	}
 	.popup-window .popup-content {
 		background: #fff;
 		min-height: 60px;
@@ -432,8 +466,14 @@ body {
 		right: 8px;
 		top: 8px;
 		cursor: pointer;
+	}
+	.popup-window .popup-footer {
+		padding: 0 8px;
+		color: #fff;
 	}		
-
+	.popup-window .popup-menu {
+		padding: 0 8px;
+	}		
 /* custom config */
 .config-large {
 	
@@ -451,6 +491,10 @@ body {
 	font-family: tahoma;
 }
 
+.config-font-baskerville .chapter {
+	font-family: baskerville;
+}
+
 /* TAN */
 .config-theme-tan #header {
 	background: #4f2e00;
@@ -466,6 +510,27 @@ body {
 }
 .config-theme-tan .chapter {
 	color: #4f2e00;
+}
+
+/* GREEN */
+.config-theme-green #header {
+	background: #33aa33;
+}
+.config-theme-green .document-content {
+	background: #fefefe;
+}
+.config-theme-green .document-header {
+	background: #ccffcc;
+}
+.config-theme-green .document-footer {
+	background: #ccffcc;
+}
+.config-theme-green .chapter {
+	color: #002200;
+}
+.config-theme-green .popup-window {
+	background: #33aa33;
+
 }
 
 /* font size */

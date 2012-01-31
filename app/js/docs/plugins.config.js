@@ -14,7 +14,8 @@ docs.plugins.push({
 			fontOptions = [
 				{name: 'Default'},
 				{name: 'Georgia'},
-				{name: 'Tahoma'}
+				{name: 'Tahoma'},
+				{name: 'Baskerville'}
 			],
 			colorOptions = [
 				{name: 'Default'},
@@ -27,19 +28,22 @@ docs.plugins.push({
 				{name: 'Large'},
 				{name: 'Jumbo'}
 			],				
-			configWindow = $('<div id="config-menu" class="modal-window">' +
+			/* configWindow = $('<div id="config-menu" class="modal-window">' +
 							'<div class="modal-header">Configuration<span class="modal-close">Close</span></div>'+
 							'<div class="modal-content">' +
 							'</div>' +
 						'</div>')
+			
 			.appendTo(document.body)
 			.hide();
+			*/
+			configWindow = docs.createModal('config', 'Configuration').size(400, 200);
 			
 			
 		function createOptionSet(title, prefix, data) {
 			var configBlock =
 				$('<div class="config-options" id="config-' + prefix + '"><h3>' + title + '</h3></div>')
-					.appendTo( configWindow.find('.modal-content') )
+					.appendTo( configWindow.content )
 					.on('click', 'input', function() {
 						var bod = $(document.body);
 						
@@ -59,9 +63,9 @@ docs.plugins.push({
 				var name = data[i].name;
 				configBlock.append($('<input type="radio" name="config-' + prefix + '-choice" id="config-' + prefix + '-' + name.toLowerCase() + '" value="' + name.toLowerCase() + '" /><label for="config-' + prefix + '-' + name.toLowerCase() + '">' + name + '</label>'))
 			}
-			var userFontConfig = $.jStorage.get('docs-config-font', 'default');
+			var userConfig = $.jStorage.get('docs-config-' + prefix, 'default');
 			
-			configBlock.find('#config-' + prefix + '-' + userFontConfig + '').trigger('click');			
+			configBlock.find('#config-' + prefix + '-' + userConfig + '').trigger('click');			
 		
 		}
 		
@@ -158,18 +162,26 @@ docs.plugins.push({
 		*/
 		
 		
-		$('<input type="button" id="docs-config" />')
+		var configButton = $('<input type="button" id="docs-config" />')
 			.appendTo(docManager.header.find('#header-nav'))
 			.on('click', function() {
 			
 				// show config menu
-				if (configWindow.is(':visible')) {
+				if (configWindow.window.is(':visible')) {
 					configWindow.hide();
 				} else {
 					configWindow.show();
+					
+					configWindow.window.css({
+						top: configButton.offset().top + configButton.height() + 5,
+						left: configButton.offset().left + configButton.width() - configWindow.window.outerWidth()
+					});					
+					
 				}
 			});
 		
+
+			
 		
 	}
 });

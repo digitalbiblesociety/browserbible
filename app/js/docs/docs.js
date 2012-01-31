@@ -6,11 +6,16 @@
 
 var docs = {};
 
+/**
+ * Array for plugins to be added on startup
+ */
+docs.plugins = [
+	
+	
+];
 
 /**
  * Document manager for Bible app
- *
- * @author John Dyer (http://j.hn/)
  */
 docs.DocManager = {
 	
@@ -416,14 +421,14 @@ docs.Document.prototype = {
 				break;			
 		}
 		
-		console.log(this.id, fragmentId, action, url);
+		//console.log(this.id, fragmentId, action, url);
 		
 		// load the URL and insert, append, prepend the content
 		$.ajax({
 			url: url,
 			dataType: 'html',
 			error: function() {
-				console.log('failed', url);
+				//console.log('failed', url);
 				
 				if (!t.switchingOver) {
 					t.switchingOver = true;
@@ -482,16 +487,21 @@ docs.Document.prototype = {
 						
 						t.wrapper.empty();
 						t.wrapper.append(newSectionNode);
+						t.content.scrollTop(0);	
 						
 						// TODO: scroll to individual verse (not just the chapter)
 						//console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );
 						
-						if (fragmentId.substring(7,10) != '001') {
+						//if (fragmentId.substring(7,10) != '001') {
 							//t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);
-							t.scrollToFragmentNode(t.wrapper.find('span.' + fragmentId.replace(/\./gi,'_') + ''), 0);
-						} else {
-							t.content.scrollTop(0);
-						}
+							var targetFragment = t.wrapper.find('span.' + fragmentId.replace(/\./gi,'_') + '');
+							if (targetFragment.length > 0)
+								t.scrollToFragmentNode(targetFragment, 0);
+							else
+								console.log('error finding: ' + fragmentId);
+						//} else {
+						//	t.content.scrollTop(0);
+						//}
 						
 						// now maunally check scroll
 						t.checkScrollPosition();
@@ -572,6 +582,9 @@ docs.Document.prototype = {
 				
 				// update the input panel
 				t.updateNavigationInput();
+				
+				// fire up the chain
+				t.manager.dispatchEvent('load', {chapter: newSectionNode});
 			}
 		})
 	},
@@ -603,7 +616,7 @@ docs.Document.prototype = {
 							.find( t.navigator.fragmentSelector + ':first') // first fragments
 							.attr( t.navigator.fragmentIdAttr );
 
-			this.load(fragmentId, 'prev');
+			t.load(fragmentId, 'prev');
 
 		} else if (distFromBottom < 750 || sections.length === 1) {
 			//console.log(t.id, 'load next');
@@ -613,29 +626,52 @@ docs.Document.prototype = {
 							.find( t.navigator.fragmentSelector + ':first') // first fragments
 							.attr( t.navigator.fragmentIdAttr );
 							
-			this.load(fragmentId, 'next');
+			t.load(fragmentId, 'next');
 		}		
 	},
 	
-	scrollTimeout: null,
+	scrollTimeout1: null,
+	scrollTimeout2: null,
 	
 	handleScroll: function(e) {
 		var t = this;
 		
-		t.updateNavigationInput();
+		
+		// update the navigation window
 		
 		if (t.ignoreScrollEvent) {
+			t.updateNavigationInput(false);
 			return;
 		}
 		
+		// send out sync events
+		var slowDownSyncing = false;	
+		if (slowDownSyncing) {
+			
+			//t.updateNavigationInput(false);
 		
-		if (t.scrollTimeout != null) {
-			clearTimeout(this.scrollTimeout);
-			t.scrollTimeout = null;
+			if (t.scrollTimeout2 == null) {
+				
+				t.scrollTimeout2 = setTimeout(function() {
+					t.updateNavigationInput(true);
+					t.scrollTimeout2 = null;
+				}, 50);			
+			}
+		} else {
+			t.updateNavigationInput(true);
+		}		
+		
+		// check if we need to load more contonet
+		if (t.scrollTimeout1 != null) {
+			clearTimeout(t.scrollTimeout1);
+			t.scrollTimeout1 = null;
 		}
-		this.scrollTimeout = setTimeout(function() {
+		t.scrollTimeout1 = setTimeout(function() {
 			t.checkScrollPosition(e);
-		}, 50);	
+		}, 100);
+		
+		
+
 	},
 	
 	setDocumentId: function(documentId) {
@@ -698,11 +734,13 @@ docs.Document.prototype = {
 		}
 	},
 	
-	updateNavigationInput: function() {
+	updateNavigationInput: function(doSync) {
 		
 		var t = this,
-			paneTop = this.content.position().top,
+			paneTop = this.content.offset().top,
 			visibleFragmentInfo = null;
+			
+		doSync = doSync || false;
 		
 		// look through all the markers and find the first one that is fully visible
 		t.content.find( this.navigator.fragmentSelector ).each(function(e) {
@@ -734,8 +772,8 @@ docs.Document.prototype = {
 			t.input.val( navigationInput );
 			
 			// sync to other like panes
-			if (this.hasFocus && this.syncCheckbox.is(':checked')) {
-				t.manager.sync(this, visibleFragmentInfo);
+			if (doSync && t.hasFocus && t.syncCheckbox.is(':checked')) {
+				t.manager.sync(t, visibleFragmentInfo);
 			}
 			
 			t.manager.dispatchEvent('navigation', {document: t});
@@ -745,28 +783,24 @@ docs.Document.prototype = {
 	scrollToFragmentNode: function(node, offset) {
 		
 		// calculate node position
-		var paneTop = this.content.position().top,
-			scrollTop = this.content.scrollTop(),
+		var t = this,
+			paneTop = t.content.offset().top,
+			scrollTop = t.content.scrollTop(),
 			nodeTop = node.offset().top,
 			nodeTopAdjusted = nodeTop - paneTop + scrollTop;
-		
+			
 		// go to it
 		//this.ignoreScrollEvent = true;
-		this.content.scrollTop(nodeTopAdjusted + (offset || 0));
+		t.content.scrollTop(nodeTopAdjusted + (offset || 0));
 		//this.ignoreScrollEvent = false;
-	},
-	
-	search: function() {
-		var t = this;
-		
-		//
-		
 	},
 	
 	close: function() {
 		
-		this.container.remove();
-		this.manager.remove(this);
+		var t = this;
+		
+		t.container.remove();
+		t.manager.remove(this);
 		
 	}
 };

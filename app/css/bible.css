@@ -45,8 +45,14 @@ h3 {
 .chapter[lang=el] {
 	font-family: 'GentiumPlus';
 	font-size: 16px;
-	line-height: 1.8;
+	line-height: 2.0;
 }
+/*
+.chapter[lang=el] {
+	font-family: 'Gentium','Gentium Plus';
+}
+*/
+
 .chapter ins {
 	text-decoration: none;
 	font-style: italic;
@@ -59,6 +65,11 @@ h3 {
 	font-size: 2.0em;
 	line-height: 1;
     margin: 0 .25em .5em 0;
+}
+
+.chapter-num + p {
+	
+	text-indent: 0;
 }
 
 .chapter[dir=rtl] .chapter-num {
@@ -90,6 +101,7 @@ h3 {
 .nasb span.verse {
 	display: block;
 	text-indent: 10px;
+	line-height: 1.5;
 }
 .nasb .ot-quote {
 	font-variant: small-caps;

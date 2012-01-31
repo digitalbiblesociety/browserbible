@@ -59,6 +59,7 @@ jQuery(function($) {
 				// search
 				docs.Search = (function() {
 					
+					/*
 					var searchWindow = $(
 						'<div id="search-window" class="modal-window">' +
 							'<div class="modal-window-header">' +
@@ -78,9 +79,22 @@ jQuery(function($) {
 						searchInput = searchWindow.find('.search-text'),
 						searchVersion = searchWindow.find('.search-version'),
 						searchButton = searchWindow.find('.search-button');
+					*/
+					
+					var searchWindow = docs.createModal('search', 'Search'),
 						
-					searchClose.on('click', function() {
-						searchWindow.hide();
+						searchInput = $('<input type="text" class="search-text" />').appendTo(searchWindow.menu),
+						searchButton = $('<input type="button" class="search-button" value="Search" />').appendTo(searchWindow.menu),
+						printButton = $('<input type="button" class="print-button" value="Print" />').appendTo(searchWindow.menu),
+						searchVersion = $('<br><select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>').appendTo(searchWindow.menu);
+						
+						
+						
+					searchWindow.size(580,400).center();
+					searchWindow.content.height(290).css({'overflow': 'auto'});
+					
+					$(window).on('resize', function() {
+						searchWindow.center();
 					});
 					
 					searchInput.on('keyup', function(e) {
@@ -91,7 +105,21 @@ jQuery(function($) {
 						doSearch();	
 					});
 					
-					searchWindow.on('click', 'span.verse', function() {		
+					printButton.on('click', function() {
+						
+						var printWin = window.open('','','letf=0,top=0,width=1,height=1,toolbar=0,scrollbars=0,status=0');
+						printWin.document.write('<!DOCTYPE html><html><head>' +
+													'<link href="css/reset.css" rel="stylesheet">' +
+													'<link href="css/study.css" rel="stylesheet">' +
+													'<link href="css/bible.css" rel="stylesheet">' + 
+												'</head><body>' + searchWindow.content[0].innerHTML + '</body></html>');
+						printWin.document.close();
+						printWin.focus();
+						printWin.print();
+						printWin.close();
+					});					
+					
+					searchWindow.content.on('click', 'span.verse', function() {		
 						
 						docs.DocManager.documents[0].navigateById($(this).attr('data-osis') , true);
 				
@@ -106,7 +134,9 @@ jQuery(function($) {
 						var input = searchInput.val(),
 							version = searchVersion.val();
 							
-						searchBody.empty();
+						console.log(input, version);
+							
+						searchWindow.content.empty();
 						
 						bible.BibleSearch.search( input, version,
 							
@@ -114,7 +144,7 @@ jQuery(function($) {
 							function(bookOsisID, chapterIndex, resultsCount, startDate) {
 								
 								//if (showFeedback) {
-									searchFooter.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '; searching: ' + bible.BOOK_DATA[ bookOsisID ].names['en'][0] + ' ' + (chapterIndex+1).toString() )
+									searchWindow.footer.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '; searching: ' + bible.BOOK_DATA[ bookOsisID ].names['en'][0] + ' ' + (chapterIndex+1).toString() )
 									//searchProgress.width( (bookIndex+1)/66 * sbw );
 								//}
 								
@@ -123,9 +153,9 @@ jQuery(function($) {
 							// ended
 							function(resultHtml, resultsCount, startDate) {
 								
-								searchBody.html(resultHtml);
+								searchWindow.content.html(resultHtml);
 								
-								searchFooter.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '');
+								searchWindow.footer.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '');
 								
 								//searchButton.prop('disabled', false);
 								//searchText.prop('disbled', false);	

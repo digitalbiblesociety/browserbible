@@ -21,7 +21,7 @@ bible.BibleSearch = {
 	
 	highlightRegExp: null,
 	
-	verseRegExp: new RegExp('<span class="verse[^>]*?>(.)*?</span>\r', 'gi'),
+	verseRegExp: new RegExp('<span class="verse[^>]*?>(.)*?</span>(\r|\n)', 'gi'),
 	
 	verseNumRegExp: new RegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
 	

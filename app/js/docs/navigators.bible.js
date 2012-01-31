@@ -111,9 +111,7 @@ bible.BibleNavigator = {
 		
 		// events!
 		document.navigationWindow.on('click', '.book-list li', function() {
-			
-			console.log('clicked', this);
-			
+					
 			var li = $(this),
 				chapters =  parseInt(li.attr('data-chapters'), 10),
 				chaptersHtml = "";
@@ -176,10 +174,7 @@ bible.BibleNavigator = {
 			
 		scroller.scrollTop( selectedBookOffset.top - scrollerOffset.top - scroller.scrollTop() - 10);
 			
-		bookToSelect.click();
-		
-		console.log(bookToSelect, offset);
-				
+		bookToSelect.click();		
 	}
 	
 };

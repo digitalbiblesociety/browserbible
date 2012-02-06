@@ -27,8 +27,12 @@ docs.plugins.push({
 					clearTimeout(timer);
 					timer = null;
 				}
-			};								
+			};
+			
+		popup.size(300,200);
+		popup.content.css('overflow','auto');
 		
+		popup.footer.remove();
 		popup.window
 			.on('mouseleave', function() {
 				startTimer();
@@ -65,6 +69,7 @@ docs.plugins.push({
 					strongLetter = '',
 					strongInfo = '',
 					strongKey = '',
+					outline = '',
 					strongNumber = 0, 
 					strongData = {};
 					
@@ -77,17 +82,22 @@ docs.plugins.push({
 						strongKey = strongLetter + strongNumber.toString();
 						morph = (i< morphParts.length) ? morphParts[i].replace('robinson:','') : '';
 							
-						if (strongLetter == 'H')
+						if (strongLetter == 'H') {
 							strongData = strongsHebrewDictionary[strongKey];
-						else if (strongLetter == 'G')
+							outline = strongsHebrewOutlines[strongKey];
+						} else if (strongLetter == 'G') {
 							strongData = strongsGreekDictionary[strongKey];
+							outline = strongsGreekOutlines[strongKey];
+						}
 						
 						if (typeof strongData != 'undefined') {
 							wordData.push({
 								strongLetter: strongLetter,
 								strongData: strongData,
 								strongKey: strongKey,
+								outline: outline,
 								morph: morph,
+								frequency: (strongLetter == 'G') ? strongsGreekFrequencies[strongKey] : strongsHebrewFrequencies[strongKey	],
 								formattedMorph: (strongLetter == 'G' && morph != '') ? bible.morphology.Greek.getMorphology( morph ): ''
 							});
 						}
@@ -133,6 +143,12 @@ docs.plugins.push({
 			var word = $(this).addClass(lemmaSelectedClass),
 				wordData = getWordData(word),
 				formattedWords = [];
+
+			if (selectedWord!= null && selectedWord.html() == word.html() && popup.window.is(':visible')) {
+				word.removeClass(lemmaSelectedClass);
+				popup.hide();
+				return;
+			}
 				
 				
 			if (wordData.length > 0) {
@@ -147,7 +163,8 @@ docs.plugins.push({
 							'<span class="lemma ' + (wordData[i].strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + wordData[i].strongData.lemma + '</span> (<span class="strongs-number">' + wordData[i].strongKey + '</span>) ' +
 							(wordData[i].formattedMorph != '' ? '<span class="morphology">' + wordData[i].formattedMorph + '</span>' : '') +
 							'<span class="definition">' + wordData[i].strongData.strongs_def + '</span>' +
-							'<span class="strong-search" data-strong="' + wordData[i].strongKey + '">Search for all occurrences</span>' +
+							(wordData[i].outline != null ? '<div class="outline">' + wordData[i].outline + '</div>' : '') +
+							'<span class="strong-search" data-strong="' + wordData[i].strongKey + '">Find all occurrences (approximately ' + wordData[i].frequency + ')</span>' +
 						'</span>'
 					);
 				}			
@@ -176,7 +193,6 @@ docs.plugins.push({
 				stopTimer();
 				
 				$(document).one('mousemove', function() {
-					console.log('moved away from word');
 					startTimer();
 				});
 			}

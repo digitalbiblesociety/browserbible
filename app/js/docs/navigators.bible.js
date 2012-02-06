@@ -60,6 +60,10 @@ bible.BibleNavigator = {
 		var reference = new bible.Reference(input);
 		
 		if (reference != null) {
+			// make sure the first verse is seleced
+			if (reference.verse1 === 0) {
+				reference.verse1 = 1;
+			}
 			return reference.toOsisVerse(); // not to chapter, to verse
 		} else {
 			return null;

@@ -45,6 +45,8 @@ docs.createModal = function(id, startTitle) {
 	
 	return {
 		window: popup,
+		height: -1,
+		width: -1,
 		title: title,
 		menu: menu,
 		content: content,
@@ -55,6 +57,11 @@ docs.createModal = function(id, startTitle) {
 		},
 		show: function() {
 			popup.show().css({'z-index': docs.createModalIndex++});
+			
+			if (this.height > 0 && this.width > 0) {
+				this.size(this.width, this.height);
+			}
+			
 			return this;
 		},
 		size: function(width, height) {
@@ -62,8 +69,18 @@ docs.createModal = function(id, startTitle) {
 				.width(width)
 				.height(height);
 				
-			//content.height( Math.abs(content.siblings().outerHeight(true) - height))
+			var visible = popup.is(':visible');
+				
+			popup.show();
+			content.width(width - content.width() - content.outerWidth(true));
+			content.height(height - menu.outerHeight(true) - title.outerHeight(true) - footer.outerHeight(true) - (content.outerHeight(true) - content.height()) - 5);
 			
+			if (!visible)
+				popup.hide();
+			
+			this.height = height;
+			this.width = width;
+				
 			return this;
 		},
 		center: function() {

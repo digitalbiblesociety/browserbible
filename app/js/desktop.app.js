@@ -18,7 +18,17 @@ jQuery(function($) {
 		
 		error: function() {
 			
-			alert('Your browser does not support loading local files. If you are using Chrome, you need to launch it with --allow-file-access-from-files ')
+			var modal = docs.createModal('error', '<strong>Error</strong>: Browser doesn\'t support local files').size(500,300).center();
+			
+			modal.content.html(
+					'<p>Windows, Start, Run</p>' +
+					'<code>"%UserProfile%\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe" --allow-file-access-from-files</code>' +				
+					'<p>Mac, Terminal</p>' +
+					'<code>/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --allow-file-access-from-files</code>'		
+			);
+			modal.show();
+			
+			//alert('Your browser does not support loading local files. If you are using Chrome, you need to launch it with --allow-file-access-from-files ')
 		},
 		
 		success: function() {
@@ -26,21 +36,32 @@ jQuery(function($) {
 			// load versions, then start doing other stuff
 			bible.versions.getVersions(function(versions) {
 		
-				var defaultDocSettings = {
+				var defaultDocSettings = (docs.Features.hasTouch) ?
+				{
 					docs: [
 					{
-						version: 'tr_turk',
+						version: 'tr_kjv',
+						location: 'John.3.1',
+						linked: true
+					}
+					]
+				}
+				:
+				{
+					docs: [
+					{
+						version: 'tr_kjv',
 						location: 'John.3.1',
 						linked: true
 					},
 					{
-						version: 'en_kjv',
+						version: 'en_nasb',
 						location: 'John.3.1',
 						linked: true
 					},
 					{
 						version: 'el_tisch',
-						location: 'John.15.1',
+						location: 'John.3.1',
 						linked: true
 					}		
 					]
@@ -58,29 +79,7 @@ jQuery(function($) {
 				
 				// search
 				docs.Search = (function() {
-					
-					/*
-					var searchWindow = $(
-						'<div id="search-window" class="modal-window">' +
-							'<div class="modal-window-header">' +
-								'<input type="text" class="search-text" />' +
-								'<select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>' +
-								'<input type="button" class="search-button" value="Search" />' +
-								'<input type="button" class="modal-window-close" value="Close" />' +
-								//'<input type="button" class="search-cancel" value="Cancel" />' + 
-							'</div>' +
-							'<div class="modal-window-body"></div>' +
-							'<div class="modal-window-footer"></div>' +
-						'</div>').appendTo( $(document.body) ).hide(), 
-						searchHeader = searchWindow.find('.modal-window-header'),
-						searchBody = searchWindow.find('.modal-window-body'),
-						searchFooter = searchWindow.find('.modal-window-footer'),
-						searchClose = searchWindow.find('.modal-window-close'),
-						searchInput = searchWindow.find('.search-text'),
-						searchVersion = searchWindow.find('.search-version'),
-						searchButton = searchWindow.find('.search-button');
-					*/
-					
+										
 					var searchWindow = docs.createModal('search', 'Search'),
 						
 						searchInput = $('<input type="text" class="search-text" />').appendTo(searchWindow.menu),
@@ -89,9 +88,9 @@ jQuery(function($) {
 						searchVersion = $('<br><select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>').appendTo(searchWindow.menu);
 						
 						
-						
+					searchWindow.footer.html('&nbsp;-');
 					searchWindow.size(580,400).center();
-					searchWindow.content.height(290).css({'overflow': 'auto'});
+					searchWindow.content.css({'overflow': 'auto'});
 					
 					$(window).on('resize', function() {
 						searchWindow.center();
@@ -129,7 +128,12 @@ jQuery(function($) {
 					
 					
 					function doSearch() {
-						console.log('doing search');
+						
+						if (window.location.href.indexOf('file:') == -1) {
+							
+							console.warn('this will be slow');
+							
+						}
 						
 						var input = searchInput.val(),
 							version = searchVersion.val();

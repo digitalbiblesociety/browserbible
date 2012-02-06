@@ -8,6 +8,7 @@ bible.versions = {
 		'en_kjv',
 		'en_nasb',
 		'en_net',
+		'en_neti',
 		'en_oeb',
 		'en_web',
 		'el_tisch',

@@ -243,7 +243,7 @@ bible.Reference = function () {
 			this.verse1 = 1;
 			this.chapter2 = -1;
 			this.verse2 = -1;
-			if (this.chapter1 == 1 && this.bookList[this.osisBookID] == 0) {
+			if (this.chapter1 == 1 && this.bookList.indexOf(this.osisBookID) == 0) {
 				return null;
 			} else {
 				if (this.chapter1 == 1) {

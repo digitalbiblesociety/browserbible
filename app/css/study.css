@@ -35,6 +35,10 @@ body {
 	font-size: 10px;
 }
 
+#footer a {
+	color: #fff;
+}
+
 #header, #footer, #content {
 	font-family: Helvetica, Arial;
 }

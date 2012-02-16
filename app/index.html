@@ -2,13 +2,18 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Ephiphany Bible Browser</title>	
+	<title>Epiphany Bible Browser</title>
+	
+	<meta name="viewport" content="width=device-width, user-scalable = no, initial-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
 	<script src="js/jquery.js"></script>
 	
 	<!-- external libraries -->
 	<script src="js/utility/jquery.json.js"></script>
 	<script src="js/utility/jstorage.js"></script>
+	
+	
 	
 	<!-- Bible related data -->
 	<script src="js/bible/bible.data.js"></script>
@@ -19,20 +24,33 @@
 	<script src="js/bible/bible.morphology.js"></script>
 	
 	<!-- Documents and windows -->
-	<script src="js/docs/docs.js"></script>
+	<script src="js/docs/docs.namespace.js"></script>
+	<script src="js/docs/docs.detection.js"></script>
+	<script src="js/docs/docs.manager.js"></script>
+	<script src="js/docs/docs.modal.js"></script>
 	<script src="js/docs/navigators.bible.js"></script>
 	
 	<!-- plugins -->
-	<script src="js/docs/docs.plugins.js"></script>
-	<script src="js/docs/plugins.highlighers.verses.js"></script>
-	<script src="js/docs/plugins.highlighers.words.js"></script>
-	<script src="js/docs/plugins.highlighers.morphology.js"></script>
+	<script src="js/docs/plugins.matchverses.js"></script>
+	<script src="js/docs/plugins.matchwords.js"></script>
+	<script src="js/docs/plugins.lemmapopup.js"></script>
 	<script src="js/docs/plugins.notes.js"></script>
+	
+	<!-- main nav -->
+	<script src="js/docs/plugins.fullscreen.js"></script>
+	<script src="js/docs/plugins.adddocument.js"></script>
+	<script src="js/docs/plugins.config.js"></script>
+	<script src="js/docs/plugins.morphology.js"></script>
 	
 	<!-- aditional data -->
 	<script src="js/data/strongs-greek-dictionary.js"></script>	
 	<script src="js/data/strongs-hebrew-dictionary.js"></script>
 
+	<script src="js/data/strongs-greek-frequencies.js"></script>
+	<script src="js/data/strongs-hebrew-frequencies.js"></script>
+	
+	<script src="js/data/strongs-greek-outlines.js"></script>
+	<script src="js/data/strongs-hebrew-outlines.js"></script>
 	
 	<!-- main launcher -->
 	<script src="js/desktop.app.js"></script>
@@ -43,18 +61,16 @@
 </head>
 <body>	
 	<div id="header">
-		<h1>Ephiphany</h1>
+		<h1>Epiphany</h1>
 		<div id="header-nav">
-			<input type="button" class="button" id="docs-add-document" />
-			<input type="button" class="button" id="docs-config" />
-			<input type="button" class="button" id="docs-fullscreen" />
+		
 		</div>
 	</div>
 	<div id="content">
 	
 	</div>
 	<div id="footer">
-		<p>Powered by Ephiphany Bible</p>
+		<p>Powered by <a href="http://www.epiphanybible.com/">Epiphany Bible</a></p>
 	</div>
 </body>
 </html>

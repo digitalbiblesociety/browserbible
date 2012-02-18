@@ -655,3 +655,35 @@ body {
 .outline ol li ol li ol li ol li{
 	list-style-type: decimal;
 }
+
+/* media library */
+.image-library-icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background: #33f url(images/icons-light-small.png) -12px -162px no-repeat;
+	font-size: 1%;
+	cursor: pointer;
+}
+.image-library-thumbs {
+	list-style-type: none;
+	border: 0;
+	padding: 0;
+}
+.image-library-thumbs li {
+	display: block;
+	width: 60px;
+	height: 60px;
+	margin: 0 10px 10px 0;
+	float: left;
+	text-align: center;
+}
+.image-library-thumbs li img {
+	display: inline;
+	cursor: pointer;
+	max-width: 60px;
+	max-height: 60px;
+	
+}

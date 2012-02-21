@@ -56,8 +56,7 @@ docs.plugins.push({
 				.css('overflow', 'hidden')
 				.on('click', 'img', function() {
 				
-					// show image in a new window
-					
+					// show image in a new window	
 					var image = $(this),
 						src = image.attr('src'),
 						imageHeight = image.height(),
@@ -68,17 +67,21 @@ docs.plugins.push({
 						windowY = 0;
 					
 					if (imageHeight > imageWidth)  {
-						// keep screen height as full
+						// center the portrait image
 						
 						windowWidth = imageWidth / imageHeight * windowHeight;
-						windowX = screen.availWidth / 2 - windowWidth / 2;
-						
+						windowX = screen.availWidth / 2 - windowWidth / 2;	
 					} else {
 						windowHeight = imageHeight / imageWidth * windowWidth;
 						windowY = screen.availHeight / 2 - windowHeight / 2;
 					}
 					
+					// hide the thumbnails if there is only one
+					if (image.parent().siblings().length == 0) {
+						popup.hide();
+					}
 					
+					// launch image
 					var imgWin = window.open(src,'image-view','left=' + windowX  +',top=' + windowY + ',width=' + windowWidth + ',height=' + windowHeight + ',toolbar=0,scrollbars=0,status=0');
 				});
 			

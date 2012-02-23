@@ -98,7 +98,7 @@ body {
 }
 	.document-header-buttons {
 		-x-float: right;
-		width: 100px;
+		-x-width: 100px;
 		text-align: right;
 		position: absolute;
 		top: 5px;
@@ -121,7 +121,8 @@ body {
 	
 	.document-header .document-search-button,
 	.document-header .document-info-button,
-	.document-header .document-close-button {
+	.document-header .document-close-button,
+	.document-header .document-lock-button {
 		background: transparent url(images/icons-dark-small.png) 0 0  no-repeat;
 		border: solid 1px #999;
 		border-radius: 5px;
@@ -132,7 +133,8 @@ body {
 	}
 	.document-header .document-search-button:hover,
 	.document-header .document-info-button:hover,
-	.document-header .document-close-button:hover{
+	.document-header .document-close-button:hover,
+	.document-header .document-lock-button:hover {
 		background-color: #ccccff;
 		cursor: pointer;
 	}
@@ -145,6 +147,13 @@ body {
 	.document-header .document-close-button {
 		background-position:  -125px -185px;
 		-x-background-position:  -80px -5px
+	}
+	.document-header .document-lock-button {
+		background-position:  -34px -73px;
+	}
+	
+	.document-header .state-unlocked {
+		background-position: -57px -73px;
 	}		
 
 .document-content {
@@ -666,6 +675,7 @@ body {
 	background: #33f url(images/icons-light-small.png) -12px -162px no-repeat;
 	font-size: 1%;
 	cursor: pointer;
+	border-radius: 4px;
 }
 .image-library-thumbs {
 	list-style-type: none;

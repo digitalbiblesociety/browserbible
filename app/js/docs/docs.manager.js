@@ -156,6 +156,7 @@ docs.DocManager = {
 	
 	sync: function(sourceDocument, visibleFragmentInfo) {
 		
+		
 		// move the other panes in sync
 		for (var i=0, il=this.documents.length; i<il; i++) {
 			
@@ -164,7 +165,8 @@ docs.DocManager = {
 			if (sourceDocument.id != document.id // make sure this isn't the one that generated the request
 				&& sourceDocument.navigator.name == document.navigator.name // same type (i.e. bible)
 				//&& sourceDocument.syncList.val() == document.syncList.val() // does the user want this one synced?
-				&& document.syncCheckbox.is(':checked')
+				//&& document.syncCheckbox.is(':checked')
+				&& document.lockBtn.hasClass('state-locked')
 				) {
 				
 				document.navigateById(visibleFragmentInfo.fragmentId, false, visibleFragmentInfo.offset);
@@ -245,8 +247,9 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			'<div class="document-container" id="' + id + '">' +
 				'<div class="document-header">' +
 					'<div class="document-header-buttons">' +
-						'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
+						//'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
 						'<input type=\"button\" class=\"document-search-button\" value="S" />' +
+						'<input type=\"button\" class=\"document-lock-button state-locked\" value="L" />' +
 						'<input type=\"button\" class=\"document-info-button\" value="i" />' +
 						'<input type=\"button\" class=\"document-close-button\" value="X" />' +
 					'</div>' +
@@ -254,8 +257,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 					
 					'<input type="button" value="GO" class="document-button" />' +
 					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
-					
-					'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
+					'<br />' +
+ 					'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
 					//'<input type="text" class="document-search" />' +
 				'</div>' +
 				'<div class="document-content">' +
@@ -278,6 +281,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
 	t.syncList = t.container.find('.document-sync-list'); // currently not being used
 	t.syncCheckbox = t.container.find('.document-sync-checkbox');
+	t.lockBtn = t.container.find('.document-lock-button');
 	t.searchBtn = t.container.find('.document-search-button');
 	t.infoBtn = t.container.find('.document-info-button');
 	t.closeBtn = t.container.find('.document-close-button');
@@ -376,6 +380,19 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	});
 	t.searchBtn.on('click', function(e) {
 		// popup search
+		
+		
+		
+	});
+	
+	t.lockBtn.on('click', function(e) {
+		var btn = $(this);
+		
+		if (btn.hasClass('state-locked')) {
+			btn.removeClass('state-locked').addClass('state-unlocked');
+		} else {
+			btn.removeClass('state-unlocked').addClass('state-locked');
+		}
 		
 		
 		
@@ -793,7 +810,10 @@ docs.Document.prototype = {
 			t.input.val( navigationInput );
 			
 			// sync to other like panes
-			if (doSync && t.hasFocus && t.syncCheckbox.is(':checked')) {
+			//if (doSync && t.hasFocus && t.syncCheckbox.is(':checked')) {
+			
+			
+			if (doSync && t.hasFocus && t.lockBtn.hasClass('state-locked')) {
 				t.manager.sync(t, visibleFragmentInfo);
 			}
 			

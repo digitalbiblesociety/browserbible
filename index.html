@@ -2,24 +2,78 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Epiphany Bible</title>
+		<title>Sofia Bible Software</title>
+		<style>
+		body {
+			background: #ccc;
+		}
+		#app {
+			width: 300px;
+			height: 220px;
+			padding: 20px;
+			font-family: Helvetica, Arial;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -120px 0 0 -160px;
+			background: #fff;
+			-webkit-box-shadow: rgba(0,0,0,0.5) 0 0 10px;
+		}
+		#app h1 {
+			font-size: 16px;
+			text-align: center;
+			margin: 20px 0;
+		}
+		#versions {
+			overflow: hidden;
+			margin: 0 0 0 -20px;
+			padding: 0;
+		}
+		#versions li {
+			margin: 0;
+			padding: 0;
+			float: left;
+			list-style-type: none;
+		}
+		#versions a {
+			display: block;
+			float: left;
+			margin: 0 0 0 20px;
+			background: #ddd;
+			border: solid 1px #333;
+			width: 138px;
+
+			text-align: center;
+			padding: 30px 0;
+			text-decoration: none;
+			color: #333;
+		}
+		#versions a:hover {
+			background: #ccc;
+
+		}
+		#app p {
+			margin: 30px 0 0 0;
+			font-size: 12px;
+			text-align: center;
+			
+		}
+		#app p a{
+			color: #888;
+		}
+		</style>
 	</head>
-	<body>	
-		<h1>Epiphany Bible</h1>
-
-		<h2>Mobile</h2>
+	<body>
 		
-		<ul>
-			<li><a href="app/mobile.html">Mobile Versions</a></li>
-		</ul>
-
-		<h2>Desktop</h2>
-		
-		<ul>
-			<li><a href="app/index.html">Desktop Application</a></li>
-		</ul>
-
-		<p>Built by the <a href="http://dbsbible.org">Digital Bible Society</a>, available at <a href="http://github.com/digitalbiblesociety/epiphanybible">github</a>
-
+		<div id="app">
+			<h1>Sofia Bible Software</h1>
+	
+			<ul id="versions">		
+				<li><a href="app/mobile.html">Mobile</a></li>
+				<li><a href="app/index.html">Desktop</a></li>
+			</ul>
+	
+			<p>Built by the <a href="http://dbsbible.org">Digital Bible Society</a>, available at <a href="http://github.com/digitalbiblesociety">github</a>
+		</div>
 	</body>
 </html>

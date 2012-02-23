@@ -68,23 +68,23 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 * ~~Chapter/verse Navigation Dropdown~~
 * ~~Add original language tools (highlighting tense/voice/freq)~~
 * ~~Improve selector speed using classes rather than attributes~~
-* Change theme colors
-* Change font size within the reader
+* ~~Change theme colors~~
+* ~~Change font size within the reader~~
+* ~~Allow version to switch if a book is missing (WLC -> tisch is hardcoded)~~
+* ~~Build NASB adn NET importer~~
 
 ### 0.3 Todo List
 
-* handle missing books (e.g. Psalms and NT)
-* handle apocrypha
-* Allow version to switch if a book is missing (WLC -> tisch is hardcoded)
-* Build NASB importer
+* ~~Strong's based searching~~
+* ~~Strong's/Thayer/BDB popups~~
+* ~~Add images links~~
 * Add Audio player
 * Add video launcher
-* Add maps/images links
+* handle missing books (e.g. Psalms and NT)
+* handle apocrypha
 
 ### Wish List
 
-* Strong's based searching
-* Strong's/Thayer/BDB popups
 * Search stemmer
 * Original language conceptual searches (love => hesed, agape, phileo, etc. => lovingkindness)
 * Compare versions

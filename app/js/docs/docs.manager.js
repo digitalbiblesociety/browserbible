@@ -525,7 +525,7 @@ docs.Document.prototype = {
 						t.content.scrollTop(0);	
 						
 						// TODO: scroll to individual verse (not just the chapter)
-						//console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );
+						//console.log( t.id, fragmentId, newSectionNode.attr('data-osis') );	
 						
 						//if (fragmentId.substring(7,10) != '001') {
 							//t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);

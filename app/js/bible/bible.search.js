@@ -21,14 +21,16 @@ bible.BibleSearch = {
 	
 	highlightRegExp: null,
 	
-	verseRegExp: new RegExp('<span class="verse[^>]*?>(.)*?</span>(\r|\n)', 'gi'),
+	allAsciiRegExp: new XRegExp('^[\040-\176]*$', 'gi'),
 	
-	verseNumRegExp: new RegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
+	verseRegExp: new XRegExp('<span class="verse[^>]*?>(.)*?</span>(\r|\n)', 'gi'),
+	
+	verseNumRegExp: new XRegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
 	
 	//stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
-	stripNotesRegExp: new RegExp('<dl class="(note|cf)">.+?</dl>','gi'),
+	stripNotesRegExp: new XRegExp('<dl class="(note|cf)">.+?</dl>','gi'),
 	
-	replaceLexRegExp: new RegExp('<span class="word"[^>]+>(.+?)</span>','gi'),
+	replaceLexRegExp: new XRegExp('<span class="word"[^>]+>(.+?)</span>','gi'),
 	
 	resultCount: 0,
 	
@@ -63,9 +65,9 @@ bible.BibleSearch = {
 		// compile regexp
 		
 		this.isLemmaSearch = /(G|H)\d{1,5}/.test(text);
-		
+			
 		if (this.isLemmaSearch) {
-			this.searchRegExp = new RegExp('<span class="[^"]*?' + text + '[^"]*?"[^>]*?>.*?</span>', 'gi');
+			//this.searchRegExp = new XRegExp('<span class="[^"]*?' + text + '[^"]*?"[^>]*?>.*?</span>', 'gi');
 			
 			if (text.substring(0,1) == 'H')
 				this.bookOsisID = bible.DEFAULT_BIBLE[0];
@@ -73,14 +75,20 @@ bible.BibleSearch = {
 				this.bookOsisID = bible.DEFAULT_BIBLE[40];
 			
 		} else {
-			this.searchRegExp = new RegExp('\\b' + text + '\\b', 'gi');
+			//this.searchRegExp = new XRegExp('\\b' + text + '\\b', 'gi');
+		}
+
+		// all ASCII
+		if (this.allAsciiRegExp.test(text)) {
+			this.searchRegExp = new XRegExp('\\b' + text + '\\b', 'gi');
+		}
+		// non-ASCII characters
+		else {
+			this.searchRegExp = new XRegExp(text, 'gi');
 		}
 		
-		this.searchRegExp = new RegExp('\\b' + text + '\\b', 'gi');
 		// <span class="[^"]*?G3056[^"]*?"[^>]*?>(.*?)</span> = Strong's
 		//this.highlightRegExp = new RegExp('\\b' + text + '\\b', 'gi');
-
-
 		
 		this.isSearching = true;
 		this.loadChapter();
@@ -156,9 +164,9 @@ bible.BibleSearch = {
 				if (this.isLemmaSearch) {
 					verseSpan = verseSpan.replace(this.searchRegExp, function(str, p1, p2, offset, s) {
 						foundMatch = true;
-						//console.log(match, match);
+						console.log(str, s);
 						//throw match;
-						return '' + str + ' highlight';
+						return ' ' + str + ' highlight ';
 					});				
 					
 				} else {

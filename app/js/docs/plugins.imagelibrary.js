@@ -70,11 +70,13 @@ docs.plugins.push({
 						// center the portrait image
 						
 						windowWidth = imageWidth / imageHeight * windowHeight;
-						windowX = screen.availWidth / 2 - windowWidth / 2;	
 					} else {
+						
 						windowHeight = imageHeight / imageWidth * windowWidth;
-						windowY = screen.availHeight / 2 - windowHeight / 2;
+
 					}
+					windowY = screen.availHeight / 2 - windowHeight / 2;
+					windowX = screen.availWidth / 2 - windowWidth / 2;				
 					
 					// hide the thumbnails if there is only one
 					if (image.parent().siblings().length == 0) {

@@ -61,7 +61,8 @@ bible.BibleNavigator = {
 		
 		if (reference != null) {
 			// make sure the first verse is seleced
-			if (reference.verse1 === 0) {
+			
+			if (reference.verse1 < 1) {
 				reference.verse1 = 1;
 			}
 			return reference.toOsisVerse(); // not to chapter, to verse
@@ -154,7 +155,7 @@ bible.BibleNavigator = {
 			//books += '<li data-osis="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' + versionInfo.bookNames[i] + '</li>';
 			booksHtml += '<li data-osis="' + versionInfo.books[i] + '" data-chapters="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' +
 				//versionInfo.bookNames[i] +
-				bible.BOOK_DATA[ versionInfo.books[i] ].names[versionInfo.language][0] + 
+				bible.BOOK_DATA[ versionInfo.books[i] ].names[versionInfo.language.toLowerCase()][0] + 
 			'</li>';
 		}
 		document.navigationWindow.find('.book-list ul').html(booksHtml);

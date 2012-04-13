@@ -4,9 +4,12 @@ body {
 
 #header {
 	height: 40px;
+}
+.site-header {
 	background: #333;
 	color: #fff;
 }
+
 #header h1 {
 	float: left;
 	width: 300px;
@@ -80,21 +83,11 @@ body {
 }
 
 .document-header {
-	-x-background: #bbb;
 	padding: 5px 20px;
-	-x-border-radius: 5px 5px 0 0;
 	border: solid 1px #aaa;
 	border-width: 1px 1px 1px 0;
 	border-color: transparent #ccc #aaa transparent;
-	
-	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeedeb), color-stop(100%, #dddcda));
-	background-image: -webkit-linear-gradient(#eeedeb,#dddcda);
-	background-image: -moz-linear-gradient(#eeedeb,#dddcda);
-	background-image: -o-linear-gradient(#eeedeb,#dddcda);
-	background-image: -ms-linear-gradient(#eeedeb,#dddcda);
-	background-image: linear-gradient(#eeedeb,#dddcda);
 	background-color: #DDDCDA;
-	-x-border: 1px solid #CBC9CF;	
 }
 	.document-header-buttons {
 		-x-float: right;
@@ -109,19 +102,22 @@ body {
 		display: none;
 	}
 	.document-header .document-input {
-		width: 180px;
-		height: 28px;
-		font-size: 120%;
-		padding: 0 6px;
+		width: 140px;
+		height: 20px;
+		font-size: 18px;
+		padding: 0 4px;
 		color: #bbb;
 	}
 	.document-header .document-selector {
-		width: 190px;
+		-x-width: 190px;
+		width: 50px;
+		height: 28px;
 	}
 	
 	.document-header .document-search-button,
 	.document-header .document-info-button,
 	.document-header .document-close-button,
+	.document-header .document-options-button,
 	.document-header .document-lock-button {
 		background: transparent url(images/icons-dark-small.png) 0 0  no-repeat;
 		border: solid 1px #999;
@@ -134,6 +130,7 @@ body {
 	.document-header .document-search-button:hover,
 	.document-header .document-info-button:hover,
 	.document-header .document-close-button:hover,
+	.document-header .document-options-button:hover,
 	.document-header .document-lock-button:hover {
 		background-color: #ccccff;
 		cursor: pointer;
@@ -144,6 +141,9 @@ body {
 	.document-header .document-info-button {
 		background-position:  -35px -28px;
 	}
+	.document-header .document-options-button {	
+		background-position: -102px -117px;
+	}	
 	.document-header .document-close-button {
 		background-position:  -125px -185px;
 		-x-background-position:  -80px -5px
@@ -198,22 +198,12 @@ body {
 
 .document-footer {
 	padding: 4px 15px;
-	-x-background: #bbb;
 	color: #333;
 	height: 44px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-size: 12px;
-	line-height: 1.2;
-	-x-border-radius: 0 0 5px 5px ;
-	
-	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeedeb), color-stop(100%, #dddcda));
-	background-image: -webkit-linear-gradient(#eeedeb,#dddcda);
-	background-image: -moz-linear-gradient(#eeedeb,#dddcda);
-	background-image: -o-linear-gradient(#eeedeb,#dddcda);
-	background-image: -ms-linear-gradient(#eeedeb,#dddcda);
-	background-image: linear-gradient(#eeedeb,#dddcda);
-	background-color: #DDDCDA;
+	line-height: 1.2;	
 	
 	border: solid 1px #aaa;
 	border-width: 1px 1px 1px 0;
@@ -507,30 +497,108 @@ body {
 		padding: 5px;
 	}
 	
-	
-/* custom config */
-.config-large {
-	
+/* config window */
+.config-options {
+	margin: 0 0 10px 0;
+	overflow: hidden;
 }
-.config-large .document-wrapper .chapter {
-	font-size: 20px;
+.config-options .config-option {
+	float: left;
+	margin: 0 5px 0  0;
+	width: 60px;
+	min-height: 20px;
+	line-height: 1;
+}
+.config-options .config-option h3 {
+	margin: 0 0 0.5em 0;
+}
+.config-options .config-option input[type=radio]{
+	margin-right: 5px;
+	vertical-align: top;
+}
+.config-options .config-option span{
+	vertical-align: middle;
 }
 
+.theme-demo {
+	display: inline-block;
+	width: 12px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+	
+/* custom config */
+
+/* CONFIG: Font-family */
+
+
+span.config-font-default {
+	font-size: 16px;
+}
 
 .config-font-georgia .chapter {
 	font-family: georgia;
 }
+span.config-font-georgia {
+	font-family: georgia;
+	font-size: 16px;
+}
+
 
 .config-font-tahoma .chapter {
 	font-family: tahoma;
 }
+span.config-font-tahoma {
+	font-family: tahoma;
+	font-size: 16px;
+}
+
 
 .config-font-baskerville .chapter {
 	font-family: baskerville;
 }
+span.config-font-baskerville {
+	font-family: baskerville;
+	font-size: 16px;
+}
+
 
 /* TAN */
-.config-theme-tan #header {
+.config-theme-default .site-header {
+	background: #000;
+}
+.config-theme-default .document-content {
+	background: #fff;
+}
+.config-theme-default .document-header {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeedeb), color-stop(100%, #dddcda));
+	background-image: -webkit-linear-gradient(#eeedeb,#dddcda);
+	background-image: -moz-linear-gradient(#eeedeb,#dddcda);
+	background-image: -o-linear-gradient(#eeedeb,#dddcda);
+	background-image: -ms-linear-gradient(#eeedeb,#dddcda);
+	background-image: linear-gradient(#eeedeb,#dddcda);
+	background-color: #eeedeb;
+}
+.config-theme-default .document-footer {
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeedeb), color-stop(100%, #dddcda));
+	background-image: -webkit-linear-gradient(#eeedeb,#dddcda);
+	background-image: -moz-linear-gradient(#eeedeb,#dddcda);
+	background-image: -o-linear-gradient(#eeedeb,#dddcda);
+	background-image: -ms-linear-gradient(#eeedeb,#dddcda);
+	background-image: linear-gradient(#eeedeb,#dddcda);
+	background-color: #DDDCDA;
+}
+.config-theme-default .chapter {
+	color: #000;
+}
+.config-theme-default .popup-window {
+	background: #000;
+}
+
+/* TAN */
+.config-theme-tan .site-header {
 	background: #4f2e00;
 }
 .config-theme-tan .document-content {
@@ -547,11 +615,10 @@ body {
 }
 .config-theme-tan .popup-window {
 	background: #4f2e00;
-
 }
 
 /* GREEN */
-.config-theme-green #header {
+.config-theme-green .site-header {
 	background: #33aa33;
 }
 .config-theme-green .document-content {
@@ -575,14 +642,31 @@ body {
 .config-size-small .chapter {
 	font-size: 10px;
 }
+span.config-size-small {
+	font-size: 10px;
+}
 
 .config-size-large .chapter {
+	font-size: 18px;
+}
+span.config-size-large  {
 	font-size: 18px;
 }
 
 .config-size-jumbo .chapter {
 	font-size: 22px;
 }
+span.config-size-jumbo  {
+	font-size: 22px;
+}
+
+.config-size-huge .chapter {
+	font-size: 26px;
+}
+span.config-size-huge  {
+	font-size: 26px;
+}
+
 
 /* verses and notes */
 .config-verses-hideverses .verse-num,

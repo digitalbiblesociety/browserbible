@@ -11,23 +11,39 @@ docs.plugins.push({
 		
 		// create config menu
 		var
-			fontOptions = [
+			renderOptionDefault = function(id, name) {
+				return '<label for="' + id + '">' + name + '</label>';
+			},			
+		
+			fontFamilyOptions = [
 				{name: 'Default'},
 				{name: 'Georgia'},
 				{name: 'Tahoma'},
 				{name: 'Baskerville'}
 			],
-			colorOptions = [
+			renderFontFamilyOption = function(id, name) {
+				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
+			},
+			themeOptions = [
 				{name: 'Default'},
 				{name: 'Tan'},
 				{name: 'Green'}
 			],
-			sizeOptions = [
+			renderThemeOption = function(id, name) {
+				return 	'<label for="' + id + '" class="' + id + '">' +
+							'<span class="site-header theme-demo"></span><span class="document-header theme-demo"></span>' +
+						'</label>';
+			},
+			fontSizeOptions = [
 				{name: 'Small'},
 				{name: 'Default'},
 				{name: 'Large'},
-				{name: 'Jumbo'}
-			],				
+				{name: 'Jumbo'},
+				{name: 'Huge'}
+			],
+			renderFontSizeOption = function(id, name) {
+				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
+			},
 			/* configWindow = $('<div id="config-menu" class="modal-window">' +
 							'<div class="modal-header">Configuration<span class="modal-close">Close</span></div>'+
 							'<div class="modal-content">' +
@@ -40,15 +56,18 @@ docs.plugins.push({
 			configWindow = docs.createModal('config', 'Configuration').size(400, 300);
 			
 			
-		function createOptionSet(title, prefix, data) {
+		function createOptionSet(title, prefix, data, renderOption) {
 			var configBlock =
 				$('<div class="config-options" id="config-' + prefix + '"><h3>' + title + '</h3></div>')
 					.appendTo( configWindow.content )
 					.on('click', 'input', function() {
 						var bod = $(document.body);
 						
+						console.log( $(this) );
+						
 						// remove all fonts
-						$(this).siblings('input').each(function(i, input) {
+						$(this).closest('.config-options').find('input').each(function(i, input) {
+							console.log('removing ', $(input).val());
 							bod.removeClass('config-' + prefix + '-' + $(input).val() );
 						});
 						
@@ -62,7 +81,11 @@ docs.plugins.push({
 			for (var i=0, il=data.length; i<il; i++) {
 				var name = data[i].name,
 					value = name.toLowerCase().replace(' ','');
-				configBlock.append($('<input type="radio" name="config-' + prefix + '-choice" id="config-' + prefix + '-' + value + '" value="' + value + '" /><label for="config-' + prefix + '-' + value + '">' + name + '</label>'))
+				configBlock.append($('<div class="config-option">' +
+										'<input type="radio" name="config-' + prefix + '-choice" id="config-' + prefix + '-' + value + '" value="' + value + '" />' +
+										renderOption('config-' + prefix + '-' + value, name) + 
+									'</div>'
+									));
 			}
 			var userConfig = $.jStorage.get('docs-config-' + prefix, 'default');
 			
@@ -70,11 +93,11 @@ docs.plugins.push({
 		
 		}
 		
-		createOptionSet('Theme', 'theme', colorOptions);
-		createOptionSet('Fonts', 'font', fontOptions);
-		createOptionSet('Size', 'size', sizeOptions);
-		createOptionSet('Verses', 'verses', [{name: 'Default'},{name: 'Hide Verses'}]);
-		createOptionSet('Notes', 'notes', [{name: 'Default'},{name: 'Hide Notes'}]);
+		createOptionSet('Theme', 'theme', themeOptions, renderThemeOption);
+		createOptionSet('Fonts', 'font', fontFamilyOptions, renderFontFamilyOption);
+		createOptionSet('Size', 'size', fontSizeOptions, renderFontSizeOption);
+		createOptionSet('Verses', 'verses', [{name: 'Default'},{name: 'Hide Verses'}], renderOptionDefault);
+		createOptionSet('Notes', 'notes', [{name: 'Default'},{name: 'Hide Notes'}], renderOptionDefault);
 
 		
 		var configButton = $('<input type="button" id="docs-config" />')

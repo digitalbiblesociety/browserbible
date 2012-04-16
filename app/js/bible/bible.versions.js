@@ -2,6 +2,13 @@ bible.versions = {
 	// prebuild version array
 	versionData: null,
 	
+	// versions by key
+	versionsByKey: {},
+	
+	getVersion: function(key) {
+		return this.versionsByKey[key];
+	},
+	
 	allVersions: [
 		'ar_svd',
 		'en_esv',
@@ -50,6 +57,7 @@ bible.versions = {
 					
 					// insertdata
 					t.versionData[data.language.toLowerCase()].versions[data.code] = data;
+					t.versionsByKey[data.code] = data;
 					
 					t.loadNextVersion();
 				},

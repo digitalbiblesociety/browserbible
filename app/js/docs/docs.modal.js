@@ -56,7 +56,12 @@ docs.createModal = function(id, startTitle) {
 			return this;
 		},
 		show: function() {
+			// hide all others
+			$('.popup-window').hide();
+			
+			// show this one
 			popup.show().css({'z-index': docs.createModalIndex++});
+			
 			
 			if (this.height > 0 && this.width > 0) {
 				this.size(this.width, this.height);

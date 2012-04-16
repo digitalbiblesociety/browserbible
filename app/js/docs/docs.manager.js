@@ -246,28 +246,24 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.container = $(
 			'<div class="document-container" id="' + id + '">' +
 				'<div class="document-header">' +
+					'<div class="document-header-input">' +
+						'<input type="text" class="document-input" />' +
+					'</div>' + 
+					'<div class="document-header-selector">' +
+						
+						'<span>NASB</span>' +
+						'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
+					'</div>' + 
 					'<div class="document-header-buttons">' +
-						//'<input type=\"checkbox\" class=\"document-sync-checkbox\" checked />' +
-						//'<input type=\"button\" class=\"document-search-button\" value="S" />' +
-						'<input type=\"button\" class=\"document-lock-button state-locked\" value="L" />' +
-						'<input type=\"button\" class=\"document-info-button\" value="i" />' +
-						'<input type=\"button\" class=\"document-options-button\" value="X" />' +
-						//'<input type=\"button\" class=\"document-close-button\" value="X" />' +
+						'<input type=\"button\" class=\"document-header-button document-audio-button\" value="A" />' +
+						'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
+						'<input type=\"button\" class=\"document-header-button document-options-button\" value="O" />' +
 					'</div>' +
-					/*
 					'<div class="document-header-options">' +
-						'close ' +
-						'search ' +
-						'lock ' +
+						'<input type=\"button\" class=\"document-header-button document-close-button\" value="X" />' +
+						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
+						'<input type=\"button\" class=\"document-header-button document-lock-button state-locked\" value="L" />' +
 					'</div>' +
-					*/
-					'<input type="text" class="document-input" />' +
-					
-					'<input type="button" value="GO" class="document-button" />' +
-					//'<select class="document-sync-list"><option seleced>A</option><option>B</option><option>C</option></select>' +
-					//'<br />' +
- 					'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
-					//'<input type="text" class="document-search" />' +
 				'</div>' +
 				'<div class="document-content">' +
 					'<div class="document-wrapper">' +
@@ -287,6 +283,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.input = t.container.find('.document-input');
 	t.button = t.container.find('.document-button');
 	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
+	t.selector.siblings().html( bible.versions.getVersion(selectedDocumentId).abbreviation )
 	t.syncList = t.container.find('.document-sync-list'); // currently not being used
 	t.syncCheckbox = t.container.find('.document-sync-checkbox');
 	t.lockBtn = t.container.find('.document-lock-button');
@@ -295,6 +292,26 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.closeBtn = t.container.find('.document-close-button');
 	t.about = t.container.find('.document-about');
 	
+	// config
+	t.optionsBtn = t.container.find('.document-options-button');
+	t.optionsWindow = docs.createModal(t.id + 'options', 'Options');
+	t.optionsWindow.content.append( t.container.find('.document-header-options') );	
+	t.optionsBtn.on('click', function() {
+		t.optionsWindow.show();
+		t.optionsWindow.window.css({top: t.optionsBtn.offset().top + 25, left: t.optionsBtn.offset().left + 25 - t.optionsWindow.window.width()});
+	});
+	
+	//audio
+	t.audioBtn = t.container.find('.document-audio-button');
+	t.audioWindow = docs.createModal(t.id + '-audio', 'Audio');
+	t.audioWindow.content.append('<audio id="' + t.id + '-audio-player" type="audio/mp3"></audio>');
+	t.audioWindow.show();
+	$('#' + t.id + '-audio-player').mediaelementplayer({type: 'audio/mp3', audioWidth: '100%'});
+	t.audioWindow.hide();
+	t.audioBtn.on('click', function() {
+		t.audioWindow.show();
+		t.audioWindow.window.css({top: t.audioBtn.offset().top + 25, left: t.audioBtn.offset().left + 25 - t.audioWindow.window.width()});
+	});	
 	
 	t.content = t.container.find('.document-content');
 	t.wrapper = t.container.find('.document-wrapper');
@@ -349,6 +366,9 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	});	
 	t.selector.on('change', function(e) {
 		t.wrapper.empty();
+		// TODO Set version
+		var version = bible.versions.versionsByKey[t.selector.val()];
+		t.container.find('.document-header-selector span').html(version.abbreviation);
 		t.navigateToUserInput();
 	});
 	
@@ -356,7 +376,9 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.infoBtn.on('click', function(e) {
 		// load about page
 		
-		//console.log('about!')
+		
+		t.optionsWindow.hide();
+		
 		
 		if (t.about.is(':visible')) {
 			t.about.hide();

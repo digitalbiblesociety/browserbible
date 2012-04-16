@@ -101,60 +101,91 @@ body {
 	.document-header .document-button {
 		display: none;
 	}
+	.document-header .document-header-input {
+		display: inline-block;
+		vertical-align: top;
+	}
 	.document-header .document-input {
 		width: 140px;
 		height: 20px;
-		font-size: 18px;
+		font-size: 14px;
 		padding: 0 4px;
 		color: #bbb;
+		margin: 0;
+		border: solid 1px #999;
 	}
-	.document-header .document-selector {
-		-x-width: 190px;
+	.document-header .document-header-selector {
 		width: 50px;
-		height: 28px;
+		height: 20px;
+		display: inline-block;
+		position: relative;
+		margin: 0 0 0 4px;
+		vertical-align: top;
+	}
+	.document-header .document-header-selector span {
+		font-size: 12px;
+		padding: 4px;
+		width: 42px;
+		height: 12px;		
+		color: #444;
+		position: absolute;
+		pointer-events: none;
+		border: solid 1px #999;
+		
 	}
 	
-	.document-header .document-search-button,
-	.document-header .document-info-button,
-	.document-header .document-close-button,
-	.document-header .document-options-button,
-	.document-header .document-lock-button {
+	.document-header .document-header-selector .document-selector {
+		width: 52px;
+		position: absolute;
+		opacity: 0;
+		-webkit-appearance: none;
+	}
+	
+	.document-header .document-header-buttons {
+		float: left;
+	}
+	
+	.document-header .document-header-options {
+		display: none;
+	}
+	
+	.document-header-button {
 		background: transparent url(images/icons-dark-small.png) 0 0  no-repeat;
 		border: solid 1px #999;
 		border-radius: 5px;
 		text-indent: -9999px;
 		width: 22px;
 		height: 22px;
-		margin: 0 2px;	
+		margin: 0 2px;				
 	}
-	.document-header .document-search-button:hover,
-	.document-header .document-info-button:hover,
-	.document-header .document-close-button:hover,
-	.document-header .document-options-button:hover,
-	.document-header .document-lock-button:hover {
+	
+	.document-header-button:hover {
 		background-color: #ccccff;
 		cursor: pointer;
 	}
-	.document-header .document-search-button {	
+	.document-search-button {	
 		background-position: -58px -186px;
 	}
-	.document-header .document-info-button {
+	.document-info-button {
 		background-position:  -35px -28px;
 	}
-	.document-header .document-options-button {	
+	.document-options-button {	
 		background-position: -102px -117px;
 	}	
-	.document-header .document-close-button {
+	.document-close-button {
 		background-position:  -125px -185px;
 		-x-background-position:  -80px -5px
 	}
-	.document-header .document-lock-button {
+	.document-lock-button {
 		background-position:  -34px -73px;
 	}
-	
-	.document-header .state-unlocked {
+	.state-unlocked {
 		background-position: -57px -73px;
-	}		
+	}
+	
+	.document-audio-button {
+		background-position: -80px -163px;
+	}
 
 .document-content {
 	position: relative;

@@ -1,0 +1,5 @@
+{
+"name":"English Standard Version",
+"abbreviation":"ESV",
+"books":bible.DEFAULT_BIBLE
+}

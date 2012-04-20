@@ -10,48 +10,12 @@ docs.plugins.push({
 				
 		if (!docs.Features.hasTouch) {
 			
+
+			// create media popup
 			var
-				popup = docs.createModal('image-library', 'Images').size(320,200).center(),
-				imageIcon = $('<div class="image-library-icon"></div>')
-									.appendTo(document.body)
-									.hide(),
-				currentVerseOsis = '',
-				timer = null,
-				startTimer = function() {				
-					stopTimer();
-					timer = setTimeout(function() {
-						imageIcon.hide();
-					}, 1000);
-				},
-				stopTimer = function() {
-					if (timer != null) {
-						clearTimeout(timer);
-						timer = null;
-					}
-				};
-			
-			imageIcon.on('mouseover' , function() {
-				stopTimer();
-			}).on('mouseout', function() {
-				startTimer();
-			}).on('click', function() {
-				
-				// show images as thumbnails in a popup window
-				
-				var
-					reference = new bible.Reference(currentVerseOsis).toString(),
-					imagesData = imageLibrary[currentVerseOsis],
-					before = '<li><img src=\"content/images/',
-					after = '\" /></li>',
-					imagesHtml = before + imagesData.join(after + before) + after;
-				
-				popup.title.html('Images: ' + reference.toString());
-					
-				popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul>');
-				popup.center().show();
-			});
-			
-			
+				popup = docs.createModal('image-library', 'Images').size(320,200).center();
+
+			// click an image in the media popup
 			popup.content
 				.css('overflow', 'hidden')
 				.on('click', 'img', function() {
@@ -85,42 +49,58 @@ docs.plugins.push({
 					
 					// launch image
 					var imgWin = window.open(src,'image-view','left=' + windowX  +',top=' + windowY + ',width=' + windowWidth + ',height=' + windowHeight + ',toolbar=0,scrollbars=0,status=0');
-				});
+				});				
 			
 			
-			// check for verses to show
-			docManager.content.on('mouseover', 'span.verse', function() {
+			// setup events to add media icons
+			docManager.addEventListener('load', function(e) {
 				
-				stopTimer();
-					
-				var verse = $(this),
-					verseId = verse.attr('data-osis'),
-					images = imageLibrary[verseId],
-					verseOffset = null,
-					parentContent = null,
-					parentContentOffset = null;
-					
-				if (typeof images != 'undefined') {
-					
-					currentVerseOsis = verseId;
-					verseOffset = verse.offset();
-					parentContent = verse.closest('.document-content');
-					parentContentOffset = parentContent.offset();
-					
-					imageIcon
-						.css( {top: verseOffset.top, left: parentContentOffset.left} )
-						.show();
-				} else {
-					currentVerseOsis = '';
-					
-					imageIcon.hide();
-				}
+				addMediaIcons(e.chapter);
 				
-				
-			}).on('mouseout', 'span.verse', function() {
-			
-				startTimer();
 			});
+			
+			function addMediaIcons(chapter) {
+				
+				chapter.find('.verse').each(function(index, verseNode) {
+					
+					// find verse and look for images
+					var verse = $(verseNode),
+						verseId = verse.attr('data-osis'),
+						images = imageLibrary[verseId],
+						verseOffset = null,
+						parentContent = null,
+						parentContentOffset = null;
+					
+					// if we have images, then insert the icon	
+					if (typeof images != 'undefined') {
+						
+						var mediaIcon = $('<span class="media-icon"></span>')
+											.appendTo(verse);
+					}
+					
+				});
+				
+				chapter.on('click', '.media-icon', function() {
+					console.log('ICON');
+					
+					var
+						mediaIcon = $(this),
+						verse = mediaIcon.closest('.verse'),
+						verseOsis = verse.attr('data-osis'),
+						reference = new bible.Reference(verseOsis).toString(),
+						imagesData = imageLibrary[verseOsis],
+						before = '<li><img src=\"content/images/',
+						after = '\" /></li>',
+						imagesHtml = before + imagesData.join(after + before) + after;
+						
+					popup.title.html('Images: ' + reference.toString());
+						
+					popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul>');
+					popup.center().show();
+				});
+				
+			}
+			
 		}
 	}
 });

@@ -781,14 +781,11 @@ span.config-size-huge  {
 }
 
 /* media library */
-.image-library-icon {
-	position: absolute;
-	top: 0;
-	left: 0;
+.media-icon {
+	display: inline-block;
 	width: 20px;
 	height: 20px;
 	background: #33f url(images/icons-light-small.png) -12px -162px no-repeat;
-	font-size: 1%;
 	cursor: pointer;
 	border-radius: 4px;
 }

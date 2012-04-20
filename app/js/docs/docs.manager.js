@@ -130,7 +130,6 @@ docs.DocManager = {
 		
 		if (this.documents.length == 0)
 			return;	
-
 		
 		var contentWidth = this.content.width(),
 			documentMargin = this.documents[0].container.outerWidth(true) - this.documents[0].container.width();
@@ -283,7 +282,6 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.input = t.container.find('.document-input');
 	t.button = t.container.find('.document-button');
 	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
-	t.selector.siblings().html( bible.versions.getVersion(selectedDocumentId).abbreviation )
 	t.syncList = t.container.find('.document-sync-list'); // currently not being used
 	t.syncCheckbox = t.container.find('.document-sync-checkbox');
 	t.lockBtn = t.container.find('.document-lock-button');
@@ -297,21 +295,45 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.optionsWindow = docs.createModal(t.id + 'options', 'Options');
 	t.optionsWindow.content.append( t.container.find('.document-header-options') );	
 	t.optionsBtn.on('click', function() {
-		t.optionsWindow.show();
-		t.optionsWindow.window.css({top: t.optionsBtn.offset().top + 25, left: t.optionsBtn.offset().left + 25 - t.optionsWindow.window.width()});
+		if (t.optionsWindow.content.is(':visible')) {
+			t.optionsWindow.hide();
+		} else {
+			t.optionsWindow.show();
+			t.optionsWindow.window.css({top: t.optionsBtn.offset().top + 25, left: t.optionsBtn.offset().left + 25 - t.optionsWindow.window.width()});
+		}
 	});
 	
 	//audio
-	t.audioBtn = t.container.find('.document-audio-button');
+	t.currentAudio = null;
+	t.audioBtn = t.container.find('.document-audio-button').hide();
 	t.audioWindow = docs.createModal(t.id + '-audio', 'Audio');
 	t.audioWindow.content.append('<audio id="' + t.id + '-audio-player" type="audio/mp3"></audio>');
 	t.audioWindow.show();
-	$('#' + t.id + '-audio-player').mediaelementplayer({type: 'audio/mp3', audioWidth: '100%'});
+	$('#' + t.id + '-audio-player').mediaelementplayer({type: 'audio/mp3', audioWidth: '100%', success: function(media, node, player) { t.player = player; } });
 	t.audioWindow.hide();
 	t.audioBtn.on('click', function() {
-		t.audioWindow.show();
-		t.audioWindow.window.css({top: t.audioBtn.offset().top + 25, left: t.audioBtn.offset().left + 25 - t.audioWindow.window.width()});
-	});	
+		if (t.audioWindow.content.is(':visible')) {
+			t.audioWindow.hide();
+		} else {
+			t.audioWindow.show();
+			t.audioWindow.window.css({top: t.audioBtn.offset().top + 25, left: t.audioBtn.offset().left + 25 - t.audioWindow.window.width()});
+			
+			var sectionId = new bible.Reference(t.input.val()).toOsisChapter();
+			
+			if (sectionId != t.currentAudio) {
+				
+				t.player.pause();
+				t.player.setSrc('content/audio/' + t.selector.val() + '/' + sectionId + '.mp3');
+				t.player.load();
+				
+				t.currentAudio = sectionId;
+			}
+			
+			
+		}
+	});
+	
+	t.updateVersion(selectedDocumentId);
 	
 	t.content = t.container.find('.document-content');
 	t.wrapper = t.container.find('.document-wrapper');
@@ -322,9 +344,9 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	}	
 	
 	t.navigationWindow = $(
-		'<div class="document-navigation-window">' +
-		'</div>'
-	).appendTo(document.body);
+			'<div class="document-navigation-window">' +
+			'</div>'
+		).appendTo(document.body);
 	t.navigator.setupNavigationList(t);	
 	
 	
@@ -367,8 +389,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.selector.on('change', function(e) {
 		t.wrapper.empty();
 		// TODO Set version
-		var version = bible.versions.versionsByKey[t.selector.val()];
-		t.container.find('.document-header-selector span').html(version.abbreviation);
+		t.updateVersion(t.selector.val());
+		
 		t.navigateToUserInput();
 	});
 	
@@ -455,6 +477,23 @@ docs.Document.prototype = {
 	},
 	
 	switchingOver: false,
+	
+	updateVersion: function(version) {
+		var t = this,
+			versionInfo = bible.versions.versionsByKey[version];
+		
+		t.container.find('.document-header-selector span').html(version.abbreviation);		
+		
+		t.audioBtn.hide();
+		
+		// find audio
+		$.ajax({
+			url:'content/audio/' + version + '/version.json',
+			success: function(data) {
+				t.audioBtn.show();
+			}
+		})
+	},
 	
 	load: function(fragmentId, action) {
 		

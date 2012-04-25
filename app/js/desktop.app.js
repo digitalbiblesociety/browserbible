@@ -55,11 +55,6 @@ jQuery(function($) {
 						linked: true
 					},
 					{
-						version: 'en_nasb',
-						location: 'John.3.1',
-						linked: true
-					},
-					{
 						version: 'el_tisch',
 						location: 'John.3.1',
 						linked: true

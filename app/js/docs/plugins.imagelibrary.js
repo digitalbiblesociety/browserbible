@@ -74,18 +74,18 @@ docs.plugins.push({
 					// if we have images, then insert the icon	
 					if (typeof images != 'undefined') {
 						
-						var mediaIcon = $('<span class="media-icon"></span>')
+						var mediaIcon = $('<span class="image-icon inline-icon"></span>')
 											.appendTo(verse);
 					}
 					
 				});
 				
-				chapter.on('click', '.media-icon', function() {
+				chapter.on('click', '.image-icon', function() {
 					console.log('ICON');
 					
 					var
-						mediaIcon = $(this),
-						verse = mediaIcon.closest('.verse'),
+						imageIcon = $(this),
+						verse = imageIcon.closest('.verse'),
 						verseOsis = verse.attr('data-osis'),
 						reference = new bible.Reference(verseOsis).toString(),
 						imagesData = imageLibrary[verseOsis],

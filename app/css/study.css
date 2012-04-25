@@ -781,14 +781,29 @@ span.config-size-huge  {
 }
 
 /* media library */
-.media-icon {
+
+.inline-icon {
 	display: inline-block;
 	width: 20px;
 	height: 20px;
-	background: #33f url(images/icons-light-small.png) -12px -162px no-repeat;
+	background: #ccc url(images/icons-light-small.png) top left no-repeat;
 	cursor: pointer;
 	border-radius: 4px;
 }
+
+.inline-icon:hover {
+	background-color: #33f;
+}
+
+.image-icon {
+	background-position: -12px -162px;
+}
+.video-icon {
+	background-position: -125px -231px;
+}
+
+
+
 .image-library-thumbs {
 	list-style-type: none;
 	border: 0;

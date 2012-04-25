@@ -7,12 +7,19 @@
 	<meta name="viewport" content="width=device-width, user-scalable = no, initial-scale=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
+	<script>
+	if (typeof console == 'undefined') { window.console = {log:function() {}}; }
+	</script>
+	
 	<script src="js/jquery.js"></script>
 	
 	<!-- external libraries -->
 	<script src="js/utility/jquery.json.js"></script>
 	<script src="js/utility/jstorage.js"></script>
 	<script src="js/utility/xregexp.js"></script>
+	
+	<script src="js/utility/mediaelementjs/mediaelement-and-player.js"></script>
+	<link rel="stylesheet" href="js/utility/mediaelementjs/mediaelementplayer.css" />	
 	
 	<!-- Bible related data -->
 	<script src="js/bible/bible.data.js"></script>
@@ -42,11 +49,13 @@
 	<script src="js/docs/plugins.fullscreen.js"></script>
 	
 	<!-- media library -->
+	<script src="js/data/images.js"></script>
+	<script src="js/data/videos.js"></script>
+	
 	<script src="js/docs/plugins.imagelibrary.js"></script>
+	<script src="js/docs/plugins.videolibrary.js"></script>
 	
 	<!-- aditional data -->
-	<script src="js/data/images.js"></script>
-	
 	<script src="js/data/strongs-greek-dictionary.js"></script>	
 	<script src="js/data/strongs-hebrew-dictionary.js"></script>
 

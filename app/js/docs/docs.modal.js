@@ -51,6 +51,7 @@ docs.createModal = function(id, startTitle) {
 		menu: menu,
 		content: content,
 		footer: footer,
+		close: close,
 		hide: function() {
 			popup.hide();
 			return this;

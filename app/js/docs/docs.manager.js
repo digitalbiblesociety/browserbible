@@ -482,7 +482,7 @@ docs.Document.prototype = {
 		var t = this,
 			versionInfo = bible.versions.versionsByKey[version];
 		
-		t.container.find('.document-header-selector span').html(version.abbreviation);		
+		t.container.find('.document-header-selector span').html(versionInfo.abbreviation);		
 		
 		t.audioBtn.hide();
 		

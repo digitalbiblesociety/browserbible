@@ -40,7 +40,7 @@ jQuery(function($) {
 				{
 					docs: [
 					{
-						version: 'tr_kjv',
+						version: 'en_kjv',
 						location: 'John.3.1',
 						linked: true
 					}
@@ -50,7 +50,7 @@ jQuery(function($) {
 				{
 					docs: [
 					{
-						version: 'tr_kjv',
+						version: 'en_kjv',
 						location: 'John.3.1',
 						linked: true
 					},

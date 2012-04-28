@@ -575,6 +575,11 @@ body {
 .config-options .config-option span{
 	vertical-align: middle;
 }
+.config-toggle {
+	display: inline-block;
+	width: 100px;
+}
+
 
 .theme-demo {
 	display: inline-block;

@@ -119,8 +119,9 @@ body {
 		height: 20px;
 		display: inline-block;
 		position: relative;
-		margin: 0 0 0 4px;
+		margin: 0 2px 0 4px;
 		vertical-align: top;
+		background: transparent url(images/arrow-down.png) center right no-repeat;
 	}
 	.document-header .document-header-selector span {
 		font-size: 12px;

@@ -88,14 +88,24 @@ body {
 	border-width: 1px 1px 1px 0;
 	border-color: transparent #ccc #aaa transparent;
 	background-color: #DDDCDA;
+	height: 25px;
 }
-	.document-header-buttons {
+	.document-header-left {
+		text-align: left;
+		position: absolute;
+		top: 6px;
+		left: 5px;
+		z-index: 2;
+	}
+
+	.document-header-right {
 		-x-float: right;
 		-x-width: 100px;
 		text-align: right;
 		position: absolute;
-		top: 5px;
+		top: 6px;
 		right: 5px;
+		z-index: 1;
 	}
 
 	.document-header .document-button {
@@ -115,7 +125,7 @@ body {
 		border: solid 1px #999;
 	}
 	.document-header .document-header-selector {
-		width: 50px;
+		width: 55px;
 		height: 20px;
 		display: inline-block;
 		position: relative;
@@ -126,7 +136,7 @@ body {
 	.document-header .document-header-selector span {
 		font-size: 12px;
 		padding: 4px;
-		width: 42px;
+		width: 47px;
 		height: 12px;		
 		color: #444;
 		position: absolute;
@@ -136,15 +146,17 @@ body {
 	}
 	
 	.document-header .document-header-selector .document-selector {
-		width: 52px;
+		width: 55px;
 		position: absolute;
 		opacity: 0;
 		-webkit-appearance: none;
 	}
 	
-	.document-header .document-header-buttons {
+	/*
+	 .document-header .document-header-buttons {
 		float: left;
 	}
+	*/
 	
 	.document-header .document-header-options {
 		display: none;
@@ -247,7 +259,7 @@ body {
 	bottom: 49px;
 	height: 5px;
 	cursor: row-resize;
-	//background: rgba(255,0,0,0.5);
+	/* background: rgba(255,0,0,0.5); */
 	font-size: 1%;
 	padding: 0;
 	margin: 0;

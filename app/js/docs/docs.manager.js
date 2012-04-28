@@ -278,6 +278,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 				'<div class="document-footer">' +
 					'&nbsp;' + 
 				'</div>' +
+				'<div class="document-footer-resize"></div>' +
 			'</div>'
 		);
 	
@@ -346,13 +347,49 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	
 	t.updateVersion(selectedDocumentId);
 	
+	// main content aresas
 	t.content = t.container.find('.document-content');
 	t.wrapper = t.container.find('.document-wrapper');
 	
 	t.footer = t.container.find('.document-footer');
 	if (docs.Features.hasTouch) {
 		t.footer.remove();
-	}	
+	}
+	
+	// footer resizing
+	t.footerHandle = t.container.find('.document-footer-resize');
+	
+	
+	var mouseIsDown = false;
+	t.footerHandle.on('mousedown', function(e) {
+		e.preventDefault();
+		mouseIsDown = true;
+		return false;
+	});
+	$(document).on('mouseup', function(e) {
+		mouseIsDown = false;
+	});
+	$(document).on('mousemove', function(e) {
+		if (mouseIsDown) {
+			// do resize	
+			var footerTop = t.footer.offset().top,
+				footerHeight = t.footer.outerHeight(true),
+				footerExtras = footerHeight -  t.footer.height(),
+				mouseTop = e.clientY,
+				newFooterActualHeight = footerTop + footerHeight - mouseTop,
+				newFooterCssHeight = newFooterActualHeight -  footerExtras;
+			
+			// resize all
+			$('.document-footer').css({height: newFooterCssHeight});
+			$('.document-footer-resize').css({bottom: newFooterActualHeight});
+			
+			//t.footerHandle.css({bottom: newFooterActualHeight});
+			//t.footer.css({height: newFooterCssHeight});
+			t.manager.resizeDocuments();
+		}
+	});
+	
+	
 	
 	t.navigationWindow = $(
 			'<div class="document-navigation-window">' +
@@ -476,13 +513,21 @@ docs.Document.prototype = {
 	ignoreScrollEvent: false,
 	
 	resize: function() {
-		var availableHeight = this.container.parent().height(),
-			containerMargin = this.container.outerHeight(true) - this.container.height(),
-			contentMargin = this.content.outerHeight(true) - this.content.height(),
-			headerHeight = this.header.outerHeight(true),
-			footerHeight = this.footer.outerHeight(true);
+		var t = this,
+			availableHeight = t.container.parent().height(),
+			containerMargin = t.container.outerHeight(true) - t.container.height(),
+			contentMargin = t.content.outerHeight(true) - t.content.height(),
+			headerHeight = t.header.outerHeight(true),
+			footerHeight = t.footer.outerHeight(true);
 			
-		this.content.height( availableHeight - containerMargin -contentMargin - headerHeight - footerHeight );
+		t.content.height( availableHeight - containerMargin -contentMargin - headerHeight - footerHeight );
+		
+		
+		// position resizer
+		t.footerHandle.css({
+				bottom: (t.footer.outerHeight(true) - t.footerHandle.outerHeight(true))+ 'px',
+				width: t.footer.outerWidth(true) + 'px'
+		});
 		
 		// TODO save scroll
 	},
@@ -851,6 +896,8 @@ docs.Document.prototype = {
 			this.manager.setFocus(this);
 		}
 	},
+	
+	
 	
 	updateNavigationInput: function(doSync) {
 		

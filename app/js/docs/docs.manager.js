@@ -320,13 +320,18 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			t.audioWindow.show();
 			t.audioWindow.window.css({top: t.audioBtn.offset().top + 25, left: t.audioBtn.offset().left + 25 - t.audioWindow.window.width()});
 			
-			var sectionId = new bible.Reference(t.input.val()).toOsisChapter();
+			var
+				reference = new bible.Reference(t.input.val()),
+				sectionId = reference.toOsisChapter();
 			
 			if (sectionId != t.currentAudio) {
 				
 				t.player.pause();
 				t.player.setSrc('content/audio/' + t.selector.val() + '/' + sectionId + '.mp3');
 				t.player.load();
+				
+				reference.verse1 = 0;
+				t.audioWindow.title.html(reference.toString());	
 				
 				t.currentAudio = sectionId;
 			}

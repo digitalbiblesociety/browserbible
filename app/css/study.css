@@ -700,15 +700,30 @@ span.config-size-huge  {
 
 
 /* verses and notes */
-.config-verses-hideverses .verse-num,
-.config-verses-hideverses .chapter-num {
+.config-chapters-off .chapter-num {
 	display: none;
 }
-.config-notes-hidenotes .chapter .note,
-.config-notes-hidenotes .chapter .cf {
+.config-verses-off .verse-num {
+	display: none;
+}
+.config-notes-off .chapter .note,
+.config-notes-off .chapter .cf {
 	display: none;
 }
 
+/* Media */
+.config-images-off .image-icon {
+	display: none;
+}
+.config-video-off .video-icon{
+	display: none;
+}
+  
+  
+/* Words fo Chrsit */
+.config-wordsofchrist-off span.woc {
+	color: #111;
+}
 
 
 /* morphy */

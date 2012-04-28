@@ -52,6 +52,9 @@ docs.plugins.push({
 				
 			});
 			
+			// add option
+			docManager.createOptionToggle('Video', 'video', true);			
+			
 			function addVideoIcons(chapter) {
 				
 				chapter.find('.verse').each(function(index, verseNode) {

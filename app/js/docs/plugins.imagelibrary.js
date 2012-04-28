@@ -59,6 +59,9 @@ docs.plugins.push({
 				
 			});
 			
+			// add option
+			docManager.createOptionToggle('Images', 'images', true);
+			
 			function addMediaIcons(chapter) {
 				
 				chapter.find('.verse').each(function(index, verseNode) {

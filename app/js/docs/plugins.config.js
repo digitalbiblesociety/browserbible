@@ -4,7 +4,8 @@
  *
  * @author John Dyer (http://j.hn/)
  */
- 
+
+
 docs.plugins.push({
 
 	init: function(docManager) {
@@ -15,6 +16,7 @@ docs.plugins.push({
 				return '<label for="' + id + '">' + name + '</label>';
 			},			
 		
+			// FONT face
 			fontFamilyOptions = [
 				{name: 'Default'},
 				{name: 'Georgia'},
@@ -24,16 +26,8 @@ docs.plugins.push({
 			renderFontFamilyOption = function(id, name) {
 				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
 			},
-			themeOptions = [
-				{name: 'Default'},
-				{name: 'Tan'},
-				{name: 'Green'}
-			],
-			renderThemeOption = function(id, name) {
-				return 	'<label for="' + id + '" class="' + id + '">' +
-							'<span class="site-header theme-demo"></span><span class="document-header theme-demo"></span>' +
-						'</label>';
-			},
+			
+			// FONT SIZE
 			fontSizeOptions = [
 				{name: 'Small'},
 				{name: 'Default'},
@@ -44,6 +38,19 @@ docs.plugins.push({
 			renderFontSizeOption = function(id, name) {
 				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
 			},
+			
+			// THEME colors
+			themeOptions = [
+				{name: 'Default'},
+				{name: 'Tan'},
+				{name: 'Green'}
+			],
+			renderThemeOption = function(id, name) {
+				return 	'<label for="' + id + '" class="' + id + '">' +
+							'<span class="site-header theme-demo"></span><span class="document-header theme-demo"></span>' +
+						'</label>';
+			},			
+			
 			/* configWindow = $('<div id="config-menu" class="modal-window">' +
 							'<div class="modal-header">Configuration<span class="modal-close">Close</span></div>'+
 							'<div class="modal-content">' +
@@ -56,18 +63,21 @@ docs.plugins.push({
 			configWindow = docs.createModal('config', 'Configuration').size(400, 300);
 			
 			
-		function createOptionSet(title, prefix, data, renderOption) {
+		docManager.createOptionSet = function(title, prefix, data, renderOption) {
+			
+			if (typeof renderOption == 'undefined') {
+				renderOption = renderOptionDefault;
+			}
+			
 			var configBlock =
 				$('<div class="config-options" id="config-' + prefix + '"><h3>' + title + '</h3></div>')
 					.appendTo( configWindow.content )
 					.on('click', 'input', function() {
 						var bod = $(document.body);
-						
-						console.log( $(this) );
-						
-						// remove all fonts
+							
+						// remove all 
 						$(this).closest('.config-options').find('input').each(function(i, input) {
-							console.log('removing ', $(input).val());
+							//console.log('removing ', $(input).val());
 							bod.removeClass('config-' + prefix + '-' + $(input).val() );
 						});
 						
@@ -81,6 +91,7 @@ docs.plugins.push({
 			for (var i=0, il=data.length; i<il; i++) {
 				var name = data[i].name,
 					value = name.toLowerCase().replace(' ','');
+				
 				configBlock.append($('<div class="config-option">' +
 										'<input type="radio" name="config-' + prefix + '-choice" id="config-' + prefix + '-' + value + '" value="' + value + '" />' +
 										renderOption('config-' + prefix + '-' + value, name) + 
@@ -91,13 +102,69 @@ docs.plugins.push({
 			
 			configBlock.find('#config-' + prefix + '-' + userConfig + '').trigger('click');			
 		
+		
+			// resize?
+		
+			configWindow.show();
+			console.log('height:::', configWindow.content.outerHeight(true), configBlock.position().top, configBlock.outerHeight(true));
+			
+			configWindow.size(400, configBlock.position().top + configBlock.outerHeight(true) + 20);
+			configWindow.hide();
+			//configWindow.content.height
 		}
 		
-		createOptionSet('Theme', 'theme', themeOptions, renderThemeOption);
-		createOptionSet('Fonts', 'font', fontFamilyOptions, renderFontFamilyOption);
-		createOptionSet('Size', 'size', fontSizeOptions, renderFontSizeOption);
-		createOptionSet('Verses', 'verses', [{name: 'Default'},{name: 'Hide Verses'}], renderOptionDefault);
-		createOptionSet('Notes', 'notes', [{name: 'Default'},{name: 'Hide Notes'}], renderOptionDefault);
+		docManager.createOptionToggle = function(title, prefix, checked) {
+				
+			checked = $.jStorage.get('docs-config-' + prefix, checked);
+			
+			
+			var bod = $(document.body),
+				setStyle = function(on) {
+					if (on) {
+						bod.removeClass( 'config-' + prefix + '-off');
+					} else {
+						bod.addClass( 'config-' + prefix + '-off');
+					}					
+				},
+				configBlock =
+					$('<div class="config-toggle">' +
+						'<input type="checkbox" ' + (checked ? ' checked' : '') + ' id="config-' + prefix + '" />' +
+						'<label for="config-' + prefix + '">' + title +'</label>' + 
+					'</div>')
+						.appendTo( configWindow.content )
+						.on('click', 'input', function() {
+							
+							var checked = $(this).is(':checked');
+								
+							setStyle(checked);
+							
+							// save setting
+							$.jStorage.set('docs-config-' + prefix + '', checked);
+						});
+			
+			setStyle(checked);
+			
+			
+			configWindow.show();
+			console.log('height:::', configWindow.content.outerHeight(true), configBlock.position().top, configBlock.outerHeight(true));
+			
+			configWindow.size(400, configBlock.position().top + configBlock.outerHeight(true) + 20);
+			configWindow.hide();
+			//configWindow.content.height
+		}		
+		
+		docManager.createOptionSet('Theme', 'theme', themeOptions, renderThemeOption);
+		docManager.createOptionSet('Fonts', 'font', fontFamilyOptions, renderFontFamilyOption);
+		docManager.createOptionSet('Size', 'size', fontSizeOptions, renderFontSizeOption);
+		docManager.createOptionToggle('Chapters', 'chapters', true);
+		docManager.createOptionToggle('Verses', 'verses', true);
+		docManager.createOptionToggle('Words of Christ', 'wordsofchrist', true);
+		docManager.createOptionToggle('Notes', 'notes', true);
+		
+		//docManager.createOptionSet('Verses', 'verses', [{name: 'Default'},{name: 'Hide Verses'}]);
+		
+		//docManager.createOptionSet('Words of Christ', 'wordsofchrist', [{name: 'Default'},{name: 'Black'}]);
+		//docManager.createOptionSet('Notes', 'notes', [{name: 'Default'},{name: 'Hide Notes'}]);
 
 		
 		var configButton = $('<input type="button" id="docs-config" />')
@@ -117,9 +184,5 @@ docs.plugins.push({
 					
 				}
 			});
-		
-
-			
-		
 	}
 });

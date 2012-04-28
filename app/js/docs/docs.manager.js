@@ -249,20 +249,22 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 						'<input type="text" class="document-input" />' +
 					'</div>' + 
 					'<div class="document-header-selector">' +
-						
 						'<span>NASB</span>' +
 						'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
 					'</div>' + 
 					'<div class="document-header-buttons">' +
 						'<input type=\"button\" class=\"document-header-button document-audio-button\" value="A" />' +
 						'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
+						
+						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
+						'<input type=\"button\" class=\"document-header-button document-lock-button state-locked\" value="L" />' +						
+						'<input type=\"button\" class=\"document-header-button document-close-button\" value="X" />' +
+					'</div>' +
+					/*
+					'<div class="document-header-options">' +
 						'<input type=\"button\" class=\"document-header-button document-options-button\" value="O" />' +
 					'</div>' +
-					'<div class="document-header-options">' +
-						'<input type=\"button\" class=\"document-header-button document-close-button\" value="X" />' +
-						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
-						'<input type=\"button\" class=\"document-header-button document-lock-button state-locked\" value="L" />' +
-					'</div>' +
+					*/
 				'</div>' +
 				'<div class="document-content">' +
 					'<div class="document-wrapper">' +

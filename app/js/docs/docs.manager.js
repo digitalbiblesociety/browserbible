@@ -245,22 +245,21 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.container = $(
 			'<div class="document-container" id="' + id + '">' +
 				'<div class="document-header">' +
-					'<div class="document-header-input">' +
-						'<input type="text" class="document-input" />' +
+				
+					'<div class="document-header-left">' +
+						'<div class="document-header-input">' +
+							'<input type="text" class="document-input" />' +
+						'</div>' +
+						'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
+						'<div class="document-header-selector">' +
+							'<span>NASB</span>' +
+							'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
+						'</div>' +
+						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
 					'</div>' +
-					'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
-					'<div class="document-header-selector">' +
-						'<span>NASB</span>' +
-						'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
-					'</div>' +
-					'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
 					
-					
-					'<div class="document-header-buttons">' +
+					'<div class="document-header-right">' +
 						'<input type=\"button\" class=\"document-header-button document-audio-button\" value="A" />' +
-						
-						
-						
 						'<input type=\"button\" class=\"document-header-button document-lock-button state-locked\" value="L" />' +						
 						'<input type=\"button\" class=\"document-header-button document-close-button\" value="X" />' +
 					'</div>' +

@@ -247,16 +247,20 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 				'<div class="document-header">' +
 					'<div class="document-header-input">' +
 						'<input type="text" class="document-input" />' +
-					'</div>' + 
+					'</div>' +
+					'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
 					'<div class="document-header-selector">' +
 						'<span>NASB</span>' +
 						'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
-					'</div>' + 
+					'</div>' +
+					'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
+					
+					
 					'<div class="document-header-buttons">' +
 						'<input type=\"button\" class=\"document-header-button document-audio-button\" value="A" />' +
-						'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
 						
-						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
+						
+						
 						'<input type=\"button\" class=\"document-header-button document-lock-button state-locked\" value="L" />' +						
 						'<input type=\"button\" class=\"document-header-button document-close-button\" value="X" />' +
 					'</div>' +

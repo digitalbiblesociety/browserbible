@@ -73,6 +73,13 @@ docs.DocManager = {
 		this.resizeDocuments();
 		this.docIndex++;
 		
+		if (this.documents.length === 1) {
+			$('.document-lock-button, .document-close-button').hide();
+		} else {
+			$('.document-lock-button, .document-close-button').show();
+		}
+		//console.warn(this.documents.length, $('.document-lock-button, .document-close-button') );
+		
 		return document;
 	},
 	
@@ -124,6 +131,11 @@ docs.DocManager = {
 		
 		this.resizeDocuments();
 		this.saveSettings();
+		
+
+		if (this.documents.length === 1) {
+			$('.document-lock-button, .document-close-button').hide();
+		}		
 	},
 	
 	resizeDocuments: function() {

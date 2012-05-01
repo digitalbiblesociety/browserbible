@@ -19,6 +19,7 @@ bible.versions = {
 		'en_oeb',
 		'en_web',
 		'el_tisch',
+		'el_sblgnt',
 		'es_rv',
 		'he_wlc',
 		'ru_syn',

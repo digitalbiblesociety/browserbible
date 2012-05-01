@@ -142,7 +142,7 @@ body {
 		position: absolute;
 		pointer-events: none;
 		border: solid 1px #999;
-		
+		/* border-radius: 5px; */
 	}
 	
 	.document-header .document-header-selector .document-selector {

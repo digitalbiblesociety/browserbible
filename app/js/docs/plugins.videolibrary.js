@@ -19,24 +19,24 @@ docs.plugins.push({
 				popup = docs.createModal('video-player', 'Video').size(width+14,height+36).center(),
 				playerid = 'player1',
 				player = null,
-				currentUrl = '';
+				currentUrls = '';
 				
 			popup.content.css('padding', 0);
 				
 				
-			function playUrl(url) {
+			function playUrl(urls) {
 				
 				if (player != null) {
-					if (currentUrl == url) {
+					if (currentUrls == urls) {
 						//player.setCurrentTime(0);
 						player.play();
 					} else {
-						player.setSrc(url);
+						player.setSrc(urls);
 						player.load();
 						player.play();
 					}
 					
-					currentUrl = url;
+					currentUrls = urls;
 				}
 				
 			}
@@ -79,19 +79,23 @@ docs.plugins.push({
 						verseOsis = verse.attr('data-osis'),
 						reference = new bible.Reference(verseOsis).toString(),
 						videoIndex = videoLibrary[verseOsis],
-						videoUrl = 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4';
+						//videoUrl = 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4';
+						videoSrc = [
+									{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4'},
+									{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.webm'}
+								   ];
 						
 					popup.title.html('Video: ' + reference.toString());	
 					popup.center().show();
 					
 					if (player != null) {
 						
-						playUrl(videoUrl);
+						playUrl(videoSrc);
 					} else {
 						
-						$('#' + playerid).mediaelementplayer({type:'video/mp4', success: function(m, n, p) {
+						$('#' + playerid).mediaelementplayer({type:['video/mp4','video/webm'], success: function(m, n, p) {
 							player = p;
-							playUrl(videoUrl);
+							playUrl(videoSrc);
 						}});
 						
 					}

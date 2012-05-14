@@ -69,9 +69,9 @@ docs.plugins.push({
 			selectedNote = note;
 		
 			if (note.hasClass('cf')) {
-				notesPopup.title.html('Cross Reference');
+				notesPopup.title.html(docs.Localizer.get('plugin_notesandcf_cf'));
 			} else if (note.hasClass('note')) {
-				notesPopup.title.html('Note');
+				notesPopup.title.html(docs.Localizer.get('plugin_notesandcf_note'));
 			}
 		
 			notesPopup.content.empty().append(note.clone());

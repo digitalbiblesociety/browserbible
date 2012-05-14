@@ -110,8 +110,8 @@ bible.BibleNavigator = {
 		});
 		
 		document.navigationWindow.html(
-			'<div class="book-list document-navigation-list"><h3>Books</h3><div class="nav-scroller"><ul></ul></div></div>' +
-			'<div class="chapter-list document-navigation-list"><h3>Chapters</h3><div class="nav-scroller"><ul></ul></div></div>'
+			'<div class="book-list document-navigation-list"><h3>' + docs.Localizer.get('bible_navigator_books') + '</h3><div class="nav-scroller"><ul></ul></div></div>' +
+			'<div class="chapter-list document-navigation-list"><h3>' + docs.Localizer.get('bible_navigator_chapters') + '</h3><div class="nav-scroller"><ul></ul></div></div>'
 		);
 		
 		// events!

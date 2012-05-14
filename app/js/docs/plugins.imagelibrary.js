@@ -13,7 +13,7 @@ docs.plugins.push({
 
 			// create media popup
 			var
-				popup = docs.createModal('image-library', 'Images').size(320,200).center();
+				popup = docs.createModal('image-library', docs.Localizer.get('plugin_images_title')).size(320,200).center();
 
 			// click an image in the media popup
 			popup.content
@@ -60,7 +60,7 @@ docs.plugins.push({
 			});
 			
 			// add option
-			docManager.createOptionToggle('Images', 'images', true);
+			docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_imags'), 'images', true);
 			
 			function addMediaIcons(chapter) {
 				

@@ -60,7 +60,7 @@ docs.plugins.push({
 			.appendTo(document.body)
 			.hide();
 			*/
-			configWindow = docs.createModal('config', 'Configuration').size(400, 300);
+			configWindow = docs.createModal('config', docs.Localizer.get('plugin_config_title')).size(400, 300);
 			
 			
 		docManager.createOptionSet = function(title, prefix, data, renderOption) {
@@ -153,13 +153,13 @@ docs.plugins.push({
 			//configWindow.content.height
 		}		
 		
-		docManager.createOptionSet('Theme', 'theme', themeOptions, renderThemeOption);
-		docManager.createOptionSet('Fonts', 'font', fontFamilyOptions, renderFontFamilyOption);
-		docManager.createOptionSet('Size', 'size', fontSizeOptions, renderFontSizeOption);
-		docManager.createOptionToggle('Chapters', 'chapters', true);
-		docManager.createOptionToggle('Verses', 'verses', true);
-		docManager.createOptionToggle('Words of Christ', 'wordsofchrist', true);
-		docManager.createOptionToggle('Notes', 'notes', true);
+		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_theme'), 'theme', themeOptions, renderThemeOption);
+		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_font'), 'font', fontFamilyOptions, renderFontFamilyOption);
+		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_size'), 'size', fontSizeOptions, renderFontSizeOption);
+		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_chapters'), 'chapters', true);
+		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_verses'), 'verses', true);
+		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_wordsofchrist'), 'wordsofchrist', true);
+		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_notes'), 'notes', true);
 		
 		//docManager.createOptionSet('Verses', 'verses', [{name: 'Default'},{name: 'Hide Verses'}]);
 		

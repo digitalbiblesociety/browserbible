@@ -8,6 +8,9 @@ jQuery(function($) {
 	
 	if (typeof window.console == 'undefined')
 		window.console = {log:function() {}};
+		
+	// updates languages
+	docs.Localizer.localize();
 	
 	// setup main site areas
 	docs.DocManager.init($('#header'), $('#footer'), $('#content'), $(window));

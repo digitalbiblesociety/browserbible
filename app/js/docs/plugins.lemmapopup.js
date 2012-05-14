@@ -12,7 +12,7 @@ docs.plugins.push({
 		// create popup
 		var selectedWord = null,
 			lemmaSelectedClass = 'lemma-selected',
-			popup = docs.createModal('lemma', 'Lemma Data'),
+			popup = docs.createModal('lemma', docs.Localizer.get('plugin_lemma_title')),
 			timer = null,
 			startTimer = function() {				
 				stopTimer();

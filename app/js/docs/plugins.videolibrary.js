@@ -16,7 +16,7 @@ docs.plugins.push({
 			var
 				width = 640,
 				height = 360,
-				popup = docs.createModal('video-player', 'Video').size(width+14,height+36).center(),
+				popup = docs.createModal('video-player', docs.Localizer.get('plugin_video_title')).size(width+14,height+36).center(),
 				playerid = 'player1',
 				player = null,
 				currentUrls = '';
@@ -53,7 +53,7 @@ docs.plugins.push({
 			});
 			
 			// add option
-			docManager.createOptionToggle('Video', 'video', true);			
+			docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_video'), 'video', true);			
 			
 			function addVideoIcons(chapter) {
 				

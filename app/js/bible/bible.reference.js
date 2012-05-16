@@ -278,7 +278,7 @@ bible.Reference = function () {
 					this.chapter1++;
 				} else if (this.bookList.indexOf(this.osisBookID) < this.bookList.length-1) {
 					// go to the next book, first chapter
-					this.bookIndex++;
+					this.osisBookID = this.bookList[this.bookList.indexOf(this.osisBookID)+1];
 					this.chapter1 = 1;
 				}
 				
@@ -288,11 +288,11 @@ bible.Reference = function () {
 		},
 		
 		isFirstChapter: function () {
-			return (this.bookIndex == 0 && this.chapter1 == 1); //  && this.verse1 == 1);
+			return (this.chapter1 == 1 && this.bookList.indexOf(this.osisBookID) == 0);
 		},
 		
 		isLastChapter: function () {
-			return (this.bookIndex == bible.Books.length - 1 && this.chapter1 == v.length); //  && 	this.verse1 == v[v.length-1]);
+			return (this.bookList[this.osisBookID] == this.bookList.length-1 && bible.BOOK_DATA[this.osisBookID].chapters.length == this.chapter1);
 		}
 	}
 };

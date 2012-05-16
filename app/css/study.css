@@ -834,6 +834,7 @@ span.config-size-huge  {
 	background: #ccc url(images/icons-light-small.png) top left no-repeat;
 	cursor: pointer;
 	border-radius: 4px;
+	margin-right: 5px;
 }
 
 .inline-icon:hover {

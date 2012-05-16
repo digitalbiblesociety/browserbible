@@ -342,8 +342,10 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			
 			if (sectionId != t.currentAudio) {
 				
+				var filename = t.audioData.name ? t.audioData.name(reference) : sectionId + '.mp3';
+				
 				t.player.pause();
-				t.player.setSrc('content/audio/' + t.selector.val() + '/' + sectionId + '.mp3');
+				t.player.setSrc('content/audio/' + t.selector.val() + '/' + filename);
 				t.player.load();
 				
 				reference.verse1 = 0;
@@ -557,6 +559,11 @@ docs.Document.prototype = {
 		$.ajax({
 			url:'content/audio/' + version + '/version.json',
 			success: function(data) {
+				
+				var audioJson = eval('(' + data + ')');
+				
+				console.log('audio data', audioJson);
+				t.audioData = audioJson;
 				t.audioBtn.show();
 			}
 		})

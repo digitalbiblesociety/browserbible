@@ -42,12 +42,17 @@ docs.plugins.push({
 			// THEME colors
 			themeOptions = [
 				{name: 'Default'},
-				{name: 'Tan'},
-				{name: 'Green'}
+				//{name: 'Tan'},
+				//{name: 'Green'}
+				{name: 'Nature'},
+				{name: 'Steel'},
+				{name: 'Art'},
+				{name: 'Wood'},
+				{name: 'Paper'}
 			],
 			renderThemeOption = function(id, name) {
 				return 	'<label for="' + id + '" class="' + id + '">' +
-							'<span class="site-header theme-demo"></span><span class="document-header theme-demo"></span>' +
+							'<span class="config-theme-' + name.toLowerCase() + '-demo1 theme-demo"></span><span class="config-theme-' + name.toLowerCase() + '-demo2 theme-demo"></span>' +
 						'</label>';
 			},			
 			

@@ -561,7 +561,7 @@ body {
 .config-options .config-option {
 	float: left;
 	margin: 0 5px 0  0;
-	width: 60px;
+	width: 55px;
 	min-height: 20px;
 	line-height: 1;
 }
@@ -657,6 +657,120 @@ span.config-font-baskerville {
 .config-theme-default .popup-window {
 	background: #000;
 }
+
+.config-theme-default-demo1 {
+	background: #eee;
+}
+.config-theme-default-demo2 {
+	background: #333;
+}
+
+/*
+NEW THEMEs
+***********************/
+/* Nature */
+.config-theme-nature #header, .config-theme-nature-demo1 {
+	background: url(images/leaves_antique_texture_1_bg.jpg);
+}
+.config-theme-nature .document-content {
+	-x-background: #eeebe7;
+}
+.config-theme-nature .document-header, .config-theme-nature-demo2 {
+	background: url(images/leaves_antique_texture_3_bg.jpg);
+}
+.config-theme-nature .document-footer {
+	background: url(images/leaves_antique_texture_3_bg.jpg);
+}
+.config-theme-nature .chapter {
+	color: #111;
+}
+.config-theme-nature .popup-window {
+	background: #111;
+}
+
+/* STEEL */
+.config-theme-steel #header, .config-theme-steel-demo1  {
+	background: url(images/cream_aluminum_1_bg.jpg);
+}
+.config-theme-steel .document-content {
+	-x-background: #eeebe7;
+}
+.config-theme-steel .document-header, .config-theme-steel-demo2 {
+	background: url(images/cream_aluminum_2_bg.jpg);
+}
+.config-theme-steel .document-footer {
+	background: url(images/cream_aluminum_2_bg.jpg);
+}
+.config-theme-steel .chapter {
+	color: #111;
+}
+.config-theme-steel .popup-window {
+	background: #111;
+}
+
+/* Art */
+.config-theme-art #header, .config-theme-art-demo1  {
+	background: url(images/floral_lines_texture_1_bg.jpg);
+}
+.config-theme-art .document-content {
+	-x-background: #eeebe7;
+}
+.config-theme-art .document-header, .config-theme-art-demo2 {
+	background: url(images/floral_lines_texture_2_bg.jpg);
+}
+.config-theme-art .document-footer {
+	background: url(images/floral_lines_texture_2_bg.jpg);
+}
+.config-theme-art .chapter {
+	color: #111;
+}
+.config-theme-art .popup-window {
+	background: #111;
+}
+
+/* WOOD */
+.config-theme-wood #header, .config-theme-wood-demo1  {
+	background: url(images/wood_texture_1_bg.jpg);
+}
+.config-theme-wood .document-content {
+	-x-background: #eeebe7;
+}
+.config-theme-wood .document-header, .config-theme-wood-demo2  {
+	background: url(images/wood_texture_2_bg.jpg);
+}
+.config-theme-wood .document-footer {
+	background: url(images/wood_texture_2_bg.jpg);
+}
+.config-theme-wood .chapter {
+	color: #111;
+}
+.config-theme-wood .popup-window {
+	background: #111;
+}
+
+/* Paper */
+.config-theme-paper #header, .config-theme-paper-demo1  {
+	background: url(images/yellow_cream_texture_1_bg-1.jpg);
+}
+.config-theme-paper .document-content {
+	background: #fefefe;
+}
+.config-theme-paper .document-header, .config-theme-paper-demo2  {
+	background: url(images/leaves_antique_texture_2_bg.jpg);
+}
+.config-theme-paper .document-footer {
+	background: url(images/leaves_antique_texture_2_bg.jpg);
+}
+.config-theme-paper .chapter {
+	color: #111;
+}
+.config-theme-paper .popup-window {
+	background: #111;
+}
+/* END NEW THEMES
+**************************/
+
+
 
 /* TAN */
 .config-theme-tan .site-header {

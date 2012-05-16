@@ -768,9 +768,11 @@ docs.Document.prototype = {
 	},
 	
 	checkScrollPosition: function() {
+		
+		
 		// measure sections
 		var t = this,
-			sections = this.wrapper.find( t.navigator.sectionSelector ),
+			sections = t.wrapper.find( t.navigator.sectionSelector ),
 			totalHeight = 0;
 		
 		sections.each(function(e) {
@@ -783,29 +785,32 @@ docs.Document.prototype = {
 			distFromBottom = totalHeight - paneHeight - distFromTop,
 			fragmentId;
 			
-		//console.log(t.id, distFromTop, distFromBottom, sections.length);
+		//if (t.id === 'doc-0')
+		//	console.log(t.id, totalHeight, distFromTop, distFromBottom, sections.length, (distFromTop < 750 || sections.length === 2), (distFromBottom < 750 || sections.length <= 2));
 
-		// check if we need to load the prev or next one
-		if (distFromTop < 750 || sections.length === 2) {
-			//console.log(t.id, 'load prev');
-
-			fragmentId = sections
-							.first() // the first chapter (top)
-							.find( t.navigator.fragmentSelector + ':first') // first fragments
-							.attr( t.navigator.fragmentIdAttr );
-
-			t.load(fragmentId, 'prev');
-
-		} else if (distFromBottom < 750 || sections.length === 1) {
-			//console.log(t.id, 'load next');
-
-			fragmentId = sections
-							.last() // the last chapter (bottom)
-							.find( t.navigator.fragmentSelector + ':first') // first fragments
-							.attr( t.navigator.fragmentIdAttr );
-							
-			t.load(fragmentId, 'next');
-		}		
+		if ( sections.length <= 5 ) {
+			// check if we need to load the prev or next one
+			if (distFromTop < 750) {
+				//console.log(t.id, 'load prev');
+	
+				fragmentId = sections
+								.first() // the first chapter (top)
+								.find( t.navigator.fragmentSelector + ':first') // first fragments
+								.attr( t.navigator.fragmentIdAttr );
+	
+				t.load(fragmentId, 'prev');
+	
+			} else if (distFromBottom < 750) {
+				
+				
+				fragmentId = sections
+								.last() // the last chapter (bottom)
+								.find( t.navigator.fragmentSelector + ':first') // first fragments
+								.attr( t.navigator.fragmentIdAttr );
+									
+				t.load(fragmentId, 'next');
+			}
+		}
 	},
 	
 	scrollTimeout1: null,
@@ -842,6 +847,9 @@ docs.Document.prototype = {
 			t.updateNavigationInput(true);
 		}
 		*/
+		
+		//t.checkScrollPosition();
+		//return;
 		
 		// Load prev/next chapter(s)
 		if (t.scrollTimeout1 != null) {

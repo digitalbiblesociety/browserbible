@@ -1,5 +1,7 @@
 {
-"name":"English Standard Version",
-"abbreviation":"ESV",
-"books":bible.DEFAULT_BIBLE
+	"name":"English Standard Version",
+	"abbreviation":"ESV",
+	"name": function(reference) {
+		return reference.toOsisChapter() + '.mp3';	
+	}
 }

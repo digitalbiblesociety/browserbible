@@ -106,7 +106,6 @@ docs.plugins.push({
 			// resize?
 		
 			configWindow.show();
-			console.log('height:::', configWindow.content.outerHeight(true), configBlock.position().top, configBlock.outerHeight(true));
 			
 			configWindow.size(400, configBlock.position().top + configBlock.outerHeight(true) + 20);
 			configWindow.hide();
@@ -146,7 +145,6 @@ docs.plugins.push({
 			
 			
 			configWindow.show();
-			console.log('height:::', configWindow.content.outerHeight(true), configBlock.position().top, configBlock.outerHeight(true));
 			
 			configWindow.size(400, configBlock.position().top + configBlock.outerHeight(true) + 20);
 			configWindow.hide();

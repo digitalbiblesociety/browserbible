@@ -300,6 +300,10 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.input = t.container.find('.document-input');
 	t.button = t.container.find('.document-button');
 	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
+	
+	// double check. if the selected version (from memory) isn't there, try the first one
+	selectedDocumentId = t.selector.val();
+	
 	t.syncList = t.container.find('.document-sync-list'); // currently not being used
 	t.syncCheckbox = t.container.find('.document-sync-checkbox');
 	t.lockBtn = t.container.find('.document-lock-button');

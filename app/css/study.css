@@ -533,6 +533,10 @@ body {
 		right: 8px;
 		top: 8px;
 		cursor: pointer;
+		text-indent: -999px;
+		background: transparent url(images/icons-small.png) -198px -42px no-repeat;
+		width: 20px;
+		height: 20px;
 	}
 	.popup-window .popup-footer {
 		padding: 0 8px 8px 8px;

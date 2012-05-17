@@ -65,7 +65,7 @@ docs.plugins.push({
 			.appendTo(document.body)
 			.hide();
 			*/
-			configWindow = docs.createModal('config', docs.Localizer.get('plugin_config_title')).size(400, 300);
+			configWindow = docs.createModal('config', docs.Localizer.get('plugin_config_title') + ' (v' + docs.version + ')').size(400, 300);
 			
 			
 		docManager.createOptionSet = function(title, prefix, data, renderOption) {

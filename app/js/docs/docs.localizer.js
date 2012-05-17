@@ -1,5 +1,5 @@
 docs.Localizer = {
-	language: 'ar',
+	language: 'en',
 	defaultLanguage: 'en',
 	get: function(key) {
 		var word = '';

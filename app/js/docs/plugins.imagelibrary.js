@@ -60,7 +60,7 @@ docs.plugins.push({
 			});
 			
 			// add option
-			docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_imags'), 'images', true);
+			docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_images'), 'images', true);
 			
 			function addMediaIcons(chapter) {
 				

@@ -9,7 +9,8 @@ docs.plugins.push({
 
 	init: function(docManager) {
 		
-		var body = document.body;
+		var body = document.body,
+			isFullscreen = false;
 	
 		if (typeof body.requestFullScreen != 'undefined' ||
 			typeof body.webkitRequestFullScreen != 'undefined' ||
@@ -19,13 +20,37 @@ docs.plugins.push({
 				.appendTo(docManager.header.find('#header-nav'))
 				.on('click', function() {
 				
-					if (typeof body.requestFullScreen != 'undefined') {
-						body.requestFullScreen();
+					if (typeof body.requestFullscreen != 'undefined') {
+						if (isFullscreen) {
+							document.exitFullscreen();
+						} else {
+							body.requestFullscreen();
+						}
+						isFullscreen = !isFullscreen;
+						
 					} else if (typeof body.webkitRequestFullScreen != 'undefined') {
-						body.webkitRequestFullScreen();
+						
+						if (isFullscreen) {
+							document.webkitCancelFullScreen();
+						} else {
+							body.webkitRequestFullScreen();
+						}
+						isFullscreen = !isFullscreen;						
+						
 					} else if (typeof body.mozRequestFullScreen != 'undefined') {
-						body.mozRequestFullScreen();
+						
+						if (isFullscreen) {
+							document.mozCancelFullScreen();
+						} else {
+							body.mozRequestFullScreen();
+						}
+						isFullscreen = !isFullscreen;						
 					}
+					
+					if (isFullscreen)
+						$(this).addClass('is-fullscreen');
+					else
+						$(this).removeClass('is-fullscreen');
 				});
 		}
 		

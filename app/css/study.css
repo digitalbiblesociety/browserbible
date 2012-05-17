@@ -47,7 +47,7 @@ body {
 }
 
 #header-nav input {
-	background: transparent url(images/icons-light-small.png) 0 0  no-repeat;
+	background: transparent url(images/icons-small.png) 0 0  no-repeat;
 	border: solid 1px #999;
 	border-radius: 5px;
 	-x-text-indent: -9999px;
@@ -62,16 +62,19 @@ body {
 
 
 #header-nav #docs-fullscreen {
-	background-position: -102px -276px;
+	background-position: -485px -38px;
+}
+#header-nav #docs-fullscreen.is-fullscreen {
+	background-position: -517px -38px;
 }
 #header-nav #docs-config {
-	background-position: -102px -117px;
+	background-position: -5px -38px;
 }
 #header-nav #docs-add-document {
-	background-position: -102px -5px;
+	background-position: -326px -37px;
 }
 #header-nav #docs-morphology {
-	background-position: -102px -208px;
+	background-position: -230px -37px;
 }
 
 
@@ -163,7 +166,7 @@ body {
 	}
 	
 	.document-header-button {
-		background: transparent url(images/icons-dark-small.png) 0 0  no-repeat;
+		background: transparent url(images/icons-small.png) 0 0  no-repeat;
 		border: solid 1px #999;
 		border-radius: 5px;
 		text-indent: -9999px;
@@ -177,27 +180,26 @@ body {
 		cursor: pointer;
 	}
 	.document-search-button {	
-		background-position: -58px -186px;
+		background-position: -37px -6px;
 	}
 	.document-info-button {
-		background-position:  -35px -28px;
+		background-position:  -70px -6px;
 	}
 	.document-options-button {	
-		background-position: -102px -117px;
+		background-position: -6px -6px;
 	}	
 	.document-close-button {
-		background-position:  -125px -185px;
-		-x-background-position:  -80px -5px
+		background-position:  -198px -6px;
 	}
 	.document-lock-button {
-		background-position:  -34px -73px;
+		background-position:  -102px -6px;
 	}
 	.state-unlocked {
-		background-position: -57px -73px;
+		background-position: -134px -6px;
 	}
 	
 	.document-audio-button {
-		background-position: -80px -163px;
+		background-position: -165px -5px;
 	}
 
 .document-content {
@@ -945,21 +947,21 @@ span.config-size-huge  {
 	display: inline-block;
 	width: 20px;
 	height: 20px;
-	background: #ccc url(images/icons-light-small.png) top left no-repeat;
+	background: #ccc url(images/icons-small.png) top left no-repeat;
 	cursor: pointer;
 	border-radius: 4px;
 	margin-right: 5px;
 }
 
 .inline-icon:hover {
-	background-color: #33f;
+	background-color: #339;
 }
 
 .image-icon {
-	background-position: -12px -162px;
+	background-position: -262px -38px;
 }
 .video-icon {
-	background-position: -125px -231px;
+	background-position: -294px -38px;
 }
 
 

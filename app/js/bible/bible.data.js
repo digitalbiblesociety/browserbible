@@ -41,7 +41,7 @@ bible.BOOK_DATA = {
 	},
 	"Judg": {
 		"chapters":[36,23,31,24,31,40,25,35,57,18,40,15,25,20,20,31,13,31,30,48,25],
-		"names":{"en":["Judges","Jg","Jud","Jdg","Ju","Jdgs"]}
+		"names":{"en":["Judges","Jg","Jdg","Jdgs"]}
 	},
 	"Ruth": {
 		"chapters":[22,23,18,22],
@@ -161,7 +161,7 @@ bible.BOOK_DATA = {
 	},
 	"Hag": {
 		"chapters":[15,23],
-		"names":{"en":["Haggia","Ha","Hag","Hagg"]}
+		"names":{"en":["Haggai","Ha","Hag","Hagg"]}
 	},
 	"Zech": {
 		"chapters":[21,13,10,14,11,15,14,23,17,12,17,14,9,21],

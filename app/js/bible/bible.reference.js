@@ -31,7 +31,7 @@ bible.parseReference = function (textReference) {
 		
 		// match OSIS id?
 		possibleMatch = input.substring(0, Math.floor(osisBookId.length, input.length)).toLowerCase();
-		if (possibleMatch == osisBookId) {
+		if (possibleMatch == osisBookId.toLowerCase()) {
 			matchingOsisBookID = osisBookId;
 			input = input.substring(osisBookId.length);
 			matchingLanguage = 'en';

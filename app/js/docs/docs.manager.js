@@ -635,6 +635,9 @@ docs.Document.prototype = {
 							
 						});
 						
+						var versionInfo = bible.versions.versionsByKey[switchToVersion];
+						t.container.find('.document-header-selector span').html(versionInfo.abbreviation);	
+						
 						//t.selector[0].selectedIndex = 0;
 						//t.selector.val('he_wlc');
 						t.load(fragmentId, action);

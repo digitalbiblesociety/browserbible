@@ -78,10 +78,11 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 * ~~Strong's based searching~~
 * ~~Strong's/Thayer/BDB popups~~
 * ~~Add images links~~
-* Add Audio player
-* Add video launcher
+* ~~Add Audio player~~
+* ~~Add video launcher~~
 * handle missing books (e.g. Psalms and NT)
 * handle apocrypha
+
 
 ### Wish List
 
@@ -96,3 +97,9 @@ source work including [http://openscriptures.org](Open Scriptures) and [http://w
 * ~~Notes and CF needs work~~
 * ~~OSIS quotes span over verses~~
 * USMF doesn't handle quote lines (OEB, WEB)
+* Custom scroll bars
+* Verse links from notes/cfs
+* ~~Images/Video always visible~~
+* ~~Settings On/Off Swtich~~
+* ~~Red letters switch~~
+* 

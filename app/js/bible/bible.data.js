@@ -73,7 +73,7 @@ bible.BOOK_DATA = {
 	},
 	"Ezra": {
 		"chapters":[11,70,13,24,17,22,28,36,15,44],
-		"names":{"en":["Ezra","Ez","Ezr"]}
+		"names":{"en":["Ezra","Ezr"]}
 	},
 	"Neh": {
 		"chapters":[11,20,32,23,19,19,73,18,38,39,36,47,31],

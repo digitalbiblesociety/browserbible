@@ -325,42 +325,54 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 		}
 	});
 	
+	
 	//audio
 	t.currentAudio = null;
 	t.audioBtn = t.container.find('.document-audio-button').hide();
-	t.audioWindow = docs.createModal(t.id + '-audio', 'Audio');
-	t.audioWindow.content.append('<audio id="' + t.id + '-audio-player" type="audio/mp3"></audio>');
-	t.audioWindow.show();
-	$('#' + t.id + '-audio-player').mediaelementplayer({type: 'audio/mp3', audioWidth: '100%', success: function(media, node, player) { t.player = player; } });
-	t.audioWindow.hide();
-	t.audioBtn.on('click', function() {
-		if (t.audioWindow.content.is(':visible')) {
-			t.audioWindow.hide();
-		} else {
-			t.audioWindow.show();
-			t.audioWindow.window.css({top: t.audioBtn.offset().top + 25, left: t.audioBtn.offset().left + 25 - t.audioWindow.window.width()});
-			
-			var
-				reference = new bible.Reference(t.input.val()),
-				sectionId = reference.toOsisChapter();
-			
-			if (sectionId != t.currentAudio) {
+	
+	// only support native MP3
+	var audio = document.createElement('audio');
+	if (audio.canPlayType && (audio.canPlayType('audio/mp3') != '' || audio.canPlayType('audio/mpeg') != '')) {
+
+		t.audioWindow = docs.createModal(t.id + '-audio', 'Audio');
+		t.audioWindow.content.append('<audio id="' + t.id + '-audio-player" type="audio/mp3"></audio>');
+		t.audioWindow.show();
+		
+		// create a media palyer
+		$('#' + t.id + '-audio-player').mediaelementplayer({type: 'audio/mp3', audioWidth: '100%', success: function(media, node, player) { t.player = player; } });
+	
+		t.audioWindow.hide();
+		t.audioBtn.on('click', function() {
+			if (t.audioWindow.content.is(':visible')) {
+				t.audioWindow.hide();
+			} else {
+				t.audioWindow.show();
+				t.audioWindow.window.css({top: t.audioBtn.offset().top + 25, left: t.audioBtn.offset().left + 25 - t.audioWindow.window.width()});
 				
-				var filename = t.audioData.name ? t.audioData.name(reference) : sectionId + '.mp3';
+				var
+					reference = new bible.Reference(t.input.val()),
+					sectionId = reference.toOsisChapter();
 				
-				t.player.pause();
-				t.player.setSrc('content/audio/' + t.selector.val() + '/' + filename);
-				t.player.load();
+				if (sectionId != t.currentAudio) {
+					
+					var filename = t.audioData.name ? t.audioData.name(reference) : sectionId + '.mp3';
+					
+					t.player.pause();
+					t.player.setSrc('content/audio/' + t.selector.val() + '/' + filename);
+					t.player.load();
+					
+					reference.verse1 = 0;
+					t.audioWindow.title.html(reference.toString());	
+					
+					t.currentAudio = sectionId;
+				}
 				
-				reference.verse1 = 0;
-				t.audioWindow.title.html(reference.toString());	
 				
-				t.currentAudio = sectionId;
 			}
-			
-			
-		}
-	});
+		});
+	} else {
+		t.audioBtn.remove();
+	}
 	
 	t.updateVersion(selectedDocumentId);
 	

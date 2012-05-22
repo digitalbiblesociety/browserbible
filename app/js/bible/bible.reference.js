@@ -218,7 +218,16 @@ bible.Reference = function () {
 		toString: function () {
 			if (this.osisBookID == null) return "invalid";
 
-			return bible.BOOK_DATA[this.osisBookID].names[this.language][0] + ' ' + this.chapterAndVerse();
+			var bookName = '',
+				bookNames = bible.BOOK_DATA[this.osisBookID].names[this.language];
+			
+			if (typeof bookNames != 'undefined') {
+				bookName = bookNames[0];
+			} else {
+				bookName = bible.BOOK_DATA[this.osisBookID].names['en'][0]
+			}
+
+			return bookName + ' ' + this.chapterAndVerse();
 		},
 
 		toOsis: function () {

@@ -447,7 +447,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 		//t.navigationWindow.hide();
 	});
 	t.searchBtn.on('click', function(e) {
-		console.log('search cicked');
+		//console.log('search cicked');
 		
 		docs.Search.searchVersion.val( t.selector.val() );
 		docs.Search.searchWindow.show();
@@ -578,7 +578,7 @@ docs.Document.prototype = {
 				
 				var audioJson = eval('(' + data + ')');
 				
-				console.log('audio data', audioJson);
+				//console.log('audio data', audioJson);
 				t.audioData = audioJson;
 				t.audioBtn.show();
 			}
@@ -586,8 +586,6 @@ docs.Document.prototype = {
 	},
 	
 	load: function(fragmentId, action) {
-		
-		
 		
 		var t = this,
 			sectionId = t.navigator.convertFragmentIdToSectionId( fragmentId ),
@@ -615,14 +613,14 @@ docs.Document.prototype = {
 				break;			
 		}
 		
-		//console.log(this.id, fragmentId, action, url);
+		console.log(this.id, fragmentId, action, url);
 		
 		// load the URL and insert, append, prepend the content
 		$.ajax({
 			url: url,
 			dataType: 'html',
 			error: function() {
-				//console.log('failed', url);
+				console.log('failed', url);
 				
 				if (!t.switchingOver) {
 					t.switchingOver = true;
@@ -637,7 +635,7 @@ docs.Document.prototype = {
 					}
 					
 					if (switchToVersion != '') {
-						console.log('switch to ', switchToVersion);
+						//console.log('switch to ', switchToVersion);
 						
 						t.selector.find('option').each(function(index, opt) {
 							
@@ -667,14 +665,15 @@ docs.Document.prototype = {
 				
 				var newSectionNode = $(data).find(t.navigator.sectionSelector),
 					newSectionId = newSectionNode.attr(t.navigator.sectionIdAttr);
+					
+				
 				
 				// Check if the content is already here!
 				//if (t.wrapper.find( t.navigator.sectionSelector + '[' + t.navigator.sectionIdAttr + '="' + newSectionId + '"]').length > 0) {
 				if (t.wrapper.find( 'div.' + newSectionId.replace(/\./gi,'_') + '').length > 0) {
+					console.log(newSectionId, 'already there');
 					return;
 				}
-				
-				
 				
 				switch (action) {
 					default:
@@ -692,10 +691,11 @@ docs.Document.prototype = {
 						//if (fragmentId.substring(7,10) != '001') {
 							//t.scrollToFragmentNode(t.wrapper.find('span.verse[data-osis=' + fragmentId + ']'), 0);
 							var targetFragment = t.wrapper.find('span.' + fragmentId.replace(/\./gi,'_') + '');
-							if (targetFragment.length > 0)
+							if (targetFragment.length > 0) {
 								t.scrollToFragmentNode(targetFragment, 0);
-							else
+							} else {
 								console.log('error finding: ' + fragmentId);
+							}
 						//} else {
 						//	t.content.scrollTop(0);
 						//}
@@ -707,9 +707,11 @@ docs.Document.prototype = {
 					
 						break;
 					case 'next':
-						
+							
 						// simply append the node
 						t.wrapper.append(newSectionNode);
+						
+						t.checkScrollPosition();
 						
 						break;
 					case 'prev':
@@ -727,8 +729,9 @@ docs.Document.prototype = {
 						} catch (e) {
 							console.log('error', 'Cant fix scroll');
 						}
-
-
+						
+						t.checkScrollPosition();
+						
 						break;			
 				}
 				
@@ -737,7 +740,7 @@ docs.Document.prototype = {
 				
 				var sections = t.wrapper.find( t.navigator.sectionSelector );
 				
-				if (sections.length > 5) {
+				if (sections.length > 7) {
 				
 					// find the one where the top of the chapter is not past the bottom of the scroll pane
 					var mostVisibleIndex = 0;
@@ -756,9 +759,8 @@ docs.Document.prototype = {
 						return true;
 					});
 					
-					//console.log(t.id + ' -- need to remove some', mostVisibleIndex);
-					
-					
+					console.log(t.id,'reducing', mostVisibleIndex, t.content.scrollTop(), t.content.height());
+				
 					if (mostVisibleIndex <= 2) {
 						// remove from the bottom
 						sections.last().remove();
@@ -776,9 +778,8 @@ docs.Document.prototype = {
 				}
 				t.ignoreScrollEvent = false;
 				
-				
 				// update the input panel
-				t.updateNavigationInput();
+				t.updateNavigationInput(false);
 				
 				// fire up the chain
 				t.manager.dispatchEvent('load', {chapter: newSectionNode});
@@ -788,6 +789,7 @@ docs.Document.prototype = {
 	
 	checkScrollPosition: function() {
 		
+		//console.log(this.id, 'checkScrollPosition');
 		
 		// measure sections
 		var t = this,
@@ -804,13 +806,14 @@ docs.Document.prototype = {
 			distFromBottom = totalHeight - paneHeight - distFromTop,
 			fragmentId;
 			
-		//if (t.id === 'doc-0')
-		//	console.log(t.id, totalHeight, distFromTop, distFromBottom, sections.length, (distFromTop < 750 || sections.length === 2), (distFromBottom < 750 || sections.length <= 2));
-
-		if ( sections.length <= 5 ) {
+		if (t.id === 'doc-0') {
+			console.log(t.id, totalHeight, distFromTop, distFromBottom, sections.length, (distFromTop < 250 ), (distFromBottom < 250));
+		}
+		
+		//if ( sections.length <= 5 ) {
 			// check if we need to load the prev or next one
-			if (distFromTop < 750) {
-				//console.log(t.id, 'load prev');
+			if (distFromTop < 250) {
+				console.log(t.id, 'load prev');
 	
 				fragmentId = sections
 								.first() // the first chapter (top)
@@ -819,9 +822,10 @@ docs.Document.prototype = {
 	
 				t.load(fragmentId, 'prev');
 	
-			} else if (distFromBottom < 750) {
+			} else if (distFromBottom < 250) {
 				
-				
+				console.log(t.id, 'load next');
+	
 				fragmentId = sections
 								.last() // the last chapter (bottom)
 								.find( t.navigator.fragmentSelector + ':first') // first fragments
@@ -829,7 +833,7 @@ docs.Document.prototype = {
 									
 				t.load(fragmentId, 'next');
 			}
-		}
+		//}
 	},
 	
 	scrollTimeout1: null,
@@ -838,16 +842,18 @@ docs.Document.prototype = {
 	handleScroll: function(e) {
 		var t = this;
 		
+		//console.log(t.id, 'handleScroll', t.ignoreScrollEvent);
 		
 		// update the navigation window
+		var syncPanes = !t.ignoreScrollEvent,
+			checkScroll = !t.ignoreScrollEvent;
 		
-		if (t.ignoreScrollEvent) {
-			t.updateNavigationInput(false);
+		t.updateNavigationInput(syncPanes);
+		
+		if (!checkScroll) {
 			return;
-		} else {
-			t.updateNavigationInput(true);
-			
 		}
+		
 		/*
 		// send out sync events
 		var slowDownSyncing = false;	
@@ -867,10 +873,14 @@ docs.Document.prototype = {
 		}
 		*/
 		
+		
+		// #1: Fire all the time when scrolling
 		//t.checkScrollPosition();
 		//return;
 		
-		// Load prev/next chapter(s)
+		
+		// #2: Only fire after user is done scrolling 
+		/*
 		if (t.scrollTimeout1 != null) {
 			clearTimeout(t.scrollTimeout1);
 			t.scrollTimeout1 = null;
@@ -878,6 +888,21 @@ docs.Document.prototype = {
 		t.scrollTimeout1 = setTimeout(function() {
 			t.checkScrollPosition(e);
 		}, 100);
+		*/
+		
+		
+		// #3: Fire every so often
+		if (t.scrollTimeout1 == null) {
+			
+			t.scrollTimeout1 = setTimeout(function() {
+				t.checkScrollPosition();
+				clearTimeout(t.scrollTimeout1);
+				t.scrollTimeout1 = null;				
+			}, 50);				
+			
+		}
+	
+		
 	},
 	
 	setDocumentId: function(documentId) {
@@ -889,7 +914,7 @@ docs.Document.prototype = {
 		
 		t.navigateByString( t.input.val(), true );
 		
-		t.updateNavigationInput();
+		t.updateNavigationInput(false);
 	},
 	
 	navigateByString: function(someString, getFocus, offset) {
@@ -952,6 +977,8 @@ docs.Document.prototype = {
 			
 		doSync = doSync || false;
 		
+		//console.log(t.id, 'updateNavigationInput', doSync);
+		
 		// look through all the markers and find the first one that is fully visible
 		t.content.find( this.navigator.fragmentSelector ).each(function(e) {
 			var m = $(this);
@@ -1003,9 +1030,9 @@ docs.Document.prototype = {
 			nodeTopAdjusted = nodeTop - paneTop + scrollTop;
 			
 		// go to it
-		//this.ignoreScrollEvent = true;
+		t.ignoreScrollEvent = true;
 		t.content.scrollTop(nodeTopAdjusted + (offset || 0));
-		//this.ignoreScrollEvent = false;
+		t.ignoreScrollEvent = false;
 	},
 	
 	close: function() {

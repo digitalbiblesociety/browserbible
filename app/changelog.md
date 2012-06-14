@@ -1,5 +1,14 @@
 # Change Log
 
+=2.0.5 (2012/06/14)
+
+* Made video and image data async
+* Made lexical data async since it's not always needed
+
+=2.0.4 (2012/06/12)
+
+* Fixed some scrolling issues in the Psalms where the posts were too small
+
 =2.0.3 (2012/05/21)
 
 * Removed audio player for non-native HTML5 MP3 players

@@ -57,56 +57,59 @@ docs.plugins.push({
 					$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);					
 				})
 			.end();
+					
+		loadScripts('G');
+		loadScripts('H');
 								
 		// finds data on a <span class="word"> and gets its morph and lemma data
 		function getWordData(word) {
 				
-				var lemma = word.attr('data-lemma'),
-					lemmaParts = lemma != null ? lemma.split(' ') : [],
-					morph = word.attr('data-morph'),
-					morphParts = morph != null ? morph.split(' ') : [],
-					wordData = [],
-					strongLetter = '',
-					strongInfo = '',
-					strongKey = '',
-					outline = '',
-					strongNumber = 0, 
-					strongData = {};
-					
-				if (lemmaParts.length > 0) {
+			var lemma = word.attr('data-lemma'),
+				lemmaParts = lemma != null ? lemma.split(' ') : [],
+				morph = word.attr('data-morph'),
+				morphParts = morph != null ? morph.split(' ') : [],
+				wordData = [],
+				strongLetter = '',
+				strongInfo = '',
+				strongKey = '',
+				outline = '',
+				strongNumber = 0, 
+				strongData = {};
 				
-					for (var i=0, il=lemmaParts.length; i<il; i++) {
-						strongInfo = lemmaParts[i].replace('strong:','');
-						strongLetter = strongInfo.substring(0,1);
-						strongNumber = parseInt(strongInfo.substring(1), 10);
-						strongKey = strongLetter + strongNumber.toString();
-						morph = (i< morphParts.length) ? morphParts[i].replace('robinson:','') : '';
-							
-						if (strongLetter == 'H') {
-							strongData = strongsHebrewDictionary[strongKey];
-							outline = strongsHebrewOutlines[strongKey];
-						} else if (strongLetter == 'G') {
-							strongData = strongsGreekDictionary[strongKey];
-							outline = strongsGreekOutlines[strongKey];
-						}
+			if (lemmaParts.length > 0) {
+			
+				for (var i=0, il=lemmaParts.length; i<il; i++) {
+					strongInfo = lemmaParts[i].replace('strong:','');
+					strongLetter = strongInfo.substring(0,1);
+					strongNumber = parseInt(strongInfo.substring(1), 10);
+					strongKey = strongLetter + strongNumber.toString();
+					morph = (i< morphParts.length) ? morphParts[i].replace('robinson:','') : '';
 						
-						if (typeof strongData != 'undefined') {
-							wordData.push({
-								strongLetter: strongLetter,
-								strongData: strongData,
-								strongKey: strongKey,
-								outline: outline,
-								morph: morph,
-								frequency: (strongLetter == 'G') ? strongsGreekFrequencies[strongKey] : strongsHebrewFrequencies[strongKey	],
-								formattedMorph: (strongLetter == 'G' && morph != '') ? bible.morphology.Greek.getMorphology( morph ): ''
-							});
-						}
+					if (strongLetter == 'H') {
+						strongData = strongsHebrewDictionary[strongKey];
+						outline = strongsHebrewOutlines[strongKey];
+					} else if (strongLetter == 'G') {
+						strongData = strongsGreekDictionary[strongKey];
+						outline = strongsGreekOutlines[strongKey];
+					}
+					
+					if (typeof strongData != 'undefined') {
+						wordData.push({
+							strongLetter: strongLetter,
+							strongData: strongData,
+							strongKey: strongKey,
+							outline: outline,
+							morph: morph,
+							frequency: (strongLetter == 'G') ? strongsGreekFrequencies[strongKey] : strongsHebrewFrequencies[strongKey	],
+							formattedMorph: (strongLetter == 'G' && morph != '') ? bible.morphology.Greek.getMorphology( morph ): ''
+						});
 					}
 				}
+			}
+			
+			return wordData;
 				
-				return wordData;
-					
-			};
+		};
 		
 	
 		// define mouseover and click events for words
@@ -120,7 +123,9 @@ docs.plugins.push({
 			
 			$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);
 			
-			var word = $(this);	
+			var word = $(this);
+			
+			loadWordIntoPopup(word);
 		});
 		
 		function loadWordIntoPopup(word) {
@@ -211,9 +216,51 @@ docs.plugins.push({
 					.find('.document-footer')
 					.html(formattedWords.join('; '));
 			}			
-			
-			
 		}
+		
+		
+		function loadScripts(lang) {
+			
+			var
+				loadingIndex = 0,
+				
+				scripts = lang == 'G' ?
+					['strongs-greek-dictionary.js', 'strongs-greek-frequencies.js','strongs-greek-outlines.js'] :
+					['strongs-hebrew-dictionary.js', 'strongs-hebrew-frequencies.js','strongs-hebrew-outlines.js'],
+			
+				objects = lang == 'G' ?
+					['strongsGreekDictionary', 'strongsGreekFrequencies', 'strongsGreekOutlines'] :
+					['strongsHebrewDictionary', 'strongsHebrewFrequencies', 'strongsHebrewOutlines'];
+				
+			//loadNext();	
+				
+			function loadNext() {
+				
+				if (loadingIndex >= objects.length) {
+					return;
+				}
+			
+				if (typeof window[objects[loadingIndex]] == 'undefined') {
+					
+					$.ajax({
+						url: 'js/data/' + scripts[loadingIndex],
+						dataType: 'script',
+						success: function() {
+							loadingIndex++;
+							loadNext();
+						}
+						
+					});
+					
+				} else {
+					// the script was already loaded so go to next
+					loadingIndex++;
+					loadNext();
+				}
+				
+			}
+		}
+		
 		
 	}
 });

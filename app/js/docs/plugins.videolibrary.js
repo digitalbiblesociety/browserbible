@@ -11,6 +11,8 @@ docs.plugins.push({
 				
 		if (!docs.Features.hasTouch) {
 			
+			var
+				chaptersAwaiting = [];
 
 			// create media popup
 			var
@@ -57,56 +59,79 @@ docs.plugins.push({
 			
 			function addVideoIcons(chapter) {
 				
-				chapter.find('.verse').each(function(index, verseNode) {
-					
-					// find verse and look for images
-					var verse = $(verseNode),
-						verseId = verse.attr('data-osis'),
-						videos = videoLibrary[verseId];
-					
-					// if we have images, then insert the icon	
-					if (typeof videos != 'undefined') {
-						var videosIcon = $('<span class="video-icon inline-icon"></span>').appendTo(verse);
+				if (typeof videoLibrary == 'undefined') {
+					if (chaptersAwaiting != null) {
+						console.log('storing', chapter);
+						chaptersAwaiting.push(chapter);
 					}
+						
+				} else {
 					
-				});
-				
-				chapter.on('click', '.video-icon', function() {
-				
-					var
-						videoIcon = $(this),
-						verse = videoIcon.closest('.verse'),
-						verseOsis = verse.attr('data-osis'),
-						reference = new bible.Reference(verseOsis).toString(),
-						videoIndex = videoLibrary[verseOsis],
-						//videoUrl = 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4';
-						videoSrc = [
-									{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4'},
-									{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.webm'}
-								   ];
+					chapter.find('.verse').each(function(index, verseNode) {
 						
-					popup.title.html('Video: ' + reference.toString());	
-					popup.center().show();
+						// find verse and look for images
+						var verse = $(verseNode),
+							verseId = verse.attr('data-osis'),
+							videos = videoLibrary[verseId];
+						
+						// if we have images, then insert the icon	
+						if (typeof videos != 'undefined') {
+							var videosIcon = $('<span class="video-icon inline-icon"></span>').appendTo(verse);
+						}
+						
+					});
 					
-					if (player != null) {
+					chapter.on('click', '.video-icon', function() {
+					
+						var
+							videoIcon = $(this),
+							verse = videoIcon.closest('.verse'),
+							verseOsis = verse.attr('data-osis'),
+							reference = new bible.Reference(verseOsis).toString(),
+							videoIndex = videoLibrary[verseOsis],
+							//videoUrl = 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4';
+							videoSrc = [
+										{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4'},
+										{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.webm'}
+									   ];
+							
+						popup.title.html('Video: ' + reference.toString());	
+						popup.center().show();
 						
-						playUrl(videoSrc);
-					} else {
-						
-						$('#' + playerid).mediaelementplayer({type:['video/mp4','video/webm'], success: function(m, n, p) {
-							player = p;
+						if (player != null) {
+							
 							playUrl(videoSrc);
-						}});
-						
-					}
-				});
-				
-				popup.close.on('click', function() {
-					player.pause();
-					
-				});
-				
+						} else {
+							
+							$('#' + playerid).mediaelementplayer({type:['video/mp4','video/webm'], success: function(m, n, p) {
+								player = p;
+								playUrl(videoSrc);
+							}});
+							
+						}
+					});
+				}
 			}
+			
+			popup.close.on('click', function() {
+				player.pause();
+			});			
+			
+			$.ajax({
+				url: 'content/videos/videos.js',
+				dataType: 'script',
+				success: function() {
+					
+					while (chaptersAwaiting.length > 0) {
+						var chapter = chaptersAwaiting.pop();
+						addVideoIcons(chapter);
+					}
+				},
+				error: function() {
+					console.log('ERROR: loading videos');
+					chaptersAwaiting = null;
+				}
+			});			
 			
 		}
 	}

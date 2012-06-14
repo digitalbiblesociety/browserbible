@@ -10,7 +10,9 @@ docs.plugins.push({
 	init: function(docManager) {
 		
 		// create popup
-		var selectedWord = null,
+		var
+			wordAwaitingData = null,
+			selectedWord = null,
 			lemmaSelectedClass = 'lemma-selected',
 			popup = docs.createModal('lemma', docs.Localizer.get('plugin_lemma_title')),
 			timer = null,
@@ -58,8 +60,8 @@ docs.plugins.push({
 				})
 			.end();
 					
-		loadScripts('G');
-		loadScripts('H');
+		//loadScripts('G');
+		//loadScripts('H');
 								
 		// finds data on a <span class="word"> and gets its morph and lemma data
 		function getWordData(word) {
@@ -86,9 +88,21 @@ docs.plugins.push({
 					morph = (i< morphParts.length) ? morphParts[i].replace('robinson:','') : '';
 						
 					if (strongLetter == 'H') {
+						
+						if (typeof strongsHebrewDictionary == 'undefined' || typeof strongsHebrewOutlines == 'undefined') {
+							loadScripts('H');
+							return null;
+						}
+						
 						strongData = strongsHebrewDictionary[strongKey];
 						outline = strongsHebrewOutlines[strongKey];
 					} else if (strongLetter == 'G') {
+						
+						if (typeof strongsGreekDictionary == 'undefined' || typeof strongsGreekOutlines == 'undefined') {
+							loadScripts('G');
+							return null;
+						}
+						
 						strongData = strongsGreekDictionary[strongKey];
 						outline = strongsGreekOutlines[strongKey];
 					}
@@ -121,6 +135,7 @@ docs.plugins.push({
 			
 		}).on('click', 'span.w', function() {
 			
+			// remove exising highlight
 			$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);
 			
 			var word = $(this);
@@ -130,41 +145,38 @@ docs.plugins.push({
 		
 		function loadWordIntoPopup(word) {
 
-			word.addClass(lemmaSelectedClass);
-
-			// show popup
-			var 
-				wordData = getWordData(word),
-				formattedWords = [];
-
-			if (selectedWord!= null && selectedWord.html() == word.html() && popup.window.is(':visible')) {
+			// if this word is clicked a second time
+			if (selectedWord != null && selectedWord.html() == word.html() && popup.window.is(':visible')) {
 				word.removeClass(lemmaSelectedClass);
 				popup.hide();
 				return;
 			}
+
+
+			// hghlight this one
+			word.addClass(lemmaSelectedClass);
+
+			// get data for word
+			var 
+				wordData = getWordData(word),
+				formattedWords = [];
 				
+			if (wordData == null) {
 				
-			if (wordData.length > 0) {
+				popup.content.html( 'Loading data' );
+				wordAwaitingData = word;
+				
+			} else if (wordData.length > 0) {
 				
 				// store for lemma search
 				selectedWord = word;
 				
-				// format for popup		
-				for (var i=0, il=wordData.length; i<il; i++) {
-					formattedWords.push(
-						'<span class="lex-entry lemma-popup">' +
-							'<span class="lemma ' + (wordData[i].strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + wordData[i].strongData.lemma + '</span> (<span class="strongs-number">' + wordData[i].strongKey + '</span>) ' +
-							(wordData[i].formattedMorph != '' ? '<span class="morphology">' + wordData[i].formattedMorph + '</span>' : '') +
-							'<span class="definition">' + wordData[i].strongData.strongs_def + '</span>' +
-							(wordData[i].outline != null ? '<div class="outline">' + wordData[i].outline + '</div>' : '') +
-							'<span class="strong-search" data-strong="' + wordData[i].strongKey + '">Find all occurrences (approximately ' + wordData[i].frequency + ')</span>' +
-						'</span>'
-					);
-				}			
+				fillPopup(wordData);
 				
-				// put the content inside
-				popup.content.html( formattedWords.join('<br><br>') );
+			}
 				
+				
+			if (wordData == null || wordData.length > 0) {
 				// measure position
 				var 
 					wordPos = word.offset(),
@@ -188,8 +200,7 @@ docs.plugins.push({
 				$(document).one('mousemove', function() {
 					startTimer();
 				});
-			}
-						
+			}			
 			
 		}
 		
@@ -199,7 +210,7 @@ docs.plugins.push({
 				wordData = getWordData(word),
 				formattedWords = [];
 			
-			if (wordData.length > 0) {
+			if (wordData != null && wordData.length > 0) {
 				
 				for (var i=0, il=wordData.length; i<il; i++) {
 					formattedWords.push(
@@ -218,8 +229,30 @@ docs.plugins.push({
 			}			
 		}
 		
+		function fillPopup(wordData) {
+			
+			var formattedWords = [];
+			
+			// format for popup		
+			for (var i=0, il=wordData.length; i<il; i++) {
+				formattedWords.push(
+					'<span class="lex-entry lemma-popup">' +
+						'<span class="lemma ' + (wordData[i].strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + wordData[i].strongData.lemma + '</span> (<span class="strongs-number">' + wordData[i].strongKey + '</span>) ' +
+						(wordData[i].formattedMorph != '' ? '<span class="morphology">' + wordData[i].formattedMorph + '</span>' : '') +
+						'<span class="definition">' + wordData[i].strongData.strongs_def + '</span>' +
+						(wordData[i].outline != null ? '<div class="outline">' + wordData[i].outline + '</div>' : '') +
+						'<span class="strong-search" data-strong="' + wordData[i].strongKey + '">Find all occurrences (approximately ' + wordData[i].frequency + ')</span>' +
+					'</span>'
+				);
+			}			
+			
+			// put the content inside
+			popup.content.html( formattedWords.join('<br><br>') );			
+			
+		}
 		
 		function loadScripts(lang) {
+		
 			
 			var
 				loadingIndex = 0,
@@ -231,12 +264,22 @@ docs.plugins.push({
 				objects = lang == 'G' ?
 					['strongsGreekDictionary', 'strongsGreekFrequencies', 'strongsGreekOutlines'] :
 					['strongsHebrewDictionary', 'strongsHebrewFrequencies', 'strongsHebrewOutlines'];
-				
-			//loadNext();	
+			
+			// start loading data files
+			//setTimeout(function() {	
+				loadNext();
+			//}, 1500);
 				
 			function loadNext() {
 				
 				if (loadingIndex >= objects.length) {
+					
+					if (wordAwaitingData != null) {
+						var wordData = getWordData(wordAwaitingData);
+						fillPopup(wordData);
+						wordAwaitingData = null;
+					}
+					
 					return;
 				}
 			

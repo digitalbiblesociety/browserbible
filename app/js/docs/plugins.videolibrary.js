@@ -25,7 +25,6 @@ docs.plugins.push({
 				
 			popup.content.css('padding', 0);
 				
-				
 			function playUrl(urls) {
 				
 				if (player != null) {
@@ -39,19 +38,15 @@ docs.plugins.push({
 					}
 					
 					currentUrls = urls;
-				}
-				
+				}				
 			}
  
 			// click an image in the media popup
 			popup.content.html('<video id="' + playerid + '" width="' + width.toString() + '" height="' + height.toString() + '" style="width:100%; height:100%;"></video>');
 			
-			
 			// setup events to add media icons
 			docManager.addEventListener('load', function(e) {
-				
 				addVideoIcons(e.chapter);
-				
 			});
 			
 			// add option

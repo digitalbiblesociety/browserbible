@@ -112,35 +112,23 @@ docs.plugins.push({
 		// define mouseover and click events for words
 		docManager.content.on('mouseover', 'span.w', function() {
 			
-			// push into footer
-			var word = $(this),
-				wordData = getWordData(word),
-				formattedWords = [];
+			var word = $(this);
 			
-			if (wordData.length > 0) {
-				
-				for (var i=0, il=wordData.length; i<il; i++) {
-					formattedWords.push(
-						'<span class="lex-entry">' +
-							'<span class="lemma ' + (wordData[i].strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + wordData[i].strongData.lemma + '</span> (<span class="strongs-number">' + wordData[i].strongKey + '</span>) ' +
-							(wordData[i].formattedMorph != '' ? '<span class="morphology">' + wordData[i].formattedMorph + '</span>' : '') +
-							' - <span class="definition">' + wordData[i].strongData.strongs_def + '</span>' +
-						'</span>'
-					);
-				}
-				
-				word
-					.closest('.document-container')
-					.find('.document-footer')
-					.html(formattedWords.join('; '));
-			}
+			loadWordIntoFooter(word);
 			
 		}).on('click', 'span.w', function() {
 			
 			$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);
 			
+			var word = $(this);	
+		});
+		
+		function loadWordIntoPopup(word) {
+
+			word.addClass(lemmaSelectedClass);
+
 			// show popup
-			var word = $(this).addClass(lemmaSelectedClass),
+			var 
 				wordData = getWordData(word),
 				formattedWords = [];
 
@@ -196,9 +184,36 @@ docs.plugins.push({
 					startTimer();
 				});
 			}
+						
+			
+		}
+		
+		function loadWordIntoFooter(word) {
+
+			var 
+				wordData = getWordData(word),
+				formattedWords = [];
+			
+			if (wordData.length > 0) {
 				
-	
-		});
+				for (var i=0, il=wordData.length; i<il; i++) {
+					formattedWords.push(
+						'<span class="lex-entry">' +
+							'<span class="lemma ' + (wordData[i].strongLetter == 'H' ? 'hebrew' : 'greek') + '">' + wordData[i].strongData.lemma + '</span> (<span class="strongs-number">' + wordData[i].strongKey + '</span>) ' +
+							(wordData[i].formattedMorph != '' ? '<span class="morphology">' + wordData[i].formattedMorph + '</span>' : '') +
+							' - <span class="definition">' + wordData[i].strongData.strongs_def + '</span>' +
+						'</span>'
+					);
+				}
+				
+				word
+					.closest('.document-container')
+					.find('.document-footer')
+					.html(formattedWords.join('; '));
+			}			
+			
+			
+		}
 		
 	}
 });

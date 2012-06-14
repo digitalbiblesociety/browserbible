@@ -26,7 +26,6 @@ docs.plugins.push({
 			],
 			transforms = $.jStorage.get('docs-morphology', defaultTransforms);
 			
-			
 		// headers
 		morphWindow.content.append(
 			$('<div class="morph-row">' +
@@ -75,10 +74,8 @@ docs.plugins.push({
 			// re-run on existing chapters
 			$('div.chapter').each(function() {
 				runTransforms( $(this) );
-			});			
-			
+			});
 		}
-		
 		
 		function saveTransforms() {
 			transforms = [];
@@ -147,9 +144,7 @@ docs.plugins.push({
 				row.find('.morph-color select').val(transform.color);
 				
 				morphWindow.rows.append(row);
-				
 			}
-			
 		}
 		
 		function createRow() {
@@ -211,7 +206,6 @@ docs.plugins.push({
 						'X' +
 					'</div>' +
 				 '</div>');
-			
 		}
 		
 		function runTransforms(chapter) {
@@ -239,8 +233,7 @@ docs.plugins.push({
 									w.css(transform.css);	
 								}
 							}
-						}
-						
+						}		
 					
 					} else if (transform.strong != '' && transform.morphRegExp != null) {
 						wordMorphData = w.attr('data-morph');
@@ -261,29 +254,25 @@ docs.plugins.push({
 								w.css(transform.css);	
 							}
 						}
-		
 					}
 				}
-			});			
-			
+			});
 		}
 		
 		// run transforms
 		docManager.addEventListener('load', function(e) {
-			
 			runTransforms(e.chapter);
-			
-		});
-		
+		});		
 		
 		// add button to header
 		$('<input type="button" id="docs-morphology" />')
 			.appendTo(docManager.header.find('#header-nav'))
 			.on('click', function() {
-				if (morphWindow.window.is(':visible'))
+				if (morphWindow.window.is(':visible')) {
 					morphWindow.hide();
-				else
+				} else {
 					morphWindow.show();
+				}
 			});			
 		
 		// initial setup

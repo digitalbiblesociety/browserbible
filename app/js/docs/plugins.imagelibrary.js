@@ -114,7 +114,7 @@ docs.plugins.push({
 					
 					while (chaptersAwaiting.length > 0) {
 						var chapter = chaptersAwaiting.pop();
-						addVideoIcons(chapter);
+						addMediaIcons(chapter);
 					}
 				},
 				error: function() {

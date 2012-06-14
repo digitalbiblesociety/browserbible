@@ -10,9 +10,9 @@ docs.plugins.push({
 				
 		if (!docs.Features.hasTouch) {
 			
-
 			// create media popup
 			var
+				chaptersAwaiting = [],
 				popup = docs.createModal('image-library', docs.Localizer.get('plugin_images_title')).size(320,200).center();
 
 			// click an image in the media popup
@@ -32,12 +32,9 @@ docs.plugins.push({
 					
 					if (imageHeight > imageWidth)  {
 						// center the portrait image
-						
 						windowWidth = imageWidth / imageHeight * windowHeight;
 					} else {
-						
 						windowHeight = imageHeight / imageWidth * windowWidth;
-
 					}
 					windowY = screen.availHeight / 2 - windowHeight / 2;
 					windowX = screen.availWidth / 2 - windowWidth / 2;				
@@ -53,10 +50,8 @@ docs.plugins.push({
 			
 			
 			// setup events to add media icons
-			docManager.addEventListener('load', function(e) {
-				
+			docManager.addEventListener('load', function(e) {				
 				addMediaIcons(e.chapter);
-				
 			});
 			
 			// add option
@@ -64,45 +59,69 @@ docs.plugins.push({
 			
 			function addMediaIcons(chapter) {
 				
-				chapter.find('.verse').each(function(index, verseNode) {
-					
-					// find verse and look for images
-					var verse = $(verseNode),
-						verseId = verse.attr('data-osis'),
-						images = imageLibrary[verseId],
-						verseOffset = null,
-						parentContent = null,
-						parentContentOffset = null;
-					
-					// if we have images, then insert the icon	
-					if (typeof images != 'undefined') {
-						
-						var mediaIcon = $('<span class="image-icon inline-icon"></span>')
-											.appendTo(verse);
+				if (typeof imageLibrary == 'undefined') {
+					if (chaptersAwaiting != null) {
+						chaptersAwaiting.push(chapter);
 					}
-					
-				});
+						
+				} else {					
 				
-				chapter.on('click', '.image-icon', function() {
-					console.log('ICON');
+					chapter.find('.verse').each(function(index, verseNode) {
+						
+						// find verse and look for images
+						var verse = $(verseNode),
+							verseId = verse.attr('data-osis'),
+							images = imageLibrary[verseId],
+							verseOffset = null,
+							parentContent = null,
+							parentContentOffset = null;
+						
+						// if we have images, then insert the icon	
+						if (typeof images != 'undefined') {
+							
+							var mediaIcon = $('<span class="image-icon inline-icon"></span>')
+												.appendTo(verse);
+						}
+						
+					});
 					
-					var
-						imageIcon = $(this),
-						verse = imageIcon.closest('.verse'),
-						verseOsis = verse.attr('data-osis'),
-						reference = new bible.Reference(verseOsis).toString(),
-						imagesData = imageLibrary[verseOsis],
-						before = '<li><img src=\"content/images/',
-						after = '\" /></li>',
-						imagesHtml = before + imagesData.join(after + before) + after;
+					chapter.on('click', '.image-icon', function() {
+						console.log('ICON');
 						
-					popup.title.html('Images: ' + reference.toString());
-						
-					popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul>');
-					popup.center().show();
-				});
+						var
+							imageIcon = $(this),
+							verse = imageIcon.closest('.verse'),
+							verseOsis = verse.attr('data-osis'),
+							reference = new bible.Reference(verseOsis).toString(),
+							imagesData = imageLibrary[verseOsis],
+							before = '<li><img src=\"content/images/',
+							after = '\" /></li>',
+							imagesHtml = before + imagesData.join(after + before) + after;
+							
+						popup.title.html('Images: ' + reference.toString());
+							
+						popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul>');
+						popup.center().show();
+					});
+				}
 				
 			}
+			
+			$.ajax({
+				url: 'content/images/images.js',
+				dataType: 'script',
+				success: function() {
+					
+					while (chaptersAwaiting.length > 0) {
+						var chapter = chaptersAwaiting.pop();
+						addVideoIcons(chapter);
+					}
+				},
+				error: function() {
+					console.log('ERROR: loading videos');
+					chaptersAwaiting = null;
+				}
+			});					
 			
 		}
 	}

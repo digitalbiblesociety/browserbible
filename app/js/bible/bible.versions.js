@@ -1,3 +1,7 @@
+// Load a versions file from
+// /app/content/bible/versions.json
+// then checks for subfolders
+
 bible.versions = {
 	// prebuild version array
 	versionData: null,
@@ -9,30 +13,37 @@ bible.versions = {
 		return this.versionsByKey[key];
 	},
 	
-	allVersions: [
-		'ar_svd',
-		'en_esv',
-		'en_kjv',
-		'en_nasb',
-		'en_net',
-		'en_neti',
-		'en_oeb',
-		'en_web',
-		'el_tisch',
-		'el_sblgnt',
-		'es_rv',
-		'he_wlc',
-		'ru_syn',
-		'tr_turk',
-		'zhcn_ncv',
-		'zhtw_ncv'
-	],
-	
 	loadingVersionIndex: -1,
 	
 	loadingCallback: null,
 	
+	// loaded from content/bible/versions.js
+	allVersions: [],
+	
+	loadVersionManifest: function() {
+		
+		var t = this;
+		
+		$.ajax({
+			url: 'content/bibles/versions.json',
+			dataType: 'json',
+			success: function(data) {
+				t.allVersions = data.versions;
+				t.loadNextVersion();
+			},
+			error: function(x) {
+				console.log('asdfa', x)
+				
+			}
+		});
+	},
+	
 	loadNextVersion: function() {
+		
+		if (this.allVersions.length == 0) {
+			this.loadVersionManifest();
+			return;
+		}
 		
 		var t = this,
 			versionFolder = '';

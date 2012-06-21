@@ -16,6 +16,13 @@
 		"ru_syn",
 		"tr_turk",
 		"zhcn_ncv",
-		"zhtw_ncv"
+		"zhtw_ncv",
+		"en_niv",
+		"en_nkjv",
+		
+		"enn_mhcc",
+		"enn_sco",
+		"enn_tsk",
+		"enn_wes"
 	]
 }

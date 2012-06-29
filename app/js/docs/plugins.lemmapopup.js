@@ -59,7 +59,8 @@ docs.plugins.push({
 					$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);					
 				})
 			.end();
-					
+				
+		// force load	
 		//loadScripts('G');
 		//loadScripts('H');
 								
@@ -286,8 +287,9 @@ docs.plugins.push({
 				if (typeof window[objects[loadingIndex]] == 'undefined') {
 					
 					$.ajax({
-						url: 'js/data/' + scripts[loadingIndex],
+						url: 'content/lexicons/' + scripts[loadingIndex],
 						dataType: 'script',
+						cache: true,
 						success: function() {
 							loadingIndex++;
 							loadNext();

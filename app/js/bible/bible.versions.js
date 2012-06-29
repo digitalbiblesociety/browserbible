@@ -27,6 +27,7 @@ bible.versions = {
 		$.ajax({
 			url: 'content/bibles/versions.json',
 			dataType: 'json',
+			cache: false,
 			success: function(data) {
 				t.allVersions = data.versions;
 				t.loadNextVersion();
@@ -119,6 +120,7 @@ bible.language = {
 		da:'Danish',
 		nl:'Dutch',
 		en:'English',
+		enn: 'English Notes',
 		et:'Estonian',
 		tl:'Filipino',
 		fi:'Finnish',

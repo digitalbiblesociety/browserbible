@@ -193,7 +193,7 @@ bible.Reference = function () {
 		bookList: bible.DEFAULT_BIBLE,
 
 		isValid: function () {
-			return (osisBookID != null && _chapter1 > 0);
+			return (typeof _osisBookID != 'undefined' && _osisBookID != null && _chapter1 > 0);
 		},
 
 		chapterAndVerse: function (cvSeparator, vvSeparator, ccSeparator) {

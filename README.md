@@ -1,6 +1,6 @@
 # Browser Bible 
 
-A browser based Bible Study Application built with the holy trinity of HTML, CSS, and JavaScript.
+A browser based Bible Study Application built with the power triad of HTML, CSS, and JavaScript.
 
 * Created by: [Digital Bible Society](http://www.dbsbible.org)
 * Project Leader: John Dyer http://j.hn/

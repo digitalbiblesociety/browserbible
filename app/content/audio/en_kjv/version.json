@@ -1,6 +1,6 @@
 {
-	"name":"English Standard Version",
-	"abbreviation":"ESV",
+	"name":"King James Version",
+	"abbreviation":"KJV",
 	"name": function(reference) {
 		return reference.toOsisChapter() + '.mp3';	
 	}

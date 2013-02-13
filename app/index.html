@@ -3,26 +3,20 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Bible Browser</title>
-	
 	<!-- Apple specific code -->
 	<meta name="viewport" content="width=device-width, user-scalable = no, initial-scale=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-	
 	<!-- replacement console for IE -->
 	<script>
 	if (typeof console == 'undefined') { window.console = {log:function() {}}; }
 	</script>
-	
-	<script src="js/jquery.js"></script>
-	
+	<script src="js/jquery.min.js"></script>
 	<!-- external libraries -->
 	<script src="js/utility/jquery.json.js"></script>
 	<script src="js/utility/jstorage.js"></script>
 	<script src="js/utility/xregexp.js"></script>
-	
 	<script src="js/utility/mediaelementjs/mediaelement-and-player.js"></script>
 	<link rel="stylesheet" href="js/utility/mediaelementjs/mediaelementplayer.css" />	
-	
 	<!-- Bible related data -->
 	<script src="js/bible/bible.data.js"></script>
 	<script src="js/bible/bible.reference.js"></script>
@@ -30,7 +24,6 @@
 	<script src="js/bible/bible.search.js"></script>
 	<script src="js/bible/bible.versions.js"></script> <!-- update to add/change versions -->
 	<script src="js/bible/bible.morphology.js"></script>
-	
 	<!-- Documents and windows -->
 	<script src="js/docs/docs.namespace.js"></script>
 	<script src="js/docs/docs.detection.js"></script>
@@ -38,13 +31,11 @@
 	<script src="js/docs/docs.modal.js"></script>
 	<script src="js/docs/docs.localizer.js"></script>
 	<script src="js/docs/navigators.bible.js"></script>
-
 	<!-- main nav -->
 	<script src="js/docs/plugins.morphology.js"></script>	
 	<script src="js/docs/plugins.config.js"></script>
 	<script src="js/docs/plugins.adddocument.js"></script>
 	<script src="js/docs/plugins.fullscreen.js"></script>	
-	
 	<!-- plugins -->
 	<script src="js/docs/plugins.matchverses.js"></script>
 	<script src="js/docs/plugins.matchwords.js"></script>
@@ -53,27 +44,20 @@
 	<script src="js/docs/plugins.imagelibrary.js"></script>
 	<script src="js/docs/plugins.videolibrary.js"></script>
 	<script src="js/docs/plugins.versepopup.js"></script>
-	
 	<!-- main launcher -->
 	<script src="js/desktop.app.js"></script>
-	
-	<link href="css/reset.css" rel="stylesheet" />
-	<link href="css/study.css" rel="stylesheet" />
-	<link href="css/bible.css" rel="stylesheet" />
+	<link href="css/studybible.css" rel="stylesheet" />
 </head>
 <body>	
-	<div id="header" class="site-header">
-		<h1 data-localized="site_title">Bible Browser</h1>
-		<div id="header-nav">
-		
-		</div>
-	</div>
-	<div id="content">
-	
-	</div>
-	<div id="footer">
-		<!--<p data-localized="site_footer">Powered by <a href="http://j.hn/digitalbible/">Arora Bible Browser</a></p>-->
-		<a href="http://digitalbiblesociety.com/aurora/" target="_blank"><img src="css/images/aurora-logo.png" height="14" width="294" /></a>
-	</div>
+
+<div id="header" class="site-header">
+	<a href="mobile.html"><img id="top-logo" src="css/images/top-logo.png" /></a>
+	<div id="header-nav"></div>
+</div>
+	<div id="content"></div>
+<div id="footer">
+</div>
+
+
 </body>
 </html>

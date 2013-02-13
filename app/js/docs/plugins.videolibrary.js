@@ -76,20 +76,19 @@ docs.plugins.push({
 						
 					});
 					
-					chapter.on('click', '.video-icon', function() {
-					
+					chapter.on('click', '.video-icon', function() {		
 						var
+							canPlayMP4 = (typeof document.createElement("video").canPlayType === "function" && document.createElement("video").canPlayType("video/mp4") !== ""),
 							videoIcon = $(this),
 							verse = videoIcon.closest('.verse'),
 							verseOsis = verse.attr('data-osis'),
 							reference = new bible.Reference(verseOsis).toString(),
 							videoIndex = videoLibrary[verseOsis],
-							//videoUrl = 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4';
+							//videoUrl = 'content/videos/' + videoIndex + '.mp4';
 							videoSrc = [
-										{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.mp4'},
-										{type: 'video/mp4', src: 'content/videos/jesusfilm/en_cr/JESUS_Western Caribbean Creole English_61-' + videoIndex + '_60229.webm'}
+										{type: 'video/mp4', src: 'content/videos/' + videoIndex + '.mp4'}
 									   ];
-							
+						if (canPlayMP4) {
 						popup.title.html('Video: ' + reference.toString());	
 						popup.center().show();
 						
@@ -98,12 +97,19 @@ docs.plugins.push({
 							playUrl(videoSrc);
 						} else {
 							
-							$('#' + playerid).mediaelementplayer({type:['video/mp4','video/webm'], success: function(m, n, p) {
+							$('#' + playerid).mediaelementplayer({type:['video/mp4'], success: function(m, n, p) {
 								player = p;
 								playUrl(videoSrc);
 							}});
 							
 						}
+						
+					} else {
+						$('.popup-content').empty();
+						popup.title.html('Video: ' + reference.toString());	
+						popup.center().show();
+						$('.popup-content').append('<object id="flashplayer" type="application/x-shockwave-flash" data="js/docs/player.swf" width="100%" height="100%"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="flashvars" value="file=../../content/videos/' + videoIndex + '.mp4"></object>');
+					}
 					});
 				}
 			}

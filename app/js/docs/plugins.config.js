@@ -42,13 +42,8 @@ docs.plugins.push({
 			// THEME colors
 			themeOptions = [
 				{name: 'Default'},
-				//{name: 'Tan'},
-				//{name: 'Green'}
-				{name: 'Nature'},
-				{name: 'Steel'},
-				{name: 'Art'},
-				{name: 'Wood'},
-				{name: 'Paper'}
+				{name: 'Brown'},
+				{name: 'White'}
 			],
 			renderThemeOption = function(id, name) {
 				return 	'<label for="' + id + '" class="' + id + '">' +

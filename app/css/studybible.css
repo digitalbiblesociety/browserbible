@@ -1,0 +1,231 @@
+*   										{margin:0;padding:0}
+li  										{list-style:none}
+
+body                                        {overflow:hidden;}
+#header                                     {height:40px;background:black;}
+#header #top-logo                           {position:absolute;top:5px;left:20px;}
+#header #header-nav                         {position:absolute;top:0;right:0;text-align:right;padding:10px 10px 0 0;}
+#footer                                     {height:12px;padding:5px 0;}
+#bottom-logo                                {position:absolute;bottom:3px; right:0;}
+
+#header,#footer,#content                    {font-family:Helvetica, Arial, sans-serif;}
+#content                                    {margin:10px auto;-moz-box-shadow:0px 2px 30px; -webkit-box-shadow:0px 2px 30px; box-shadow:0px 2px 30px; }
+
+#header-nav input                           {background:transparent url(images/icons-small.png) 0 0 no-repeat;border:solid 0 #fff;width:22px;height:22px;cursor:pointer;margin:0 5px;}
+#header-nav #docs-fullscreen 				{background-position:-485px -38px;}
+#header-nav #docs-fullscreen.is-fullscreen 	{background-position:-517px -38px;}
+#header-nav #docs-config 					{background-position:-5px -38px;}
+#header-nav #docs-add-document 				{background-position:-326px -37px;}
+#header-nav #docs-morphology 				{background-position:-230px -37px;}
+
+.document-content                           {background:#fff;}
+.document-container                         {-x-border:solid 1px #bbb;float:left;position:relative;margin:0;}
+.document-header                            {border:solid 1px #aaa;background-color:#DDDCDA;height:25px;border-color:transparent #ccc #aaa transparent;border-width:1px 1px 1px 0;padding:5px 20px;}
+.document-header-left                       {text-align:left;position:absolute;top:6px;left:5px;z-index:2;}
+.document-header-right                      {-x-float:right;-x-width:100px;text-align:right;position:absolute;top:6px;right:5px;z-index:1;}
+.document-header .document-header-input     {display:inline-block;vertical-align:top;}
+.document-header .document-input            {width:125px;height:20px;font-size:12px;color:#bbb;border:solid 1px #999;margin:0;padding:0 4px;}
+
+.document-header .document-header-selector  {position:absolute; width:35px; top:0; left:140px;}
+.document-header .document-header-selector:after {content:'';position:absolute; right:-20px; z-index:-5; top:7px; border-left:4px solid transparent; border-right:4px solid transparent; border-top:6px solid #444; }
+
+.document-header-selector span              {font-size:12px;width:47px;height:12px;color:#444;position:absolute;border:solid 1px #999;padding:4px;}
+.document-header-selector .document-selector{width:55px;position:absolute;opacity:0;}
+.document-header-button                     {background:transparent url(images/icons-small.png) 0 0 no-repeat; border:solid 1px #999; border-radius:5px; text-indent:-9999px; width:22px; height:22px; margin:0 2px; }
+.document-header-button:hover               {background-color:#ccccff; cursor:pointer; }
+.document-search-button                     {background-position:-37px -6px; }
+.document-info-button                       {background-position:-70px -6px; }
+.document-options-button                    {background-position:-6px -6px; }
+.document-close-button                      {background-position:-198px -6px; }
+.document-lock-button                       {background-position:-102px -6px; }
+.state-unlocked                             {background-position:-134px -6px; }
+.document-audio-button                      {background-position:-165px -5px; }
+.document-content                           {position:relative; overflow:auto; /* overflow:scroll; overflow-y:hidden; overflow-x:hidden; */ }
+.document-wrapper 							{position:absolute; padding:10px 20px; line-height:1.6; font-size:14px;}
+.document-about 							{position:absolute; background:#fefefe; background:rgba(221, 220, 218, 0.9); top:10px; left:10px; width:200px; padding:15px; height:200px; display:none; }
+.document-about h1 							{margin:0 0 15px 0; line-height:1; }
+.document-about p 							{margin:15px 0; line-height:1.5; }
+.document-footer 							{padding:4px 15px; color:#333; height:44px; overflow:hidden; text-overflow:ellipsis; font-size:12px; line-height:1.2; border:solid 1px #aaa; border-width:1px 1px 1px 0; border-color:#ccc #ccc transparent transparent; }
+.document-footer-resize 					{position:absolute; bottom:49px; height:5px; cursor:row-resize; /* background:rgba(255,0,0,0.5); */ font-size:1%; padding:0; margin:0; width:400px; }
+.document-focused 							{-x-border:solid 1px #333; }
+.document-focused .document-input	 		{color:#000; }
+.document-focused .document-header 			{-x-background:#999; }
+.document-focused .document-footer 			{-x-background:#999; }
+
+.document-content                           {position:relative;overflow:auto;}
+.document-wrapper                           {position:absolute;line-height:1.6;font-size:14px;padding:10px 20px;}
+.document-about                             {position:absolute;background:rgba(0,0,0,0.9);display:none;padding:15px;overflow-y:scroll;color:white;}
+.document-about h1                          {line-height:1;margin:0 0 15px;}
+.document-about p                           {line-height:1.5;margin:15px 0;}
+.document-footer                            {color:#333;height:30px;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:1.2;border:solid 1px #ccc;padding:4px 15px;}
+.document-footer-resize                     {position:absolute;bottom:49px;height:5px;cursor:row-resize;font-size:1%;width:400px;margin:0;padding:0;}
+.document-focused                           {-x-border:solid 1px #333;}
+
+.chapter                                    {margin:5px 0;}
+.verse-highlight                            {background:Gainsboro;-webkit-transition:all 1s ease-in-out;}
+.word-highlight                             {background:Gold;}
+
+.modal-window                               {position:absolute;width:600px;height:400px;top:50%;left:50%;margin-left:-300px;margin-top:-200px;background:#fff;border:solid 1px #999;}
+.modal-window-header                        {background:#333;color:#fff;height:20px;background-image:linear-gradient(#eeedeb,#dddcda);background-color:#DDDCDA;padding:5px;}
+.modal-window-header .modal-window-close    {float:right;}
+.modal-window-body                          {overflow:auto;height:318px;border:solid 1px #ccc;padding:10px;}
+.modal-window-footer                        {background-image:linear-gradient(#eeedeb,#dddcda);background-color:#DDDCDA;height:20px;font-size:12px;padding:5px;}
+
+.search-text                                {width:200px;}
+.search-result                              {overflow:hidden;font-size:13px;line-height:1.3;margin:0 0 6px;padding:4px 0;}
+.search-result:hover                        {background:#FFF6C9;cursor:pointer;}
+.search-result .verse                       {display:block;float:left;width:420px;}
+.search-result .search-verse                {display:block;font-weight:bold;float:left;width:120px;}
+.search-result .highlight                   {background:#FFC237;}
+
+.document-navigation-window                 {position:absolute;border:2px solid #333;background:#222;border-radius:5px;width:300px;height:300px;top:0;left:0;display:none;font-size:12px;padding:5px;}
+.document-navigation-window h3              {color:#fff;font-size:14px;height:20px;margin:0;padding:0;}
+.document-navigation-list .nav-scroller     {height:280px;overflow-x:hidden;overflow-y:scroll;-x-border:solid 1px #222;background:#eee;color:#333;}
+.document-navigation-list .nav-scroller li  {cursor:pointer;}
+.document-navigation-list .nav-scroller li:hover{background:#aaaaff;}
+
+.book-list li                               {display:block;border:solid 1px #aaa;border-color:#ccc #333 #333 #ccc;padding:4px 0 4px 5px;}
+.book-list li.selected                      {background:#ccccff;}
+
+.chapter-list li                            {font-size:11px;line-height:1;float:left;width:24px;height:16px;border:solid 1px #aaa;text-align:center;padding:5px 0 2px;}
+
+.lex-entry .greek                           {font-family:GentiumPlus;font-size:14px;font-weight:bold;}
+.lex-entry .hebrew                          {font-family:EzraSILRegular;font-size:14px;font-weight:bold;}
+.lex-entry .morphology                      {font-style:italic;}
+.lex-entry .strong-search                   {display:inline-block;cursor:pointer;color:#0000cc;}
+.lex-entry .strong-search:hover             {background:#0000cc;color:#fff;}
+.lex-entry.lemma-popup .definition          {display:block;}
+
+.popup-window                               {position:absolute;top:0;left:0;display:none;width:300px;border-radius:4px;font-size:12px;box-shadow:rgba(20,20,20,0.6) 0 5px 10px;border:solid 1px #111;}
+.popup-window .popup-header                 {color:#fff;position:relative;padding:7px 7px 0;}
+.popup-window .popup-title                  {}
+.popup-window .popup-content                {background:#fff;min-height:60px;line-height:1.4;margin:7px;padding:8px;}
+.popup-window .popup-close                  {position:absolute;right:8px;top:8px;cursor:pointer;text-indent:-999px;background:transparent url(images/icons-small.png) -198px -42px no-repeat;width:20px;height:20px;}
+.popup-window .popup-footer                 {color:#fff;padding:0 8px 8px;}
+.popup-window .popup-menu                   {padding:0 8px;}
+.popup-window .popup-content p              {margin:10px 0;}
+.popup-window .popup-content code           {font-family:monospace;background:#111;color:#eee;display:block;margin:10px 0;padding:5px;}
+
+.config-options                             {overflow:hidden;margin:0 0 10px;}
+.config-options .config-option              {float:left;width:55px;min-height:20px;line-height:1;margin:0 5px 0 0;}
+.config-options .config-option h3           {margin:0 0 .5em;}
+.config-options .config-option input[type=radio]{margin-right:5px;vertical-align:top;}
+.config-options .config-option span         {vertical-align:middle;}
+.config-toggle                              {display:inline-block;width:100px;}
+
+.theme-demo                                 {display:inline-block;width:12px;height:20px;border:0;margin:0;padding:0;}
+.config-font-default                        {font-size:16px;}
+.config-font-georgia .chapter               {font-family:georgia;}
+.config-font-georgia                        {font-family:georgia;font-size:16px;}
+.config-font-tahoma .chapter                {font-family:tahoma;}
+.config-font-tahoma                         {font-family:tahoma;font-size:16px;}
+.config-font-baskerville .chapter           {font-family:baskerville;}
+.config-font-baskerville                    {font-family:baskerville;font-size:16px;}
+
+/* theme backgrounds */
+.config-theme-default,
+.config-theme-default .popup-window,
+.config-theme-default #header               {background:url(images/bg-dark.jpg);}
+.config-theme-default .document-header,
+.config-theme-default .document-footer      {background:#000}
+.config-theme-default #content-wrap:after,
+.config-theme-default #content-wrap:before  {opacity:0}
+
+.config-theme-brown,
+.config-theme-brown .popup-window,
+.config-theme-brown #header                 {background:url(images/bg-brown.jpg);}
+.config-theme-brown .document-header,
+.config-theme-brown .document-footer        {background:url(images/bg-graph.jpg);}
+.config-theme-brown #content-wrap:after,
+.config-theme-brown #content-wrap:before    {opacity:1}
+
+.config-theme-white,
+.config-theme-white .popup-window,
+.config-theme-white #header                 {background:url(images/bg-grey.jpg);}
+.config-theme-white .document-header,
+.config-theme-white .document-footer        {background:url(images/bg-white.jpg);}
+.config-theme-white #content-wrap:after,
+.config-theme-white #content-wrap:before    {opacity:0}
+
+
+.morph-row                                  {overflow:hidden;}
+.morph-strong                               {float:left;width:90px;}
+.morph-strong input                         {width:80px;}
+.morph-morph                                {float:left;width:140px;}
+.morph-style                                {float:left;width:130px;}
+.morph-color                                {float:left;width:80px;}
+.morph-example                              {float:left;width:60px;text-align:center;}
+.morph-remove                               {float:left;cursor:pointer;font-size:10px;line-height:1;text-align:center;color:#fff;border-radius:10px;width:10px;height:10px;padding:4px;}
+.morph-remove:hover                         {background:#999;}
+
+.outline                                    {display:block;margin:5px 0;}
+.outline ul,.outline ol                     {margin:0 0 0 10px;}
+.outline ol li                              {list-style-type:decimal;margin:0 0 0 10px;}
+.outline ol li ol li                        {list-style-type:lower-alpha;}
+.outline ol li ol li ol li                  {list-style-type:lower-roman;}
+.outline ol li ol li ol li ol li            {list-style-type:decimal;}
+
+.inline-icon                                {display:inline-block;width:20px;height:20px;background:#ccc url(images/icons-small.png) top left no-repeat;cursor:pointer;border-radius:4px;margin-right:5px;}
+.inline-icon:hover                          {background-color:#339;}
+.image-icon                                 {background-position:-262px -38px;}
+.video-icon                                 {background-position:-294px -38px;}
+
+.image-library-thumbs                       {list-style-type:none;border:0;padding:0;}
+.image-library-thumbs li                    {display:block;width:60px;height:60px;float:left;text-align:center;margin:0 10px 10px 0;}
+.image-library-thumbs li img                {display:inline;cursor:pointer;max-width:60px;max-height:60px;}
+
+.site-header,.lemma-selected                {background:#333;color:#fff;}
+
+/* Hide content set to off */
+.document-header .document-button,
+.document-header .document-header-options,
+.search-result .verse-num,.search-result .cf,
+.search-result .note,
+.config-chapters-off .chapter-num,
+.config-verses-off .verse-num,
+.config-notes-off .chapter .note,
+.config-notes-off .chapter .cf,
+.config-images-off .image-icon,
+.config-video-off .video-icon               {display:none;}
+
+
+.document-focused .document-input,
+.config-theme-default .chapter 								{color:#000;}
+.document-focused .document-header,
+.document-focused .document-footer 							{-x-background:#999;}
+.book-list,.chapter-list 									{float:left;width:150px;}
+.config-size-small .chapter,
+.config-size-small 											{font-size:10px;}
+.config-size-large .chapter,
+.config-size-large 											{font-size:18px;}
+.config-size-jumbo .chapter,
+.config-size-jumbo 											{font-size:22px;}
+.config-size-huge .chapter,
+.config-size-huge 											{font-size:26px;}
+
+/* BIBLE */
+
+.book-name 													{text-align:center;font-size:2em;margin:1.2em 0;}
+.chapter p 													{-x-margin:1em 0;text-indent:1em;}
+.chapter[lang=he] 											{font-family:EzraSILRegular;}
+.chapter[lang=el] 											{font-family:GentiumPlus;}
+.chapter ins                                                {text-decoration:none;font-style:italic;}
+.chapter-num                                                {float:left;font-size:2em;line-height:1;margin:0 .25em .5em 0;}
+.chapter[dir=rtl] .chapter-num                              {float:right;margin:0 0 .5em .5em;}
+.verse-num                                                  {font-weight:bold;font-size:12px;vertical-align:top;-x-color:#cc6666;color:#aaa;}
+
+.note,.cf                                                   {display:inline;}
+.note .key,.cf .key                                         {vertical-align:top;font-size:60%;font-weight:bold;color:#3333cc;letter-spacing:1px;cursor:pointer;display:inline;}
+.chapter .note .key:hover,.chapter .cf.key:hover            {color:#fff;background:#3333cc;}
+.chapter .note .text,.chapter .cf .text                     {display:none;}
+.document-footer .cf .key,.document-footer .note .key       {display:inline;vertical-align:top;font-size:8px;font-weight:bold;color:#3333cc;}
+
+.woc                                                        {color:#aa0000;}
+
+.v-1,.chapter .note .text,.chapter .cf .text,
+#search-results .note,#search-results .cf                   {display:none;}
+span[class^='verse Ps_']                                    {display:block;}
+
+@media only screen and (max-width:630px)					{
+.document-header-right {display: none;}
+}

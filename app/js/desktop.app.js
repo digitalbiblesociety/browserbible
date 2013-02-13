@@ -106,9 +106,7 @@ jQuery(function($) {
 						
 						var printWin = window.open('','','letf=0,top=0,width=1,height=1,toolbar=0,scrollbars=0,status=0');
 						printWin.document.write('<!DOCTYPE html><html><head>' +
-													'<link href="css/reset.css" rel="stylesheet">' +
-													'<link href="css/study.css" rel="stylesheet">' +
-													'<link href="css/bible.css" rel="stylesheet">' + 
+													'<link href="css/studybible.css" rel="stylesheet">' +
 												'</head><body>' + searchWindow.content[0].innerHTML + '</body></html>');
 						printWin.document.close();
 						printWin.focus();

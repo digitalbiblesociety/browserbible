@@ -87,24 +87,74 @@ docs.plugins.push({
 					
 					chapter.on('click', '.image-icon', function() {
 						console.log('ICON');
-						
-						var
+						var 
 							imageIcon = $(this),
 							verse = imageIcon.closest('.verse'),
 							verseOsis = verse.attr('data-osis'),
+							imageLibraryKeys = Object.keys(imageLibrary),
+							flexPrev = [],
+							flexNext = [],
+							n = 0,
+							p = 0;
+							
+						for (var i = 0; i < imageLibraryKeys.length; i++) {
+						  if (imageLibrary[verseOsis] == imageLibrary[imageLibraryKeys[i]]) {
+								n = i;
+								p = i;
+								if (imageLibrary[imageLibraryKeys[i - 1]] != undefined) {
+									flexPrev = flexPrev.concat(imageLibrary[imageLibraryKeys[i - 2]], imageLibrary[imageLibraryKeys[i - 1]])
+								} else {
+									flexPrev = [];
+								}
+								if (imageLibrary[imageLibraryKeys[i + 1]] != undefined) {
+									flexNext = flexNext.concat(imageLibrary[imageLibraryKeys[i + 1]],imageLibrary[imageLibraryKeys[i + 2]])
+								} else {
+									flexNext = [];
+								}
+							}
+						}
+						
+						var
+							n = n + 3,
+							p = p - 3,
+							allPrevNext = [],
 							reference = new bible.Reference(verseOsis).toString(),
-							imagesData = imageLibrary[verseOsis],
+							imagesData = allPrevNext.concat(flexPrev, imageLibrary[verseOsis], flexNext),
 							before = '<li><img src=\"content/images/',
 							after = '\" /></li>',
 							imagesHtml = before + imagesData.join(after + before) + after;
 							
-						popup.title.html('Images: ' + reference.toString());
-							
-						popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul>');
+						popup.title.html('Images: ' + reference.toString());							
+						popup.content.html('<div class="flexslider carousel"><ul class="slides">' + imagesHtml + '</ul></div>');
 						popup.center().show();
+						
+						$('.flexslider').flexslider({
+							animation: "slide",
+							animationLoop: false,
+							slideshow: false,
+							controlNav: false,
+							itemWidth: 85,
+							itemMargin: 5,
+							start: function(slider) {
+								//$('.flexslider').flexslider(slider.count-3)
+							},
+							end: function(slider){
+								$(".pull-next").click(function(e) {
+									e.preventDefault();
+									slider.addSlide(before + imageLibrary[imageLibraryKeys[n + 1]].join(after + before) + after)
+									$('.flexslider').flexslider("next")
+									n = n + 1;
+								});
+								$(".pull-prev").click(function(e) {
+									e.preventDefault();
+									slider.addSlide(before + imageLibrary[imageLibraryKeys[p - 1]].join(after + before) + after, 0)
+									$('.flexslider').flexslider("prev")
+									p = p - 1;
+								});
+							}
+						});
 					});
 				}
-				
 			}
 			
 			$.ajax({
@@ -121,8 +171,8 @@ docs.plugins.push({
 					console.log('ERROR: loading videos');
 					chaptersAwaiting = null;
 				}
-			});					
-			
+			});			
 		}
-	}
+	}    
 });
+

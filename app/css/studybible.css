@@ -1,3 +1,19 @@
+/* Judson Aurora Bible  */
+@font-face {
+	font-family: 'padauk_src';
+    src: url('fonts/padauk_src.eot');
+    src: url('fonts/padauk_src.eot?#iefix') format('eot'),
+         url('fonts/padauk_src.woff') format('woff'),
+         url('fonts/padauk_src.ttf') format('truetype'),
+         url('fonts/padauk_src.svg#webfontVIEluHTx') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.JUD {
+	font-family: 'padauk_src';
+}
+
 *   										{margin:0;padding:0}
 li  										{list-style:none}
 
@@ -24,7 +40,7 @@ body                                        {overflow:hidden;}
 .document-header-left                       {text-align:left;position:absolute;top:6px;left:5px;z-index:2;}
 .document-header-right                      {-x-float:right;-x-width:100px;text-align:right;position:absolute;top:6px;right:5px;z-index:1;}
 .document-header .document-header-input     {display:inline-block;vertical-align:top;}
-.document-header .document-input            {width:125px;height:20px;font-size:12px;color:#bbb;border:solid 1px #999;margin:0;padding:0 4px;}
+.document-header .document-input            {width:125px;height:20px;font-size:12px;color:#bbb;border:solid 1px #999;margin:0;padding:0 4px;font-family: 'padauk_src';}
 
 .document-header .document-header-selector  {position:absolute; width:35px; top:0; left:140px;}
 .document-header .document-header-selector:after {content:'';position:absolute; right:-20px; z-index:-5; top:7px; border-left:4px solid transparent; border-right:4px solid transparent; border-top:6px solid #444; }
@@ -84,7 +100,7 @@ body                                        {overflow:hidden;}
 .document-navigation-list .nav-scroller li  {cursor:pointer;}
 .document-navigation-list .nav-scroller li:hover{background:#aaaaff;}
 
-.book-list li                               {display:block;border:solid 1px #aaa;border-color:#ccc #333 #333 #ccc;padding:4px 0 4px 5px;}
+.book-list li                               {display:block;border:solid 1px #aaa;border-color:#ccc #333 #333 #ccc;padding:4px 0 4px 5px;font-family: 'padauk_src';}
 .book-list li.selected                      {background:#ccccff;}
 
 .chapter-list li                            {font-size:11px;line-height:1;float:left;width:24px;height:16px;border:solid 1px #aaa;text-align:center;padding:5px 0 2px;}
@@ -127,25 +143,21 @@ body                                        {overflow:hidden;}
 .config-theme-default .popup-window,
 .config-theme-default #header               {background:url(images/bg-dark.jpg);}
 .config-theme-default .document-header,
-.config-theme-default .document-footer      {background:#000}
-.config-theme-default #content-wrap:after,
-.config-theme-default #content-wrap:before  {opacity:0}
+.config-theme-default .document-footer      {background:#000;color: #fff;}
+.config-theme-default * {border: none;}
+.config-theme-default .document-header-selector span {border: 1px solid #222;}
 
 .config-theme-brown,
 .config-theme-brown .popup-window,
 .config-theme-brown #header                 {background:url(images/bg-brown.jpg);}
 .config-theme-brown .document-header,
 .config-theme-brown .document-footer        {background:url(images/bg-graph.jpg);}
-.config-theme-brown #content-wrap:after,
-.config-theme-brown #content-wrap:before    {opacity:1}
 
 .config-theme-white,
 .config-theme-white .popup-window,
 .config-theme-white #header                 {background:url(images/bg-grey.jpg);}
 .config-theme-white .document-header,
 .config-theme-white .document-footer        {background:url(images/bg-white.jpg);}
-.config-theme-white #content-wrap:after,
-.config-theme-white #content-wrap:before    {opacity:0}
 
 
 .morph-row                                  {overflow:hidden;}

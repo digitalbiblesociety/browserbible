@@ -82,6 +82,7 @@ jQuery(function($) {
 						
 						searchInput = $('<input type="text" class="search-text" />').appendTo(searchWindow.menu),
 						searchButton = $('<input type="button" class="search-button" value="Search" />').appendTo(searchWindow.menu),
+						cancelButton = $('<input type="button" class="cancel-button" value="Cancel" disabled />').appendTo(searchWindow.menu),
 						printButton = $('<input type="button" class="print-button" value="Print" />').appendTo(searchWindow.menu),
 						searchVersion = $('<br><select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>').appendTo(searchWindow.menu);
 						
@@ -101,6 +102,10 @@ jQuery(function($) {
 					searchButton.on('click', function() {
 						doSearch();	
 					});
+					cancelButton.on('click', function() {
+						bible.BibleSearch.cancelSearch();	
+					});
+
 					
 					printButton.on('click', function() {
 						
@@ -118,10 +123,9 @@ jQuery(function($) {
 						
 						docs.DocManager.documents[0].navigateById($(this).attr('data-osis') , true);
 				
-						searchWindow.hide();
+						//searchWindow.hide();
 					});
-					
-					
+				
 					
 					function doSearch() {
 						
@@ -137,6 +141,7 @@ jQuery(function($) {
 						console.log(input, version);
 							
 						searchWindow.content.empty();
+						cancelButton.prop('disabled', false);						
 						
 						bible.BibleSearch.search( input, version,
 							
@@ -156,6 +161,8 @@ jQuery(function($) {
 								searchWindow.content.html(resultHtml);
 								
 								searchWindow.footer.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '');
+								
+								cancelButton.prop('disabled', true);
 								
 								//searchButton.prop('disabled', false);
 								//searchText.prop('disbled', false);	

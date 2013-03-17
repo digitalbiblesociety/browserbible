@@ -187,10 +187,12 @@ docs.plugins.push({
 					popupHeight = popup.window.outerHeight(true),
 					windowWidth = $(window).width(),
 					windowHeight = $(window).height(),
+					windowScrollTop = $(window).scrollTop(),
 					// default to below and to the right
-					top = (wordPos.top + wordHeight + popupHeight > windowHeight) ? wordPos.top - popupHeight - 5 : wordPos.top + wordHeight + 4,
+					top = (wordPos.top + wordHeight + popupHeight - windowScrollTop > windowHeight) ? wordPos.top - popupHeight - 5 : wordPos.top + wordHeight + 4,
 					left = (wordPos.left + popupWidth > windowWidth) ? windowWidth - popupWidth : wordPos.left;
 				
+				console.log(wordPos.top + wordHeight + popupHeight - windowScrollTop, windowHeight);
 		
 				// place me!	
 				popup.window.css({top: top, left: left});

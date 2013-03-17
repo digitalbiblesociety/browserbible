@@ -6,7 +6,7 @@
  
 docs.plugins.push({
 
-	init: function( docManager ) { 
+	init: function( docManager ) {	
 				
 		if (!docs.Features.hasTouch) {
 			
@@ -41,7 +41,7 @@ docs.plugins.push({
 					
 					// hide the thumbnails if there is only one
 					if (image.parent().siblings().length == 0) {
-						popup.hide();
+						//popup.hide();
 					}
 					
 					// launch image
@@ -87,26 +87,48 @@ docs.plugins.push({
 					
 					chapter.on('click', '.image-icon', function() {
 						console.log('ICON');
-						
-						var
+						var 
 							imageIcon = $(this),
 							verse = imageIcon.closest('.verse'),
 							verseOsis = verse.attr('data-osis'),
 							reference = new bible.Reference(verseOsis).toString(),
 							imagesData = imageLibrary[verseOsis],
 							before = '<li><img src=\"content/images/',
-							after = '\" /></li>',
-							imagesHtml = before + imagesData.join(after + before) + after;
+							after = '\" width="75" /></li>',
+							imagesHtml = before + imagesData.join(after + before) + after,
+							imgIndex = 0;
 							
-						popup.title.html('Images: ' + reference.toString());
-							
-						popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul>');
+						for (var i = 0; i < imageLibraryKeys.length; i++) {
+						  if (imageLibrary[verseOsis] == imageLibrary[imageLibraryKeys[i]]) {
+								imgIndex = i;
+							}
+						};
+	
+						popup.title.html('Images: ' + reference.toString());							
+						popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul><div class="imgControls"><span class="imgPrev"><span></span></span><span class="imgNext"><span></span></span></div>');
 						popup.center().show();
+						
+						function imgSlides(index) {
+							$('.image-library-thumbs').empty();
+							popup.title.html('Images: ' + bible.Reference(imageLibraryKeys[index]).toString());
+							$('.image-library-thumbs').append(before + imageLibrary[imageLibraryKeys[index]].join(after + before) + after);
+							$('.document-input').val(bible.Reference(imageLibraryKeys[index]).toString());
+							docManager.documents[0].navigateToUserInput();
+							imgIndex = index;
+						};
+						
+						$('.imgNext').click(function() {
+							imgSlides(imgIndex + 1);
+						});
+						
+						$('.imgPrev').click(function() {
+							imgSlides(imgIndex - 1);
+						});
+
 					});
 				}
-				
 			}
-			
+
 			$.ajax({
 				url: 'content/images/images.js',
 				dataType: 'script',
@@ -121,8 +143,8 @@ docs.plugins.push({
 					console.log('ERROR: loading videos');
 					chaptersAwaiting = null;
 				}
-			});					
-			
+			});			
 		}
-	}
+	}    
 });
+

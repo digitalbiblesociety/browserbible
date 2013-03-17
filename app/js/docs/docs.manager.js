@@ -972,7 +972,7 @@ docs.Document.prototype = {
 	
 	
 	updateNavigationInput: function(doSync) {
-		
+	
 		var t = this,
 			paneTop = this.content.offset().top,
 			visibleFragmentInfo = null;

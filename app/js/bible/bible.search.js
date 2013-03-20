@@ -135,7 +135,7 @@ bible.BibleSearch = {
 	verseNumRegExp: new XRegExp('\\w{1,6}\\.\\d{1,3}\\.\\d{1,3}','gi'),
 	
 	//stripNotesRegExp: new RegExp('<span class="(note|cf)">.+?</span>','gi'),
-	stripNotesRegExp: new XRegExp('<span class="(note|cf)">.+?<span class="key">.+?</span><span class="text">.+?</span></span>','gi'),
+	stripNotesRegExp: new XRegExp('<span class="(note|cf)"><span class="key">[a-zA-Z0-9]+</span><span class="text">.+?</span></span>','gi'),
 	
 	replaceLexRegExp: new XRegExp('<span class="word"[^>]+>(.+?)</span>','gi'),
 	
@@ -190,27 +190,35 @@ bible.BibleSearch = {
 		s.allAsciiRegExp.lastIndex = 0;
 		if (s.allAsciiRegExp.test( s.searchText )) {
 			
-			var andSearchParts = s.searchText.split(/\sAND\s/gi);
+			// reset the regexes
 			s.searchRegExp = [];
-			for (var i=0, il=andSearchParts.length; i<il; i++) {
 			
-				var part = andSearchParts[i];
+			// check for quoted search first
+			if (s.searchText.substring(0,1) == '"' && s.searchText.substring(s.searchText.length-1) == '"') {
+				var part = s.searchText;
+				part = part.split(' OR ').join('|');
+				part = part.replace(/"/gi,'');
+				part = part.replace(/ /gi,'[\\s\\.,"\';:]+');
+		
+				s.searchRegExp.push( new XRegExp('\\b(' + part + ')\\b', 'gi') );			
+			} else {
+			
+				// for non-quoted searches we assume an "AND" search
 				
-				if (part.substring(0,1) == '"' && part.substring(part.length-1) == '"') {
-					part = part.split(' OR ').join('|');
-					part = part.replace(/"/gi,'');
-					part = part.replace(/ /gi,'[\\s\\.,"\';:]+');
-			
+				var andSearchParts = s.searchText.split(/\s+AND\s+|\s+/gi);
+				
+				for (var i=0, il=andSearchParts.length; i<il; i++) {
+				
+					var part = andSearchParts[i];
+	
+					//part = part.split(' OR ').join('|');
+					//part = part.split(' ').join('|');
+				
 					s.searchRegExp.push( new XRegExp('\\b(' + part + ')\\b', 'gi') );
-				} else {
-				
-					part = part.split(' OR ').join('|');
-					part = part.split(' ').join('|');
-				
-					s.searchRegExp.push( new XRegExp('\\b(' + part + ')\\b', 'gi') );
-				}
-			}			
 			
+				}			
+			}
+					
 			console.log('SEARCH', s.searchRegExp);
 		
 			//var parts = term.split(' ').join('|');
@@ -234,12 +242,17 @@ bible.BibleSearch = {
 	
 		var s = this;
 		
-		s.searchTerms = s.searchText.replace(/\sAND\s/gi,' ').replace(/\sOR\s/gi,' ').replace(/"/g,'').split(' ');
+		s.searchTerms = s.searchText.replace(/\sAND\s/gi,' ').replace(/\sOR\s/gi,' ').replace(/"/g,'').split(/\s+/g);
 		s.searchTermsIndex = -1;
 		
 		// create an index of just the chapters (John.1) instead of all the verses (John.1.1 and John.1.7)
 		s.indexedChapters = []
 		s.osisBookMatches = {};
+		
+		s.indexGroups = [];		
+		for (var i=0,il=s.searchTerms.length; i<il; i++) {
+			s.indexGroups.push([]);		
+		}
 		
 		s.loadNextIndex();
 		
@@ -256,19 +269,53 @@ bible.BibleSearch = {
 			// reset the final list of OSIS chapters we are going to load
 			s.indexedChapters = [];
 			
-			// create unique indexed chapters
-			for (var i=0, il=bible.DEFAULT_BIBLE.length; i<il; i++) {
-				var bookOsis = bible.DEFAULT_BIBLE[i],
-					bookChapters = s.osisBookMatches[bookOsis];
-					
-				if (typeof bookChapters != 'undefined') {
-					for (var j=0, jl=bookChapters.length; j<jl; j++) {
+			// OR Search
+			if (s.searchRegExp.length == 1) {
+				// create unique indexed chapters
+				for (var i=0, il=bible.DEFAULT_BIBLE.length; i<il; i++) {
+					var bookOsis = bible.DEFAULT_BIBLE[i],
+						bookChapters = s.osisBookMatches[bookOsis];
 						
-						s.indexedChapters.push(bookOsis + '.' + bookChapters[j]);
+					if (typeof bookChapters != 'undefined') {
+						for (var j=0, jl=bookChapters.length; j<jl; j++) {
+							
+							s.indexedChapters.push(bookOsis + '.' + bookChapters[j]);
+						}
 					}
 				}
+			} else {
+				console.log('COMBINING indexes', s.indexGroups);	
+						
+				var firstArray = s.indexGroups[0];
+					
+				// go through all the values of the first array and see if it's in the others
+				// LOVE => Gen.1, Gen.2
+				// TRUTH => Gen.2, Mark.3
+				// result => Gen.2
+				for (var i=1, il=firstArray.length; i<il; i++) {
+					var osis = firstArray[i],
+						inAllArrays = true;
+
+
+					// see if the other arrays have this value					
+					for (var j=1, jl=s.indexGroups.length; j<jl; j++) {
+						var group = s.indexGroups[j];
+						
+						if (group.indexOf(osis) == -1) {
+							inAllArrays = false;
+							//break;
+						}
+					}
+					
+					//console.log(osis, inAllArrays, s.indexGroups[1].indexOf
+					
+					if (inAllArrays) {
+						s.indexedChapters.push(osis);
+					}
+				}
+				
+				console.log('COMBINE', s.indexedChapters.length, s.indexedChapters);							
 			}
-		
 				
 			if (s.indexedChapters.length > 0) {		
 				// set the first one
@@ -277,7 +324,7 @@ bible.BibleSearch = {
 				s.chapterIndex = parseInt(s.indexedChapters[s.indexedChaptersIndex].split('.')[1])-1;	
 			}
 			
-			console.log( 'loaded indexes', s.indexedChapters);
+			//console.log( 'loaded indexes', s.indexedChapters);
 			
 			s.isSearching = true;
 			s.nextChapter();				
@@ -300,17 +347,35 @@ bible.BibleSearch = {
 					var verseOsis = data[i],
 						verseParts = verseOsis.split('.'),
 						bookOsis = verseParts[0],
-						chapterNumber = verseParts[1],
+						chapterNumber = verseParts[1];
+
 						
-						bookCheck = s.osisBookMatches[bookOsis];
-						
-					if (typeof bookCheck == 'undefined') {
-						s.osisBookMatches[bookOsis] = [chapterNumber];
-					} else {
-						if (bookCheck.indexOf(chapterNumber) == -1) {
-							bookCheck.push(chapterNumber);
+					// for or searches, we are combining the indexes into one LONGER list that we sort at the end	
+					if (s.searchRegExp.length == 1) {
+						var bookCheck = s.osisBookMatches[bookOsis];
+									
+						if (typeof bookCheck == 'undefined') {
+							s.osisBookMatches[bookOsis] = [chapterNumber];
+						} else {
+							if (bookCheck.indexOf(chapterNumber) == -1) {
+								bookCheck.push(chapterNumber);
+							}
 						}
+					
+					// for AND searches, we store all the indexes and then combine them after we're doing
+					} else {
+					
+						var group = s.indexGroups[s.searchTermsIndex],
+							chapterOsis = bookOsis + '.' + chapterNumber;
+							
+						//console.log(group, s.indexGroups, chapterOsis);
+						
+						if (group.indexOf(chapterOsis) == -1) {
+							group.push(chapterOsis);
+						}
+					
 					}
+			
 				}			
 				
 				
@@ -404,7 +469,6 @@ bible.BibleSearch = {
 		var s = this;
 				
 		s.verseRegExp.lastIndex = 0;
-		s.stripNotesRegExp.lastIndex = 0;
 				
 		
 		// remove notes
@@ -428,9 +492,17 @@ bible.BibleSearch = {
 				
 				// TODO: remove extra HTML to allow searches for "Jesus Wept"
 				verseSpan = verses[i];
+				
+				// strip notes
+				s.stripNotesRegExp.lastIndex = 0;
+				// TAKES TOO LONG
+				//verseSpan = verseSpan.replace( s.stripNotesRegExp, '' );		
+				
+				// array storing matches
 				foundMatches = [s.searchRegExp.length];
 				
-
+		
+				// check that all words match (truth AND love)
 				for (var j=0, jl=s.searchRegExp.length; j<jl; j++) {
 					
 					foundMatches[j] = false;
@@ -460,15 +532,20 @@ bible.BibleSearch = {
 				}
 				
 				if (foundMatch) {
-					verseReferenceText = new bible.Reference( verseSpan.match( s.verseNumRegExp )[0] ); //.toString();
-					//console.log(verse);
+					var verseOsis = verseSpan.match( s.verseNumRegExp );
 					
-					// put it altogether for a row
-					html = '<div class="search-result"><span class="search-verse">' + verseReferenceText + '</span>' + verseSpan + '</div>';
+					if (verseOsis != null) {
 					
-					// store results
-					s.searchResultsArray.push( html );
-					s.resultCount++;
+						verseReferenceText = new bible.Reference( verseOsis[0] ); //.toString();
+						//console.log(verse);
+						
+						// put it altogether for a row
+						html = '<div class="search-result"><span class="search-verse">' + verseReferenceText + '</span>' + verseSpan + '</div>';
+						
+						// store results
+						s.searchResultsArray.push( html );
+						s.resultCount++;
+					} 
 				}				
 				
 			}

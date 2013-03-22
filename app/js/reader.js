@@ -18,8 +18,7 @@ var $win = $(window),
 	
 	$reference = $('#reference'),
 	$referenceNavigation = null,	
-	
-	
+
 	$logo = $('#logo'),	
 				
 	isLoading = false,

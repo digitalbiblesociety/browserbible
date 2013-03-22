@@ -3,6 +3,9 @@
 =2.1.0 (2012/03/22)
 
 * total cleanup of repo, removing all data for separate downloads
+* added reader version
+* moved to jQuery 1.9
+* totally updated search (AND by default + super fast indexing)
 
 =2.0.5 (2012/06/14)
 

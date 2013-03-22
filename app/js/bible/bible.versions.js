@@ -21,7 +21,6 @@ bible.versions = {
 	allVersions: [],
 	
 	loadVersionManifest: function() {
-		
 		var t = this;
 		
 		$.ajax({
@@ -40,7 +39,6 @@ bible.versions = {
 	},
 	
 	loadNextVersion: function() {
-		
 		if (this.allVersions.length == 0) {
 			this.loadVersionManifest();
 			return;
@@ -67,7 +65,6 @@ bible.versions = {
 							versions: {}
 						};
 					}
-					
 					// insertdata
 					t.versionData[data.language.toLowerCase()].versions[data.code] = data;
 					t.versionsByKey[data.code] = data;
@@ -87,7 +84,6 @@ bible.versions = {
 	
 	loadingFinished: function() {
 		//this.versionData = bible.versionData;
-	
 		this.loadingCallback(bible.versionData);		
 	},
 	
@@ -144,6 +140,7 @@ bible.language = {
 		mk:'Macedonian',
 		ms:'Malay',
 		mt:'Maltese',
+		my:'Burmese',
 		no:'Norwegian',
 		fa:'Persian',
 		pl:'Polish',

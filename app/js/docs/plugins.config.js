@@ -28,7 +28,7 @@ docs.plugins.push({
 			},
 			
 			// FONT SIZE
-			fontSizeOptions = [
+			/*fontSizeOptions = [
 				{name: 'Small'},
 				{name: 'Default'},
 				{name: 'Large'},
@@ -37,7 +37,7 @@ docs.plugins.push({
 			],
 			renderFontSizeOption = function(id, name) {
 				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
-			},
+			},*/
 			
 			// THEME colors
 			themeOptions = [
@@ -61,7 +61,60 @@ docs.plugins.push({
 			.hide();
 			*/
 			configWindow = docs.createModal('config', docs.Localizer.get('plugin_config_title') + ' (v' + docs.version + ')').size(400, 300);
+		docManager.createFontSlider = function(title, prefix) {
+		
+			var aFontsSizeArray = new Array('10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26');
 			
+			if (typeof renderOption == 'undefined') {
+				renderOption = renderOptionDefault;
+			}
+			
+			var configBlock =
+				$('<div class="config-options" id="config-' + prefix + '"><h3>' + title + '</h3></div>')
+					.appendTo( configWindow.content )
+					.on('click', 'input', function() {
+						var bod = $(document.body);
+							
+						// remove all 
+						$(this).closest('.config-options').find('input').each(function(i, input) {
+							//console.log('removing ', $(input).val());
+							bod.removeClass('config-' + prefix + '-' + $(input).val() );
+						});
+						
+						// select this one
+						bod.addClass( 'config-' + prefix + '-' + $(this).val() );
+						
+					});
+				
+			configBlock.append($('<div style="width:200px;"><div id="font-slider"></div></div><span id="font-size"></span>'));
+			
+			var userConfig = parseInt($.jStorage.get('docs-config-' + prefix, 2), 10);
+			$('.document-wrapper').css('font-size', (userConfig + 11) + 'px' );
+			$('#font-slider').slider({
+				value: userConfig,
+				min: 0,
+				max: 16,
+				step: 1,
+				slide: function(event, ui) {
+					var sFontSizeArray = aFontsSizeArray[ui.value];
+					$('#font-size').html(sFontSizeArray + ' px');
+					$('.document-wrapper').css('font-size', sFontSizeArray + 'px' );
+					$.jStorage.set('docs-config-' + prefix, $('#font-slider').slider("option", "value")+1);
+				}
+			});
+			$('#font-size').html((aFontsSizeArray[$('#font-slider').slider('value')]) + ' px');
+
+			//configBlock.find('#config-' + prefix + '-' + userConfig + '').trigger('click');			
+		
+		
+			// resize?
+		
+			configWindow.show();
+			
+			configWindow.size(400, configBlock.position().top + configBlock.outerHeight(true) + 20);
+			configWindow.hide();
+			//configWindow.content.height
+		}			
 			
 		docManager.createOptionSet = function(title, prefix, data, renderOption) {
 			
@@ -73,6 +126,7 @@ docs.plugins.push({
 				$('<div class="config-options" id="config-' + prefix + '"><h3>' + title + '</h3></div>')
 					.appendTo( configWindow.content )
 					.on('click', 'input', function() {
+
 						var bod = $(document.body);
 							
 						// remove all 
@@ -150,10 +204,11 @@ docs.plugins.push({
 			configWindow.hide();
 			//configWindow.content.height
 		}		
-		
+
 		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_theme'), 'theme', themeOptions, renderThemeOption);
 		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_font'), 'font', fontFamilyOptions, renderFontFamilyOption);
-		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_size'), 'size', fontSizeOptions, renderFontSizeOption);
+		//docManager.createOptionSet(docs.Localizer.get('plugin_config_option_size'), 'size', fontSizeOptions, renderFontSizeOption);
+		docManager.createFontSlider(docs.Localizer.get('plugin_config_option_size'), 'size');
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_chapters'), 'chapters', true);
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_verses'), 'verses', true);
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_wordsofchrist'), 'wordsofchrist', true);
@@ -164,7 +219,6 @@ docs.plugins.push({
 		//docManager.createOptionSet('Words of Christ', 'wordsofchrist', [{name: 'Default'},{name: 'Black'}]);
 		//docManager.createOptionSet('Notes', 'notes', [{name: 'Default'},{name: 'Hide Notes'}]);
 
-		
 		var configButton = $('<input type="button" id="docs-config" />')
 			.appendTo(docManager.header.find('#header-nav'))
 			.on('click', function() {

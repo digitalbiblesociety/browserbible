@@ -6,7 +6,7 @@
  
 docs.plugins.push({
 
-	init: function( docManager ) { 
+	init: function( docManager ) {	
 				
 		if (!docs.Features.hasTouch) {
 			
@@ -41,7 +41,7 @@ docs.plugins.push({
 					
 					// hide the thumbnails if there is only one
 					if (image.parent().siblings().length == 0) {
-						popup.hide();
+						//popup.hide();
 					}
 					
 					// launch image
@@ -91,72 +91,44 @@ docs.plugins.push({
 							imageIcon = $(this),
 							verse = imageIcon.closest('.verse'),
 							verseOsis = verse.attr('data-osis'),
-							imageLibraryKeys = Object.keys(imageLibrary),
-							flexPrev = [],
-							flexNext = [],
-							n = 0,
-							p = 0;
-							
-						for (var i = 0; i < imageLibraryKeys.length; i++) {
-						  if (imageLibrary[verseOsis] == imageLibrary[imageLibraryKeys[i]]) {
-								n = i;
-								p = i;
-								if (imageLibrary[imageLibraryKeys[i - 1]] != undefined) {
-									flexPrev = flexPrev.concat(imageLibrary[imageLibraryKeys[i - 2]], imageLibrary[imageLibraryKeys[i - 1]])
-								} else {
-									flexPrev = [];
-								}
-								if (imageLibrary[imageLibraryKeys[i + 1]] != undefined) {
-									flexNext = flexNext.concat(imageLibrary[imageLibraryKeys[i + 1]],imageLibrary[imageLibraryKeys[i + 2]])
-								} else {
-									flexNext = [];
-								}
-							}
-						}
-						
-						var
-							n = n + 3,
-							p = p - 3,
-							allPrevNext = [],
 							reference = new bible.Reference(verseOsis).toString(),
 							imagesData = allPrevNext.concat(flexPrev, imageLibrary[verseOsis], flexNext),
 							before = '<li><img src=\"content/images/',
-							after = '\" /></li>',
-							imagesHtml = before + imagesData.join(after + before) + after;
+							after = '\" width="75" /></li>',
+							imagesHtml = before + imagesData.join(after + before) + after,
+							imgIndex = 0;
 							
+						for (var i = 0; i < imageLibraryKeys.length; i++) {
+						  if (imageLibrary[verseOsis] == imageLibrary[imageLibraryKeys[i]]) {
+								imgIndex = i;
+							}
+						};
+	
 						popup.title.html('Images: ' + reference.toString());							
-						popup.content.html('<div class="flexslider carousel"><ul class="slides">' + imagesHtml + '</ul></div>');
+						popup.content.html('<ul class="image-library-thumbs">' + imagesHtml + '</ul><div class="imgControls"><span class="imgPrev"><span></span></span><span class="imgNext"><span></span></span></div>');
 						popup.center().show();
 						
-						$('.flexslider').flexslider({
-							animation: "slide",
-							animationLoop: false,
-							slideshow: false,
-							controlNav: false,
-							itemWidth: 85,
-							itemMargin: 5,
-							start: function(slider) {
-								//$('.flexslider').flexslider(slider.count-3)
-							},
-							end: function(slider){
-								$(".pull-next").click(function(e) {
-									e.preventDefault();
-									slider.addSlide(before + imageLibrary[imageLibraryKeys[n + 1]].join(after + before) + after)
-									$('.flexslider').flexslider("next")
-									n = n + 1;
-								});
-								$(".pull-prev").click(function(e) {
-									e.preventDefault();
-									slider.addSlide(before + imageLibrary[imageLibraryKeys[p - 1]].join(after + before) + after, 0)
-									$('.flexslider').flexslider("prev")
-									p = p - 1;
-								});
-							}
+						function imgSlides(index) {
+							$('.image-library-thumbs').empty();
+							popup.title.html('Images: ' + bible.Reference(imageLibraryKeys[index]).toString());
+							$('.image-library-thumbs').append(before + imageLibrary[imageLibraryKeys[index]].join(after + before) + after);
+							$('.document-input').val(bible.Reference(imageLibraryKeys[index]).toString());
+							docManager.documents[0].navigateToUserInput();
+							imgIndex = index;
+						};
+						
+						$('.imgNext').click(function() {
+							imgSlides(imgIndex + 1);
 						});
+						
+						$('.imgPrev').click(function() {
+							imgSlides(imgIndex - 1);
+						});
+
 					});
 				}
 			}
-			
+
 			$.ajax({
 				url: 'content/images/images.js',
 				dataType: 'script',

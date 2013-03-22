@@ -4,7 +4,7 @@ docs.createModal = function(id, startTitle) {
 			'<div class="popup-window" id="' + id + '">' +
 				'<div class="popup-header">' +
 					'<span class="popup-title">' + startTitle + '</span>' + 
-					'<span class="popup-close">X</span>' + 
+					'<span class="popup-close"></span>' + 
 				'</div>' +
 				'<div class="popup-menu"></div>' +
 				'<div class="popup-content"></div>' +

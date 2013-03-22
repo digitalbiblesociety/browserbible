@@ -108,7 +108,6 @@ bible.BibleNavigator = {
 		document.navigationWindow.on('mouseleave', function() {
 			$(this).hide();
 		});
-		
 		document.navigationWindow.html(
 			'<div class="book-list document-navigation-list"><h3>' + docs.Localizer.get('bible_navigator_books') + '</h3><div class="nav-scroller"><ul></ul></div></div>' +
 			'<div class="chapter-list document-navigation-list"><h3>' + docs.Localizer.get('bible_navigator_chapters') + '</h3><div class="nav-scroller"><ul></ul></div></div>'
@@ -145,15 +144,13 @@ bible.BibleNavigator = {
 	
 	showNavigationList: function(document) {
 		
-
 		// get books
-		
 		var versionInfo = JSON.parse( document.selector.find('option:selected').attr('data-version') );
 			booksHtml = '';
-		
+
 		for (var i in versionInfo.books) {
 			//books += '<li data-osis="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' + versionInfo.bookNames[i] + '</li>';
-			booksHtml += '<li data-osis="' + versionInfo.books[i] + '" data-chapters="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' +
+			booksHtml += '<li class="' + versionInfo.code.toLowerCase() + '" data-osis="' + versionInfo.books[i] + '" data-chapters="' + bible.BOOK_DATA[ versionInfo.books[i] ].chapters.length + '">' +
 				//versionInfo.bookNames[i] +
 				bible.BOOK_DATA[ versionInfo.books[i] ].names[versionInfo.language.toLowerCase()][0] + 
 			'</li>';

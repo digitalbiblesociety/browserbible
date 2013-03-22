@@ -244,7 +244,6 @@ docs.DocManager = {
 };
 
 docs.Document = function(manager, id, navigator, selectedDocumentId) {
-
 	var t = this;
 
 	// store
@@ -302,7 +301,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.input = t.container.find('.document-input');
 	t.button = t.container.find('.document-button');
 	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
-	
+
 	// double check. if the selected version (from memory) isn't there, try the first one
 	selectedDocumentId = t.selector.val();
 	
@@ -441,7 +440,6 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			t.navigationWindow.hide();
 		}
 	}).on('click', function(e) {
-		
 		// show the navigation list
 		t.navigator.showNavigationList(t);	
 		
@@ -572,7 +570,7 @@ docs.Document.prototype = {
 		t.container.find('.document-header-selector span').html(versionInfo.abbreviation);		
 		
 		t.audioBtn.hide();
-		
+
 		// find audio
 		$.ajax({
 			url:'content/audio/' + version + '/version.json',
@@ -588,11 +586,11 @@ docs.Document.prototype = {
 	},
 	
 	load: function(fragmentId, action) {
-		
+	
 		var t = this,
 			sectionId = t.navigator.convertFragmentIdToSectionId( fragmentId ),
 			url = 'content/bibles/' + this.selector.val() + '/';
-			
+
 		// select the URL based on the action
 		switch (action) {
 			default:
@@ -626,7 +624,7 @@ docs.Document.prototype = {
 				
 				if (!t.switchingOver) {
 					t.switchingOver = true;
-					
+
 					var currentVersion = t.selector.val(),
 						switchToVersion = '';
 					
@@ -661,10 +659,13 @@ docs.Document.prototype = {
 				
 			},
 			success: function(data) {
+			
+				$(t.wrapper).removeClass().addClass('document-wrapper ' + t.selector.val());
+				$(t.input).removeClass().addClass('document-input ' + t.selector.val());
 				
 				if (t.switchingOver == true)
 					t.switchingOver = false;
-				
+					
 				var newSectionNode = $(data).find(t.navigator.sectionSelector),
 					newSectionId = newSectionNode.attr(t.navigator.sectionIdAttr);
 					
@@ -972,7 +973,6 @@ docs.Document.prototype = {
 	
 	
 	updateNavigationInput: function(doSync) {
-	
 		var t = this,
 			paneTop = this.content.offset().top,
 			visibleFragmentInfo = null;

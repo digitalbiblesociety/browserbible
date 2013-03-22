@@ -89,7 +89,7 @@ function updateReference() {
 function start() {
 
 	// create buttons that aren't in the main HTML page
-	createNavigation();			
+	createNavigation();	
 	createOptions();
 	createPrevNext();
 	
@@ -405,12 +405,14 @@ function createOptions() {
 		)
 		.hide()
 		.appendTo( 	$(document.body) );
-	
+		
 	// SHOW/HIDE
-	$logo.toggle(function() {
-		optionsWindow.show();
-	}, function() {
-		optionsWindow.hide();	
+	$logo.on('click', function() {
+		if (optionsWindow.is(':visible')) {
+			optionsWindow.hide();
+		} else {
+			optionsWindow.show();
+		}
 	});
 	
 	$content.on('click', function() {

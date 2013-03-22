@@ -1,5 +1,9 @@
 # Change Log
 
+=2.1.0 (2012/03/22)
+
+* total cleanup of repo, removing all data for separate downloads
+
 =2.0.5 (2012/06/14)
 
 * Made video and image data async

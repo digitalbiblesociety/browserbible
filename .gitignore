@@ -5,3 +5,4 @@
 /app/content/audio/*.mp3
 /app/content/videos/*.mp4
 /app/content/images/*.jpg
+*.db

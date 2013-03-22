@@ -1,0 +1,19 @@
+{
+	"instructions": "List all versions folders here and the data in version/version.json will make things happen",
+	"versions": [
+		"ar_svd",
+		"el_tisch",
+		"en_kjv",
+		"en_web",
+		"en_esv",
+		"en_net",
+		"en_neti",
+		"en_nasb",
+		"en_niv",
+		"en_oeb",
+		"es_rv",
+		"he_wlc",
+		"my_jud",
+		"ru_syn"
+	]
+}

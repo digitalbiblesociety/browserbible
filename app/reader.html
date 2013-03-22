@@ -27,8 +27,16 @@
 	}	
 
 	#header {
-		height: 40px;
-		background: #000;
+		height: 48px;
+		background: #7d7e7d; /* Old browsers */
+background: -moz-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d7e7d), color-stop(100%,#0e0e0e)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* IE10+ */
+background: linear-gradient(to bottom, #7d7e7d 0%,#0e0e0e 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+
 		position: fixed;
 		width: 100%;
 		padding: 10px;
@@ -36,16 +44,39 @@
 		position: fixed;
 		z-index: 100;		
 	}
+	#nav-input {
+		height: 30px;
+		font-size: 18px;
+		padding: 4px;
+		margin: 0;	
+	}
 	#main {
-		padding: 50px 10%;
+		padding: 50px 5%;
+		/* overflow: auto; */
+		font-size: 20px;
 	}
-	#content {
-		
+	#content table {
+		width: 100%;
 	}
-	#content.with-side {
+	#content tr {
+		width: 100%;
+	}
+	#content td {
+		vertical-align: top;
+		width: 100%;
+		padding: 0;
+	}
+	#content.two-columns td {
 		width: 50%;
-		padding-right: 2%;
 	}
+	#content.two-columns td:nth-child(1) {
+		padding-right: 2%;
+	}	
+	#content.two-columns td:nth-child(1) {
+		padding-left: 2%;
+	}	
+
+
 	
 	#side {
 		position: absolute;
@@ -55,9 +86,11 @@
 		z-index: 10;
 	}
 	
+	/*
 	.top-verse {
 		background: yellow;
 	}
+	*/
 	</style>
 	
 	<link rel="stylesheet" href="css/bible.css" />
@@ -66,19 +99,19 @@
 <body>	
 	<div id="container">	
 		<div id="header">
-			Header
-			<input id="header-input" type="text">
+			Bible
+			<input id="nav-input" type="text">
 			<input type="button" value="GO">
 
 			<label>
 				<input type="checkbox" id="enable-side" />
-				Enable Side
+				+Side
 			</label>
 			
 		</div>	
 		<div id="main">
 			<div id="content">
-				
+				<table></table>
 			</div>			
 		</div>
 		<div id="side">
@@ -95,7 +128,7 @@
 		$content = $('#content'),				
 		$side = $('#side'),
 		$enableSide = $('#enable-side'),
-		$input = $('#header-input');
+		$input = $('#nav-input');
 	
 	function resize() {
 		var width = $win.width(),
@@ -113,9 +146,6 @@
 	$win.on('resize', resize);
 	$win.on('scroll', scrollCheck);	
 	
-	$win.on('touchstart', startScrollInterval);	
-	$win.on('touchend', stopScrollInterval);	
-	
 	
 	var scrollTimeout = null;
 	function scrollCheck() {
@@ -124,13 +154,19 @@
 		if (scrollTimeout == null) {
 			
 			scrollTimeout = setTimeout(function() {
-				checkVerse();
+				updateVerse();
 				clearTimeout(scrollTimeout);
 				scrollTimeout = null;				
 			}, 100);				
 			
 		}		
-	}	
+	}
+
+	
+	
+	/*
+	$win.on('touchstart', startScrollInterval);	
+	$win.on('touchend', stopScrollInterval);	
 	
 	
 	var scrollInterval = null;
@@ -140,7 +176,7 @@
 		if (scrollInterval == null) {
 			scrollInterval = setInterval(function() {
 							
-				checkVerse();
+				updateVerse();
 			}, 100);
 		}		
 	}
@@ -151,10 +187,11 @@
 			scrollInterval = null;
 		}		
 	}	
+	*/
 	
 	
 	
-	function checkVerse() {
+	function updateVerse() {
 		var top = $win.scrollTop(),
 			contentOffset = $content.offset(),
 			pixel = top + $header.height() + 10; // parseInt($main.css('padding-top'), 10); // + contentOffset.top;
@@ -190,43 +227,33 @@
 	$enableSide.on('click', function() {
 		if ($enableSide.is(':checked') ) {
 		
+			$content.addClass('two-columns');
 
-			$side
-				.empty();
+			$content.find('tr').each( function() {
 				
-			loadVerses($side, 'en_web', 'Gen', 1, 10, function() {
-				
-				/*
-				$side.find('.chapter').each( function() {
+				var row = $(this),
+					chapter = row.find('div.chapter'),
+					newCell = $('<td />').appendTo(row);
 					
-					var sideChapter = $(this),
-						mainChapter = $main.find('div.' + sideChapter.attr('data-osis').replace('.','_') + '');
+				$.ajax({
+					url: 'content/bibles/en_web/' + chapter.attr('data-osis') + '.html',
+					success: function(d) {
+						
+						newCell.append( $(d).find('.chapter') );
 					
-					console.log(sideChapter, mainChapter);
+					}
 					
-					sideChapter
-						.css('position', 'absolute')
-						.css('top', mainChapter.offset().top);
 					
 				});
-				*/
-			
-			
-			});	
 				
+			});
 			
-			$content
-				.addClass('with-side');	
-				
-				
-			$side.width( $content.width() );
-		
 		} else {
-			$side
-				.hide();
-
 			$content
-				.removeClass('with-side');				
+				.removeClass('two-columns');	
+				
+			$content
+				.find('tr td:nth-child(2)').remove();			
 		}
 	
 	});
@@ -274,7 +301,15 @@
 						
 						var doc = $(d);
 						
-						target.append(doc.find('div.chapter'));
+						
+						//target.find('table')
+						//		.append( doc.find('div.chapter').clone().wrap('<td />').wrap('<tr />') );
+						
+						
+						doc.find('div.chapter')
+							.appendTo( target.find('table') )
+							.wrap('<tr><td></td></tr>');
+						
 						
 						currentChapter++;
 						loadNext();

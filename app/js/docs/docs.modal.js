@@ -24,8 +24,6 @@ docs.createModal = function(id, startTitle) {
 		
 	$(document).on('mousemove', function(e) {
 		if (isMouseDown) {
-			console.log(e);
-			
 			popup.css({
 				top: startWindowPosition.top - (startMousePosition.y - e.clientY),
 				left: startWindowPosition.top - (startMousePosition.x - e.clientX)	  
@@ -63,11 +61,10 @@ docs.createModal = function(id, startTitle) {
 			// show this one
 			popup.show().css({'z-index': docs.createModalIndex++});
 			
-			
 			if (this.height > 0 && this.width > 0) {
 				this.size(this.width, this.height);
 			}
-			
+
 			return this;
 		},
 		size: function(width, height) {
@@ -78,7 +75,8 @@ docs.createModal = function(id, startTitle) {
 			var visible = popup.is(':visible');
 				
 			popup.show();
-			content.width(width - content.width() - content.outerWidth(true));
+			var newWidth = Math.abs(width - content.width() - content.outerWidth(true));
+			content.width(newWidth);
 			content.height(height - menu.outerHeight(true) - title.outerHeight(true) - footer.outerHeight(true) - (content.outerHeight(true) - content.height()) - 5);
 			
 			if (!visible)

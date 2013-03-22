@@ -2,332 +2,86 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Bible - iPad</title>
+	<title>Bible - Reader</title>
+	
 	<!-- Apple specific code -->
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0" /> <!-- width=device-width,  -->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	
 	<!-- replacement console for IE -->
 	<script>
 	if (typeof console == 'undefined') { window.console = {log:function() {}}; }
 	</script>
+	
+	<link rel="shortcut icon" href="css/images/top-logo-square.png" type="image/x-icon"> 
+	
 	<script src="js/jquery.min.js"></script>
+	
+	<script src="js/utility/jstorage.js"></script>	
+	
 	<script src="js/bible/bible.js"></script>
 	<script src="js/bible/bible.data.js"></script>
+	<script src="js/bible/bible.morphology.js"></script>	
+	<script src="js/bible/bible.versions.js"></script>	
 	<script src="js/bible/bible.reference.js"></script>
 
-	<style>
-	html, body {
-		width: 100%;
-		height: 100%;
-	}
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}	
-
-	#header {
-		height: 48px;
-		background: #7d7e7d; /* Old browsers */
-background: -moz-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d7e7d), color-stop(100%,#0e0e0e)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #7d7e7d 0%,#0e0e0e 100%); /* IE10+ */
-background: linear-gradient(to bottom, #7d7e7d 0%,#0e0e0e 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
-
-		position: fixed;
-		width: 100%;
-		padding: 10px;
-		color: #fff;
-		position: fixed;
-		z-index: 100;		
-	}
-	#nav-input {
-		height: 30px;
-		font-size: 18px;
-		padding: 4px;
-		margin: 0;	
-	}
-	#main {
-		padding: 50px 5%;
-		/* overflow: auto; */
-		font-size: 20px;
-	}
-	#content table {
-		width: 100%;
-	}
-	#content tr {
-		width: 100%;
-	}
-	#content td {
-		vertical-align: top;
-		width: 100%;
-		padding: 0;
-	}
-	#content.two-columns td {
-		width: 50%;
-	}
-	#content.two-columns td:nth-child(1) {
-		padding-right: 2%;
-	}	
-	#content.two-columns td:nth-child(1) {
-		padding-left: 2%;
-	}	
-
-
+	<script src="js/docs/docs.namespace.js"></script>
+	<script src="js/docs/docs.detection.js"></script>		
+	<script src="js/docs/docs.localizer.js"></script>
+	<script src="js/docs/docs.modal.js"></script>	
+	<script src="js/docs/docs.plugins.js"></script>	
+	<script src="js/docs/plugins.lemmapopup.js"></script>
+	<script src="js/docs/plugins.matchwords.js"></script>
+	<script src="js/docs/plugins.notes.js"></script>	
+	<script src="js/docs/plugins.matchverses.js"></script>		
 	
-	#side {
-		position: absolute;
-		left: 50%;
-		top: 0;
-		padding: 50px 0 50px 2%;	
-		z-index: 10;
-	}
+
+	<script src="js/reader.js"></script>
 	
-	/*
-	.top-verse {
-		background: yellow;
-	}
-	*/
-	</style>
-	
+
 	<link rel="stylesheet" href="css/bible.css" />
+	
+<style>
+.verse-num {
+	color: #111; /* #365fdc; */
+	text-align: auto;
+	font-size: 80%;
+}
+
+.note .key, .cf .key {
+	color: #999;
+}
+
+.chapter {
+	line-height: 1.5;
+}
+
+.lex-entry .strong-search {
+	display: none;
+}
+
+.chapter h3 {
+	margin: 1.5em 0 0.5em 0;
+}
+</style>
 
 </head>
 <body>	
 	<div id="container">	
-		<div id="header">
-			Bible
-			<input id="nav-input" type="text">
-			<input type="button" value="GO">
-
-			<label>
-				<input type="checkbox" id="enable-side" />
-				+Side
-			</label>
+		<div id="header" class="stacked">
 			
+			<span id="version2" class="version-selector">V2</span>
+			<span id="version1" class="version-selector">V1</span>
+
+			<span id="logo">Bible</span>
+			
+			<span id="reference" class="reference-selector">R</span>
 		</div>	
 		<div id="main">
 			<div id="content">
-				<table></table>
+				<table><tbody></tbody></table>
 			</div>			
 		</div>
-		<div id="side">
-		
-		</div>
 	</div>
-	
-	
-	<script>
-	var $win = $(window),
-		$header = $('#header'),
-		$container = $('#container'),		
-		$main = $('#main'),
-		$content = $('#content'),				
-		$side = $('#side'),
-		$enableSide = $('#enable-side'),
-		$input = $('#nav-input');
-	
-	function resize() {
-		var width = $win.width(),
-			height = $win.height();
-			
-		$main
-			.width(width)
-			.height(height);
-			
-		$header
-			.width(width);
-		
-	}
-
-	$win.on('resize', resize);
-	$win.on('scroll', scrollCheck);	
-	
-	
-	var scrollTimeout = null;
-	function scrollCheck() {
-		
-		// #3: Fire every so often
-		if (scrollTimeout == null) {
-			
-			scrollTimeout = setTimeout(function() {
-				updateVerse();
-				clearTimeout(scrollTimeout);
-				scrollTimeout = null;				
-			}, 100);				
-			
-		}		
-	}
-
-	
-	
-	/*
-	$win.on('touchstart', startScrollInterval);	
-	$win.on('touchend', stopScrollInterval);	
-	
-	
-	var scrollInterval = null;
-	function startScrollInterval() {
-		$input.val( 'touchstart' );
-	
-		if (scrollInterval == null) {
-			scrollInterval = setInterval(function() {
-							
-				updateVerse();
-			}, 100);
-		}		
-	}
-	function stopScrollInterval() {
-	
-		if (scrollInterval != null) {
-			clearInterval(scrollInterval);
-			scrollInterval = null;
-		}		
-	}	
-	*/
-	
-	
-	
-	function updateVerse() {
-		var top = $win.scrollTop(),
-			contentOffset = $content.offset(),
-			pixel = top + $header.height() + 10; // parseInt($main.css('padding-top'), 10); // + contentOffset.top;
-		
-		//console.log(top, contentOffset, $main.css('padding-top'), pixel);
-		
-		$('span.top-verse').removeClass('top-verse');
-		
-		$content.find('span.verse').each(function(index, el) { 
-			
-			//console.log(top, contentOffset, pixel);
-			
-			var m = $(this);
-			if (m.offset().top - pixel > -2) {
-			
-				// this is the one!
-				m.addClass('top-verse');
-				
-				$input.val( new bible.Reference( m.attr('data-osis') ));
-			
-				return false;
-			}
-			
-			
-			return true; // keep looking
-
-		
-		});
-	
-	}
-		
-	
-	$enableSide.on('click', function() {
-		if ($enableSide.is(':checked') ) {
-		
-			$content.addClass('two-columns');
-
-			$content.find('tr').each( function() {
-				
-				var row = $(this),
-					chapter = row.find('div.chapter'),
-					newCell = $('<td />').appendTo(row);
-					
-				$.ajax({
-					url: 'content/bibles/en_web/' + chapter.attr('data-osis') + '.html',
-					success: function(d) {
-						
-						newCell.append( $(d).find('.chapter') );
-					
-					}
-					
-					
-				});
-				
-			});
-			
-		} else {
-			$content
-				.removeClass('two-columns');	
-				
-			$content
-				.find('tr td:nth-child(2)').remove();			
-		}
-	
-	});
-	
-	
-	function enableMorphWords() {
-
-		// define mouseover and click events for words
-		$container.on('mouseover', 'span.w', function() {
-			
-			var word = $(this);
-			
-			//loadWordIntoFooter(word);
-			
-		}).on('click', 'span.w', function() {
-			
-			// remove exising highlight
-			//$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);
-			
-			var word = $(this);
-			
-			//loadWordIntoPopup(word);
-		});		
-	}
-
-	
-	
-	function start() {
-		resize();
-		//enableMorphWords();
-		loadVerses($content, 'en_kjv', 'Gen', 1, 10, null);
-	}
-	
-	
-	function loadVerses(target, version, book, startChapter, maxChapters, done) {
-		
-		var currentChapter = startChapter;
-			
-			
-		function loadNext() {
-			if (currentChapter <= maxChapters) {
-				$.ajax({
-					url: 'content/bibles/' + version + '/' + book + '.' + currentChapter.toString() + '.html',
-					success: function(d) {
-						
-						var doc = $(d);
-						
-						
-						//target.find('table')
-						//		.append( doc.find('div.chapter').clone().wrap('<td />').wrap('<tr />') );
-						
-						
-						doc.find('div.chapter')
-							.appendTo( target.find('table') )
-							.wrap('<tr><td></td></tr>');
-						
-						
-						currentChapter++;
-						loadNext();
-					}
-				});
-			} else {
-				if (done != null) {
-					done();
-				}
-			}
-		}
-		
-		loadNext();
-	}
-	
-	start();
-	
-	</script>
-
 </body>
 </html>

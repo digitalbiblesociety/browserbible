@@ -39,7 +39,7 @@
 		position: absolute;
 		left: 50%;
 		margin: 0 0 0 -25px;
-		background: transparent url(css/images/top-logo.fw.png) top left no-repeat;
+		background: transparent url(images/reader-logo.png) top left no-repeat;
 		background-size: auto 100%;
 		cursor: pointer;
 	}
@@ -199,7 +199,7 @@
 		top: 8px;
 		cursor: pointer;
 		text-indent: -999px;
-		background: transparent url(css/images/icons-small.png) -198px -42px no-repeat;
+		background: transparent url(images/icons-small.png) -198px -42px no-repeat;
 		width: 20px;
 		height: 20px;
 	}

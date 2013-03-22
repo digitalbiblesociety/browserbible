@@ -1,3 +1,7 @@
 /study.js
 /study.min.js
 /test/
+/app/content/bibles/*.html
+/app/content/audio/*.mp3
+/app/content/videos/*.mp4
+/app/content/images/*.jpg

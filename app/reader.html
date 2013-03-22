@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Bible - iPad</title>
+	<!-- Apple specific code -->
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- replacement console for IE -->
+	<script>
+	if (typeof console == 'undefined') { window.console = {log:function() {}}; }
+	</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bible/bible.js"></script>
+	<script src="js/bible/bible.data.js"></script>
+	<script src="js/bible/bible.reference.js"></script>
+
+	<style>
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}	
+
+	#header {
+		height: 40px;
+		background: #000;
+		position: fixed;
+		width: 100%;
+		padding: 10px;
+		color: #fff;
+		position: fixed;
+		z-index: 100;		
+	}
+	#main {
+		padding: 50px 10%;
+	}
+	#content {
+		
+	}
+	#content.with-side {
+		width: 50%;
+		padding-right: 2%;
+	}
+	
+	#side {
+		position: absolute;
+		left: 50%;
+		top: 0;
+		padding: 50px 0 50px 2%;	
+		z-index: 10;
+	}
+	
+	.top-verse {
+		background: yellow;
+	}
+	</style>
+	
+	<link rel="stylesheet" href="css/bible.css" />
+
+</head>
+<body>	
+	<div id="container">	
+		<div id="header">
+			Header
+			<input id="header-input" type="text">
+			<input type="button" value="GO">
+
+			<label>
+				<input type="checkbox" id="enable-side" />
+				Enable Side
+			</label>
+			
+		</div>	
+		<div id="main">
+			<div id="content">
+				
+			</div>			
+		</div>
+		<div id="side">
+		
+		</div>
+	</div>
+	
+	
+	<script>
+	var $win = $(window),
+		$header = $('#header'),
+		$container = $('#container'),		
+		$main = $('#main'),
+		$content = $('#content'),				
+		$side = $('#side'),
+		$enableSide = $('#enable-side'),
+		$input = $('#header-input');
+	
+	function resize() {
+		var width = $win.width(),
+			height = $win.height();
+			
+		$main
+			.width(width)
+			.height(height);
+			
+		$header
+			.width(width);
+		
+	}
+
+	$win.on('resize', resize);
+	$win.on('scroll', scrollCheck);	
+	
+	$win.on('touchstart', startScrollInterval);	
+	$win.on('touchend', stopScrollInterval);	
+	
+	
+	var scrollTimeout = null;
+	function scrollCheck() {
+		
+		// #3: Fire every so often
+		if (scrollTimeout == null) {
+			
+			scrollTimeout = setTimeout(function() {
+				checkVerse();
+				clearTimeout(scrollTimeout);
+				scrollTimeout = null;				
+			}, 100);				
+			
+		}		
+	}	
+	
+	
+	var scrollInterval = null;
+	function startScrollInterval() {
+		$input.val( 'touchstart' );
+	
+		if (scrollInterval == null) {
+			scrollInterval = setInterval(function() {
+							
+				checkVerse();
+			}, 100);
+		}		
+	}
+	function stopScrollInterval() {
+	
+		if (scrollInterval != null) {
+			clearInterval(scrollInterval);
+			scrollInterval = null;
+		}		
+	}	
+	
+	
+	
+	function checkVerse() {
+		var top = $win.scrollTop(),
+			contentOffset = $content.offset(),
+			pixel = top + $header.height() + 10; // parseInt($main.css('padding-top'), 10); // + contentOffset.top;
+		
+		//console.log(top, contentOffset, $main.css('padding-top'), pixel);
+		
+		$('span.top-verse').removeClass('top-verse');
+		
+		$content.find('span.verse').each(function(index, el) { 
+			
+			//console.log(top, contentOffset, pixel);
+			
+			var m = $(this);
+			if (m.offset().top - pixel > -2) {
+			
+				// this is the one!
+				m.addClass('top-verse');
+				
+				$input.val( new bible.Reference( m.attr('data-osis') ));
+			
+				return false;
+			}
+			
+			
+			return true; // keep looking
+
+		
+		});
+	
+	}
+		
+	
+	$enableSide.on('click', function() {
+		if ($enableSide.is(':checked') ) {
+		
+
+			$side
+				.empty();
+				
+			loadVerses($side, 'en_web', 'Gen', 1, 10, function() {
+				
+				/*
+				$side.find('.chapter').each( function() {
+					
+					var sideChapter = $(this),
+						mainChapter = $main.find('div.' + sideChapter.attr('data-osis').replace('.','_') + '');
+					
+					console.log(sideChapter, mainChapter);
+					
+					sideChapter
+						.css('position', 'absolute')
+						.css('top', mainChapter.offset().top);
+					
+				});
+				*/
+			
+			
+			});	
+				
+			
+			$content
+				.addClass('with-side');	
+				
+				
+			$side.width( $content.width() );
+		
+		} else {
+			$side
+				.hide();
+
+			$content
+				.removeClass('with-side');				
+		}
+	
+	});
+	
+	
+	function enableMorphWords() {
+
+		// define mouseover and click events for words
+		$container.on('mouseover', 'span.w', function() {
+			
+			var word = $(this);
+			
+			//loadWordIntoFooter(word);
+			
+		}).on('click', 'span.w', function() {
+			
+			// remove exising highlight
+			//$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);
+			
+			var word = $(this);
+			
+			//loadWordIntoPopup(word);
+		});		
+	}
+
+	
+	
+	function start() {
+		resize();
+		//enableMorphWords();
+		loadVerses($content, 'en_kjv', 'Gen', 1, 10, null);
+	}
+	
+	
+	function loadVerses(target, version, book, startChapter, maxChapters, done) {
+		
+		var currentChapter = startChapter;
+			
+			
+		function loadNext() {
+			if (currentChapter <= maxChapters) {
+				$.ajax({
+					url: 'content/bibles/' + version + '/' + book + '.' + currentChapter.toString() + '.html',
+					success: function(d) {
+						
+						var doc = $(d);
+						
+						target.append(doc.find('div.chapter'));
+						
+						currentChapter++;
+						loadNext();
+					}
+				});
+			} else {
+				if (done != null) {
+					done();
+				}
+			}
+		}
+		
+		loadNext();
+	}
+	
+	start();
+	
+	</script>
+
+</body>
+</html>

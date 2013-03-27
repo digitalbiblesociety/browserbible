@@ -17,9 +17,11 @@ jQuery(function($) {
 	
 	// test for AJAX capabilities
 	$.ajax({
-		url: 'mobile.html',
+		url: 'content/bible/versions.json',
 		
-		error: function() {
+		dataType: 'text',
+		
+		error: function(e) {
 			
 			var modal = docs.createModal('error', '<strong>Error</strong>: Browser doesn\'t support local files').size(500,300).center();
 			

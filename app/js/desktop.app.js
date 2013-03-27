@@ -17,7 +17,7 @@ jQuery(function($) {
 	
 	// test for AJAX capabilities
 	$.ajax({
-		url: 'content/bible/versions.json',
+		url: 'mobile.html',
 		
 		dataType: 'text',
 		
@@ -40,6 +40,20 @@ jQuery(function($) {
 			
 			// load versions, then start doing other stuff
 			bible.versions.getVersions(function(versions) {
+		
+				console.log('versions', versions);
+				
+				if (bible.versions.versionKeys.length == 0) {
+					var modal = docs.createModal('error', '<strong>Error</strong>: No Bibles installed').size(500,300).center();
+					
+					modal.content.html(
+							'<p>No Bibles were found on this installation.</p>' +
+							'<p> To get started, go to <a href="https://github.com/digitalbiblesociety/browserbible/" target="_blank">github.com/digitalbiblesociety/browserbible</a> to download publicly available texts, and install them in the following folder:</p> <code>/app/content/bibles/</code>'		
+					);
+					modal.show();				
+				
+					return;
+				}
 		
 				var defaultDocSettings = (docs.Features.hasTouch) ?
 				{

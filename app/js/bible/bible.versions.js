@@ -9,6 +9,9 @@ bible.versions = {
 	// versions by key
 	versionsByKey: {},
 	
+	// list of keys
+	versionKeys: [],
+	
 	getVersion: function(key) {
 		return this.versionsByKey[key];
 	},
@@ -68,6 +71,7 @@ bible.versions = {
 					// insertdata
 					t.versionData[data.language.toLowerCase()].versions[data.code] = data;
 					t.versionsByKey[data.code] = data;
+					t.versionKeys.push(data.code);
 					
 					t.loadNextVersion();
 				},
@@ -83,8 +87,10 @@ bible.versions = {
 	},
 	
 	loadingFinished: function() {
+		this.versionKeys.sort();
+	
 		//this.versionData = bible.versionData;
-		this.loadingCallback(bible.versionData);		
+		this.loadingCallback(bible.versions.versionData);		
 	},
 	
 	getVersions: function(callback) {

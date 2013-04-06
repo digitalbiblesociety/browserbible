@@ -23,6 +23,7 @@
 }
 
 
+/* main bible verse, text formating */
 .book-name 													{text-align:center;font-size:2em;margin:1.2em 0;}
 .chapter													{line-height: 1.3;}
 .chapter p 													{text-indent:1em;}
@@ -34,15 +35,20 @@
 .chapter[dir=rtl] .chapter-num                              {float:right;margin:0 0 .5em .5em;}
 .verse-num                                                  {font-weight:bold;font-size:12px;vertical-align:top;-x-color:#cc6666;color:#aaa;}
 
+/* notes and cross references */
 .note,.cf                                                   {display:inline;}
 .note .key,.cf .key                                         {vertical-align:top;font-size:60%;font-weight:bold;color:#3333cc;letter-spacing:1px;cursor:pointer;display:inline;}
 .chapter .note .key:hover,.chapter .cf.key:hover            {color:#fff;background:#3333cc;}
 .chapter .note .text,.chapter .cf .text                     {display:none;}
 .document-footer .cf .key,.document-footer .note .key       {display:inline;vertical-align:top;font-size:8px;font-weight:bold;color:#3333cc;}
 
+/* Gospels red letters */
 .woc                                                        {color:#aa0000;}
+
 
 .v-1,.chapter .note .text,.chapter .cf .text,
 #search-results .note,#search-results .cf                   {display:none;}
+
+/* special display for Psalms */
 span[class^='verse Ps_']                                    {display:block;}
 

@@ -566,6 +566,15 @@ docs.Document.prototype = {
 	updateVersion: function(version) {
 		var t = this,
 			versionInfo = bible.versions.versionsByKey[version];
+			
+		// find and load styles
+		var styleId = 'style-' + version,
+			styleLink = $('#' + styleId);
+			
+		if (styleLink.length == 0) {
+			styleLink = $('<link id="' + styleId + '" rel="stylesheet" href="content/bibles/' + version + '/style.css" />')
+							.appendTo($('head'));
+		}
 		
 		t.container.find('.document-header-selector span').html(versionInfo.abbreviation);		
 		
@@ -582,7 +591,7 @@ docs.Document.prototype = {
 				t.audioData = audioJson;
 				t.audioBtn.show();
 			}
-		})
+		});
 	},
 	
 	load: function(fragmentId, action) {
@@ -613,14 +622,14 @@ docs.Document.prototype = {
 				break;			
 		}
 		
-		console.log(this.id, fragmentId, action, url);
+		//console.log(this.id, fragmentId, action, url);
 		
 		// load the URL and insert, append, prepend the content
 		$.ajax({
 			url: url,
 			dataType: 'html',
 			error: function() {
-				console.log('failed', url);
+				//console.log('failed', url);
 				
 				if (!t.switchingOver) {
 					t.switchingOver = true;
@@ -674,7 +683,7 @@ docs.Document.prototype = {
 				// Check if the content is already here!
 				//if (t.wrapper.find( t.navigator.sectionSelector + '[' + t.navigator.sectionIdAttr + '="' + newSectionId + '"]').length > 0) {
 				if (t.wrapper.find( 'div.' + newSectionId.replace(/\./gi,'_') + '').length > 0) {
-					console.log(newSectionId, 'already there');
+					//console.log(newSectionId, 'already there');
 					return;
 				}
 				
@@ -762,7 +771,7 @@ docs.Document.prototype = {
 						return true;
 					});
 					
-					console.log(t.id,'reducing', mostVisibleIndex, t.content.scrollTop(), t.content.height());
+					//console.log(t.id,'reducing', mostVisibleIndex, t.content.scrollTop(), t.content.height());
 				
 					if (mostVisibleIndex <= 2) {
 						// remove from the bottom
@@ -810,13 +819,13 @@ docs.Document.prototype = {
 			fragmentId;
 			
 		if (t.id === 'doc-0') {
-			console.log(t.id, totalHeight, distFromTop, distFromBottom, sections.length, (distFromTop < 250 ), (distFromBottom < 250));
+			//console.log(t.id, totalHeight, distFromTop, distFromBottom, sections.length, (distFromTop < 250 ), (distFromBottom < 250));
 		}
 		
 		//if ( sections.length <= 5 ) {
 			// check if we need to load the prev or next one
 			if (distFromTop < 250) {
-				console.log(t.id, 'load prev');
+				//console.log(t.id, 'load prev');
 	
 				fragmentId = sections
 								.first() // the first chapter (top)
@@ -827,7 +836,7 @@ docs.Document.prototype = {
 	
 			} else if (distFromBottom < 250) {
 				
-				console.log(t.id, 'load next');
+				//console.log(t.id, 'load next');
 	
 				fragmentId = sections
 								.last() // the last chapter (bottom)

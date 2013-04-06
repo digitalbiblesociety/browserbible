@@ -98,7 +98,7 @@ docs.plugins.push({
 				
 			}
 			
-			console.log('scan', chapter[0]);
+			//console.log('scan', chapter[0]);
 			
 			bibly.scanForReferences(chapter[0]);
 			

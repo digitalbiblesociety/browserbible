@@ -41,7 +41,7 @@ jQuery(function($) {
 			// load versions, then start doing other stuff
 			bible.versions.getVersions(function(versions) {
 		
-				console.log('versions', versions);
+				//console.log('versions', versions);
 				
 				if (bible.versions.versionKeys.length == 0) {
 					var modal = docs.createModal('error', '<strong>Error</strong>: No Bibles installed').size(500,300).center();

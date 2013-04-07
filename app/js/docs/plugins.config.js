@@ -43,7 +43,8 @@ docs.plugins.push({
 			themeOptions = [
 				{name: 'Default'},
 				{name: 'Brown'},
-				{name: 'White'}
+				{name: 'White'},
+				{name: 'Clean'},				
 			],
 			renderThemeOption = function(id, name) {
 				return 	'<label for="' + id + '" class="' + id + '">' +

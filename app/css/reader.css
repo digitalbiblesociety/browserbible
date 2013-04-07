@@ -97,6 +97,8 @@
 	}
 	#content {
 		padding: 40px 0 0 0;
+		max-width: 640px;
+		margin: 0 auto;
 	}
 	#content table {
 		width: 100%;
@@ -108,6 +110,9 @@
 		vertical-align: top;
 		width: 100%;
 		padding: 1px 0;
+	}
+	#content.two-columns {
+		max-width: 1000px;
 	}
 	#content.two-columns td {
 		width: 50%;
@@ -452,4 +457,28 @@
 }
 .hide-notes .cf, .hide-notes .note {
 	display: none;
+}
+
+
+/* bible style overrides */
+.verse-num {
+	color: #111; /* #365fdc; */
+	text-align: auto;
+	font-size: 80%;
+}
+
+.note .key, .cf .key {
+	color: #999;
+}
+
+.chapter {
+	line-height: 1.5;
+}
+
+.lex-entry .strong-search {
+	display: none;
+}
+
+.chapter h3 {
+	margin: 1.5em 0 0.5em 0;
 }

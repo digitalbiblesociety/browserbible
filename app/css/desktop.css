@@ -37,7 +37,7 @@ body                                        {overflow: hidden;}
 .document-header-button:hover               {cursor: pointer;}
 
 .document-search-button                     {background-position:-323px -44px;}
-.document-info-button                       {background-position:-283px -44px;}
+.document-info-button                       {background-position:-283px -46px;}
 .document-options-button                    {background-position:-164px -44px;}
 .document-close-button                      {background-position:-243px -44px;}
 .document-lock-button                       {background-position:-164px -45px;}
@@ -45,7 +45,7 @@ body                                        {overflow: hidden;}
 .document-audio-button                      {background-position:-165px -5px;}
 
 .document-content                           {position:relative;overflow:auto;}
-.document-wrapper                           {position:absolute;line-height:1.6;font-size:14px;font-family:Helvetica, Arial;padding:10px 20px;}
+.document-wrapper                           {position:absolute;line-height:1.7;font-size:18px;font-family:Helvetica, Arial;padding:10px 20px;}
 .document-about                             {position:absolute;background:rgba(0,0,0,0.9);display:none;padding:15px;overflow-y:scroll;color:white;}
 .document-about h1                          {line-height:1;margin:0 0 15px;}
 .document-about p                           {line-height:1.5;margin:15px 0;}

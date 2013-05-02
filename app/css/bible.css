@@ -34,6 +34,11 @@
 .chapter-num + p                                            {text-indent: 0 ;}
 .chapter[dir=rtl] .chapter-num                              {float:right;margin:0 0 .5em .5em;}
 .verse-num                                                  {font-weight:bold;font-size:12px;vertical-align:top;-x-color:#cc6666;color:#aaa;}
+.chapter h3 {
+	line-height: 1.4;
+	margin: 1.5em 0 0.5em 0;
+}
+
 
 /* notes and cross references */
 .note,.cf                                                   {display:inline;}

@@ -6,7 +6,7 @@ li  {list-style:none}
 body                                        {overflow: hidden;}
 #header                                     {height:40px;}
 #header #top-logo                           {position: absolute;top:5px;left:20px; opacity: .8}
-#header #header-nav                         {position:absolute;top:0;right:0;text-align:right;padding:10px 10px 0 0;}
+#header #header-nav                         {position:absolute;top:0;right:0;text-align:right;padding:10px 10px 0 0; font-size: 10px;line-height:1;}
 #footer                                     {height:12px;padding:5px 0;}
 #bottom-logo                                {position: absolute;bottom: 3px; right: 0;}
 
@@ -26,12 +26,12 @@ body                                        {overflow: hidden;}
 .document-header-left                       {font-size:16px;text-align:left;position:absolute;top:6px;left:5px;z-index:2;}
 .document-header-right                      {font-size:16px;-x-float:right;-x-width:100px;text-align:right;position:absolute;top:6px;right:5px;z-index:1;}
 .document-header .document-header-input     {display:inline-block;vertical-align:top;}
-.document-header .document-input            {width:135px;height:20px;font-size:12px;color:#bbb;border:solid 1px #999;margin:0;padding:0 4px;}
+.document-header .document-input            {width:135px;height:23px;font-size:14px;color:#bbb;border:solid 1px #999;margin:0;padding:0 4px;}
 
-.document-header .document-header-selector  {position:absolute; width: 35px; top:0; left:150px;}
-.document-header .document-header-selector:after {content: '';position: absolute; right: -20px; z-index: -5; top: 7px; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid #444; }
+.document-header .document-header-selector  {position:absolute; width: 40px; height: 25px; top:0; left:150px;}
+.document-header .document-header-selector:after {content: '';position: absolute; right: -15px; z-index: -5; top: 9px; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid #444; }
 
-.document-header-selector span              {font-size:12px;width:47px;height:12px;color:#444;position:absolute;pointer-events:none;border:solid 1px #999;padding:4px;}
+.document-header-selector span              {font-size:13px;width:41px; height:15px;color:#444;position:absolute;pointer-events:none;border:solid 1px #999;padding:4px 12px 4px 4px; overflow: hidden;}
 .document-header-selector .document-selector{width:55px;position:absolute;opacity:0;}
 .document-header-button                     {background:transparent url(images/icons-lg.png) 0 0 no-repeat;border:solid 0 #fff;border-radius:3px;text-indent:-9999px;width:30px;height:30px;margin:0 2px;}
 .document-header-button:hover               {cursor: pointer;}
@@ -42,9 +42,9 @@ body                                        {overflow: hidden;}
 .document-close-button                      {background-position:-243px -44px;}
 .document-lock-button                       {background-position:-164px -45px;}
 .state-unlocked                             {background-position:-204px -44px;}
-.document-audio-button                      {background-position:-165px -5px;}
+.document-audio-button                      {background-position:-401px -44px;}
 
-.document-content                           {position:relative;overflow:auto;}
+.document-content                           {position:relative;overflow:auto; -webkit-overflow-scrolling:touch; }
 .document-wrapper                           {position:absolute;line-height:1.7;font-size:18px;font-family:Helvetica, Arial;padding:10px 20px;}
 .document-about                             {position:absolute;background:rgba(0,0,0,0.9);display:none;padding:15px;overflow-y:scroll;color:white;}
 .document-about h1                          {line-height:1;margin:0 0 15px;}
@@ -63,6 +63,8 @@ body                                        {overflow: hidden;}
 .search-result .verse                       {display:block;float:left;width:420px;}
 .search-result .search-verse                {display:block;font-weight:bold;float:left;width:120px;}
 .search-result .highlight                   {background:#FFC237;}
+.search-version								{width:50px;}
+.print-button 								{float: right; }
 
 .document-navigation-window                 {position:absolute;border:2px solid #333;background:#222;border-radius:5px;width:300px;height:300px;top:0;left:0;display:none;font-size:12px;padding:5px;}
 .document-navigation-window h3              {color:#fff;font-size:14px;height:20px;margin:0;padding:0;}
@@ -75,12 +77,13 @@ body                                        {overflow: hidden;}
 
 .chapter-list li                            {font-size:11px;line-height:1;float:left;width:24px;height:16px;border:solid 1px #aaa;text-align:center;padding:5px 0 2px;}
 
-.config-options                             {overflow:hidden;margin:0 0 10px;}
+.config-options                             {overflow:hidden;margin:0 0 10px; font-family: helvetica; font-size: 12px;}
 .config-options .config-option              {float:left;width:55px;min-height:20px;line-height:1;margin:0 5px 0 0;}
 .config-options .config-option h3           {margin:0 0 .5em;}
 .config-options .config-option input[type=radio]{margin-right:5px;vertical-align:top;}
 .config-options .config-option span         {vertical-align:middle;}
-.config-toggle                              {display:inline-block;width:100px;}
+.config-toggle                              {font-family: helvetica; font-size: 12px;display:inline-block;width:115px;}
+.config-toggle input                        {margin-right: 5px;}
 
 .theme-demo                                 {display:inline-block;width:12px;height:20px;border:0;margin:0;padding:0;}
 .config-font-default                        {font-size:16px;}
@@ -155,17 +158,28 @@ body                                        {overflow: hidden;}
 .config-images-off .image-icon,
 .config-video-off .video-icon               {display:none;}
 
+.config-titles-off .chapter h2,
+.config-titles-off .chapter h3
+							              {display:none;}
+
 
 .document-focused .document-input,
 .config-theme-default .chapter              {color:#000;}
 .document-focused .document-header,
 .document-focused .document-footer          {-x-background:#999;}
 .book-list,.chapter-list                    {float:left;width:150px;}
+
+.config-size-tiny .chapter,
+.config-size-tiny                          {font-size:12px;}
+
 .config-size-small .chapter,
-.config-size-small                          {font-size:10px;}
+.config-size-small                          {font-size:15px;}
+
+.config-size-default .chapter,
+.config-size-default                        {font-size:18px;}
+
 .config-size-large .chapter,
-.config-size-large                          {font-size:18px;}
-.config-size-jumbo .chapter,
-.config-size-jumbo                          {font-size:22px;}
+.config-size-large                          {font-size:21px;}
+
 .config-size-huge .chapter,
-.config-size-huge                           {font-size:26px;}
+.config-size-huge                           {font-size:24px;}

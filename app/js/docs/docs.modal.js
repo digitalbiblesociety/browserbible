@@ -75,9 +75,16 @@ docs.createModal = function(id, startTitle) {
 			var visible = popup.is(':visible');
 				
 			popup.show();
-			var newWidth = Math.abs(width - content.width() - content.outerWidth(true));
+			
+			var newWidth = Math.abs(width - (content.outerWidth(true) - content.width()) );
 			content.width(newWidth);
-			content.height(height - menu.outerHeight(true) - title.outerHeight(true) - footer.outerHeight(true) - (content.outerHeight(true) - content.height()) - 5);
+			
+			content.height(height 
+							- menu.outerHeight(true) 
+							- title.outerHeight(true) 
+							- footer.outerHeight(true) 
+							- (content.outerHeight(true) - content.height()) 
+							- 5);
 			
 			if (!visible)
 				popup.hide();

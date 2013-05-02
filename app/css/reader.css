@@ -362,6 +362,7 @@
 .reader-navigation .reader-navigation-list {
 	height: 330px;
 	overflow: auto;
+	-webkit-overflow-scrolling:touch;
 }
 
 .reader-navigation .reader-navigation-list span {

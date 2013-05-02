@@ -391,7 +391,7 @@ function createOptions() {
 				
 					'<h4>Options</h4>' + 
 					'<label><input type="checkbox" id="option-autoload"' + (autoLoad ? ' checked' : '') + '>Auto Load</option></label>' +
-					'<a href="javascript:window.location.reload();">Reload()</a>' +
+					//'<a href="javascript:window.location.reload();">Reload()</a>' +
 			
 					'<h4>Show</h4>' + 
 					'<label><input type="checkbox" class="option-showhide" id="option-showchapters" checked>Chapters</option></label>' +

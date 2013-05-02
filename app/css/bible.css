@@ -25,7 +25,7 @@
 
 /* main bible verse, text formating */
 .book-name 													{text-align:center;font-size:2em;margin:1.2em 0;}
-.chapter													{line-height: 1.3;}
+.chapter													{line-height: 1.8;}
 .chapter p 													{text-indent:1em;}
 .chapter[lang=he] p											{font-family:EzraSILRegular;}
 .chapter[lang=el] p											{font-family:GentiumPlus; line-height: 1.8;}

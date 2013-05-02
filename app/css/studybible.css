@@ -201,7 +201,7 @@ body                                        {overflow: hidden;}
 .outline ol li ol li ol li                  {list-style-type:lower-roman;}
 .outline ol li ol li ol li ol li            {list-style-type:decimal;}
 
-.inline-icon                                {display:inline-block;width:20px;height:20px;background:#ccc url(images/icons-small.png) top left no-repeat;cursor:pointer;border-radius:4px;margin-right:5px;}
+.inline-icon                                {display:inline-block;width:20px;height:20px;background:#ccc url(images/icons-small.png) top left no-repeat;cursor:pointer;border-radius:4px;margin-right:5px; vertical-align: middle;}
 .inline-icon:hover                          {background-color:#339;}
 .image-icon                                 {background-position:-262px -38px;}
 .video-icon                                 {background-position:-294px -38px;}

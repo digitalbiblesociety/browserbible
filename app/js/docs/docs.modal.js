@@ -24,9 +24,10 @@ docs.createModal = function(id, startTitle) {
 		
 	$(document).on('mousemove', function(e) {
 		if (isMouseDown) {
+			
 			popup.css({
 				top: startWindowPosition.top - (startMousePosition.y - e.clientY),
-				left: startWindowPosition.top - (startMousePosition.x - e.clientX)	  
+				left: startWindowPosition.left - (startMousePosition.x - e.clientX)	  
 			});
 		}
 		

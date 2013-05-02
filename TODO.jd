@@ -1,0 +1,13 @@
+- split styles into modules
+	- bible text
+	- common ui (popups, selectors)
+	- reader / study / mobile
+- book/version selector unify
+
+	
+----=================	
+x fix video size
+- ready/study switcher
+x search ui cleanup
+- video/image prev/next
+ 

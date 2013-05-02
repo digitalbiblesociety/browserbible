@@ -34,7 +34,7 @@ bible.parseReference = function (textReference) {
 		if (possibleMatch == osisBookId.toLowerCase()) {
 			matchingOsisBookID = osisBookId;
 			input = input.substring(osisBookId.length);
-			matchingLanguage = 'en';
+			matchingLanguage = 'eng';
 			break;
 		}		
 		
@@ -224,7 +224,7 @@ bible.Reference = function () {
 			if (typeof bookNames != 'undefined') {
 				bookName = bookNames[0];
 			} else {
-				bookName = bible.BOOK_DATA[this.osisBookID].names['en'][0]
+				bookName = bible.BOOK_DATA[this.osisBookID].names['eng'][0]
 			}
 
 			return bookName + ' ' + this.chapterAndVerse();

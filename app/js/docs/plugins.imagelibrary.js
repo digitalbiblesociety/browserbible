@@ -92,7 +92,7 @@ docs.plugins.push({
 							verse = imageIcon.closest('.verse'),
 							verseOsis = verse.attr('data-osis'),
 							reference = new bible.Reference(verseOsis).toString(),
-							imagesData = allPrevNext.concat(flexPrev, imageLibrary[verseOsis], flexNext),
+							imagesData = imageLibrary[verseOsis], // allPrevNext.concat(flexPrev, imageLibrary[verseOsis], flexNext),
 							before = '<li><img src=\"content/images/',
 							after = '\" width="75" /></li>',
 							imagesHtml = before + imagesData.join(after + before) + after,

@@ -159,8 +159,9 @@ body                                        {overflow: hidden;}
 .config-video-off .video-icon               {display:none;}
 
 .config-titles-off .chapter h2,
-.config-titles-off .chapter h3
-							              {display:none;}
+.config-titles-off .chapter h3	            {display:none;}
+
+.config-wordsofchrist-off .woc            {color:inherit;}
 
 
 .document-focused .document-input,

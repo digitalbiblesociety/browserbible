@@ -15,13 +15,7 @@ docs.plugins.push({
 					strong: 'G2424',
 					morph: '',
 					style: 'underline-dotted',
-					color: '#ff9999'
-				},
-				{
-					strong: null,
-					morph: 'V-A',
-					style: 'background',
-					color: '#99ff99'				
+					color: '#9999ff'
 				}
 			],
 			transforms = $.jStorage.get('docs-morphology', defaultTransforms);

@@ -266,11 +266,10 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 							'<span>NASB</span>' +
 							'<select class="document-selector">' + t.navigator.getOptions() + '</select>' +
 						'</div>' +
-
+						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
 					'</div>' +
 					
 					'<div class="document-header-right">' +
-						'<input type=\"button\" class=\"document-header-button document-info-button\" value="i" />' +
 						'<input type=\"button\" class=\"document-header-button document-search-button\" value="S" />' +
 						'<input type=\"button\" class=\"document-header-button document-audio-button\" value="A" />' +
 						'<input type=\"button\" class=\"document-header-button document-lock-button state-locked\" value="L" />' +						
@@ -339,7 +338,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 		t.audioWindow.content.append('<audio id="' + t.id + '-audio-player" type="audio/mp3"></audio>');
 		t.audioWindow.show();
 		
-		// create a media palyer
+		// create a media player
 		$('#' + t.id + '-audio-player').mediaelementplayer({type: 'audio/mp3', audioWidth: '100%', success: function(media, node, player) { t.player = player; } });
 	
 		t.audioWindow.hide();
@@ -372,7 +371,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 			}
 		});
 	} else {
-		t.audioBtn.remove();
+		t.audioBtn.hide();
 	}
 	
 	t.updateVersion(selectedDocumentId);

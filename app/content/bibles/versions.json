@@ -1,20 +1,23 @@
 {
 	"instructions": "List all versions folders here and the data in version/version.json will make things happen",
 	"versions": [
-		"ar_svd",
-		"el_tisch",
-		"el_sblgnt",
-		"en_kjv",
-		"en_web",
-		"en_esv",
-		"en_net",
-		"en_neti",
-		"en_nasb",
-		"en_niv",
-		"en_oeb",
-		"es_rv",
-		"he_wlc",
-		"my_jud",
-		"ru_syn"
+			"ara_vady",
+			"ara_wbtc",
+			"beng_erv",
+			"gre_tisch",
+			"eng_kjv",
+			"eng_nasb",
+			"spa_dhh",
+			"spa_erv",
+			"spa_lbla",
+			"spa_nblh",
+			"fre_s21",
+			"heb_wlc",
+			"bur_jud",
+			"bur_myetr",
+			"zho_cnv",
+			"chi_cnvs",
+			"zho_rcuv",
+			"chi_rcuvss"
 	]
 }

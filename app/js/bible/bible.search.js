@@ -264,6 +264,7 @@ bible.BibleSearch = {
 		
 		s.searchTermsIndex++;
 		
+		// if we've done all the indexes, then it's time to start combining them
 		if (s.searchTermsIndex == s.searchTerms.length) {
 		
 			// reset the final list of OSIS chapters we are going to load
@@ -324,70 +325,82 @@ bible.BibleSearch = {
 				s.chapterIndex = parseInt(s.indexedChapters[s.indexedChaptersIndex].split('.')[1])-1;	
 			}
 			
-			//console.log( 'loaded indexes', s.indexedChapters);
+			console.log( 'loaded indexes', s.indexedChapters);
 			
 			s.isSearching = true;
 			s.nextChapter();				
 		
-			return;
-		}
-		
-		var
-			term = s.searchTerms[s.searchTermsIndex],
-			indexUrl = s.basePath + s.version + '/index/' + term + '.json';
 			
-		console.log('Loading Index:' + term);	
+		} else {
 			
-		// attempt to load in index
-		$.ajax({
-			url: indexUrl,
-			success: function(data) {
-				
-				for (var i=0, il=data.length; i<il; i++) {
-					var verseOsis = data[i],
-						verseParts = verseOsis.split('.'),
-						bookOsis = verseParts[0],
-						chapterNumber = verseParts[1];
-
-						
-					// for or searches, we are combining the indexes into one LONGER list that we sort at the end	
-					if (s.searchRegExp.length == 1) {
-						var bookCheck = s.osisBookMatches[bookOsis];
-									
-						if (typeof bookCheck == 'undefined') {
-							s.osisBookMatches[bookOsis] = [chapterNumber];
-						} else {
-							if (bookCheck.indexOf(chapterNumber) == -1) {
-								bookCheck.push(chapterNumber);
-							}
-						}
-					
-					// for AND searches, we store all the indexes and then combine them after we're doing
-					} else {
-					
-						var group = s.indexGroups[s.searchTermsIndex],
-							chapterOsis = bookOsis + '.' + chapterNumber;
-							
-						//console.log(group, s.indexGroups, chapterOsis);
-						
-						if (group.indexOf(chapterOsis) == -1) {
-							group.push(chapterOsis);
-						}
-					
-					}
+			// since we are not at the end of the indexes, we'll get the next one
 			
-				}			
+			var
+				term = s.searchTerms[s.searchTermsIndex],
+				indexUrl = s.basePath + s.version + '/index/' + term + '.json';
 				
-				
-				s.loadNextIndex();
-
-			}, 
-			error: function() {
-				console.log('no index for: ' + term);
-				s.loadNextIndex();
+			if (term == 'undefined') {
+				console.log('STOP search. undefined term');	
+				return;
 			}
-		
-		});
+				
+			console.log('Loading Index:' + term);	
+				
+			// attempt to load in index
+			$.ajax({
+				dataType: 'json',
+				url: indexUrl,
+				success: function(data) {
+				
+					console.log('index:' + data);
+					//return;
+				
+					for (var i=0, il=data.length; i<il; i++) {
+						var verseOsis = data[i],
+							verseParts = verseOsis.split('.'),
+							bookOsis = verseParts[0],
+							chapterNumber = verseParts[1];
+	
+							
+						// for or searches, we are combining the indexes into one LONGER list that we sort at the end	
+						if (s.searchRegExp.length == 1) {
+							var bookCheck = s.osisBookMatches[bookOsis];
+										
+							if (typeof bookCheck == 'undefined') {
+								s.osisBookMatches[bookOsis] = [chapterNumber];
+							} else {
+								if (bookCheck.indexOf(chapterNumber) == -1) {
+									bookCheck.push(chapterNumber);
+								}
+							}
+						
+						// for AND searches, we store all the indexes and then combine them after we're doing
+						} else {
+						
+							var group = s.indexGroups[s.searchTermsIndex],
+								chapterOsis = bookOsis + '.' + chapterNumber;
+								
+							//console.log(group, s.indexGroups, chapterOsis);
+							
+							if (group.indexOf(chapterOsis) == -1) {
+								group.push(chapterOsis);
+							}
+						
+						}
+				
+					}			
+					
+					console.log('load next index', s.osisBookMatches);
+					s.loadNextIndex();
+	
+				}, 
+				error: function() {
+					console.log('no index for: ' + term);
+					s.loadNextIndex();
+				}
+			
+			});
+		}
 	
 	},
 	

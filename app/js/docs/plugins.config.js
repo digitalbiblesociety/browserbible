@@ -28,16 +28,16 @@ docs.plugins.push({
 			},
 			
 			// FONT SIZE
-			/*fontSizeOptions = [
+			fontSizeOptions = [
+				{name: 'Tiny'},
 				{name: 'Small'},
-				{name: 'Default'},
+				{name: 'Default'},				
 				{name: 'Large'},
-				{name: 'Jumbo'},
 				{name: 'Huge'}
 			],
 			renderFontSizeOption = function(id, name) {
 				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
-			},*/
+			},
 			
 			// THEME colors
 			themeOptions = [
@@ -52,15 +52,7 @@ docs.plugins.push({
 						'</label>';
 			},			
 			
-			/* configWindow = $('<div id="config-menu" class="modal-window">' +
-							'<div class="modal-header">Configuration<span class="modal-close">Close</span></div>'+
-							'<div class="modal-content">' +
-							'</div>' +
-						'</div>')
-			
-			.appendTo(document.body)
-			.hide();
-			*/
+
 			configWindow = docs.createModal('config', docs.Localizer.get('plugin_config_title') + ' (v' + docs.version + ')').size(400, 300);
 		docManager.createFontSlider = function(title, prefix) {
 		
@@ -208,18 +200,15 @@ docs.plugins.push({
 
 		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_theme'), 'theme', themeOptions, renderThemeOption);
 		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_font'), 'font', fontFamilyOptions, renderFontFamilyOption);
-		//docManager.createOptionSet(docs.Localizer.get('plugin_config_option_size'), 'size', fontSizeOptions, renderFontSizeOption);
-		docManager.createFontSlider(docs.Localizer.get('plugin_config_option_size'), 'size');
+		docManager.createOptionSet(docs.Localizer.get('plugin_config_option_size'), 'size', fontSizeOptions, renderFontSizeOption);
+		//docManager.createFontSlider(docs.Localizer.get('plugin_config_option_size'), 'size');
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_chapters'), 'chapters', true);
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_verses'), 'verses', true);
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_wordsofchrist'), 'wordsofchrist', true);
 		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_notes'), 'notes', true);
+		docManager.createOptionToggle(docs.Localizer.get('plugin_config_option_titles'), 'titles', true);
 		
-		//docManager.createOptionSet('Verses', 'verses', [{name: 'Default'},{name: 'Hide Verses'}]);
-		
-		//docManager.createOptionSet('Words of Christ', 'wordsofchrist', [{name: 'Default'},{name: 'Black'}]);
-		//docManager.createOptionSet('Notes', 'notes', [{name: 'Default'},{name: 'Hide Notes'}]);
-
+		// add to top row of buttons
 		var configButton = $('<input type="button" id="docs-config" />')
 			.appendTo(docManager.header.find('#header-nav'))
 			.on('click', function() {

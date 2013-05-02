@@ -56,7 +56,8 @@ docs.Languages = {
 		"plugin_notesandcf_cf": "Cross References",
 		
 		"bible_navigator_books": "Books",
-		"bible_navigator_chapters": "Chapters"
+		"bible_navigator_chapters": "Chapters",
+		"plugin_config_option_titles": "Titles"
 
 	},
 	"ar": {

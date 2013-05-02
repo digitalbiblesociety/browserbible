@@ -97,11 +97,11 @@ jQuery(function($) {
 					var searchWindow = docs.createModal('search', 'Search'),
 						
 						searchInput = $('<input type="text" class="search-text" />').appendTo(searchWindow.menu),
+						searchVersion = $('<select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>').appendTo(searchWindow.menu),
 						searchButton = $('<input type="button" class="search-button" value="Search" />').appendTo(searchWindow.menu),
 						cancelButton = $('<input type="button" class="cancel-button" value="Cancel" disabled />').appendTo(searchWindow.menu),
-						printButton = $('<input type="button" class="print-button" value="Print" />').appendTo(searchWindow.menu),
-						searchVersion = $('<br><select class="search-version">' + bible.BibleNavigator.getOptions() + '</select>').appendTo(searchWindow.menu);
-						
+						printButton = $('<input type="button" class="print-button" value="Print" />').appendTo(searchWindow.menu);
+												
 						
 					searchWindow.footer.html('&nbsp;-');
 					searchWindow.size(580,400).center();

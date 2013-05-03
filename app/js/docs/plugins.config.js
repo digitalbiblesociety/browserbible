@@ -13,7 +13,7 @@ docs.plugins.push({
 		// create config menu
 		var
 			renderOptionDefault = function(id, name) {
-				return '<label for="' + id + '">' + name + '</label>';
+				return '<label for="' + id + '" title="' + name + '">' + name + '</label>';
 			},			
 		
 			// FONT face
@@ -24,7 +24,7 @@ docs.plugins.push({
 				{name: 'Baskerville'}
 			],
 			renderFontFamilyOption = function(id, name) {
-				return '<label for="' + id + '"><span class="' + id + '">Aa</span></label>';
+				return '<label for="' + id + '" title="' + name + '"><span class="' + id + '">Aa</span></label>';
 			},
 			
 			// FONT SIZE
@@ -47,7 +47,7 @@ docs.plugins.push({
 				{name: 'Clean'},				
 			],
 			renderThemeOption = function(id, name) {
-				return 	'<label for="' + id + '" class="' + id + '">' +
+				return 	'<label for="' + id + '" class="' + id + '" title="' + name + '">' +
 							'<span class="config-theme-' + name.toLowerCase() + '-demo1 theme-demo"></span><span class="config-theme-' + name.toLowerCase() + '-demo2 theme-demo"></span>' +
 						'</label>';
 			},			
@@ -183,7 +183,7 @@ docs.plugins.push({
 				configBlock =
 					$('<div class="config-toggle">' +
 						'<input type="checkbox" ' + (checked ? ' checked' : '') + ' id="config-' + prefix + '" />' +
-						'<label for="config-' + prefix + '">' + title +'</label>' + 
+						'<label for="config-' + prefix + '" title="' + title + '">' + title +'</label>' + 
 					'</div>')
 						.appendTo( configWindow.content )
 						.on('click', 'input', function() {

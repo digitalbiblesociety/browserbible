@@ -5,6 +5,8 @@
 /app/content/bibles/**/*.html
 /app/content/bibles/**/*.json
 /app/content/bibles/**/*.css
+/app/content/bibles/**/*.*
+/app/content/bibles/**/*
 /app/content/bibles/**/**/*.json
 /app/content/audio/*.mp3
 /app/content/videos/*.mp4

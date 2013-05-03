@@ -13,7 +13,7 @@ docs.plugins.push({
 			.appendTo(docManager.header.find('#header-nav'))
 			.on('click', function() {
 			
-				docManager.addDocument(bible.BibleNavigator, 'en_kjv');
+				docManager.addDocument(bible.BibleNavigator, 'eng_kjv');
 				docManager.documents[docManager.documents.length-1].navigateByString(docManager.documents[0].input.val());
 				docManager.saveSettings();
 			});

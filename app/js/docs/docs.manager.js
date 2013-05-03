@@ -89,11 +89,14 @@ docs.DocManager = {
 		
 		// setup all documents and load content
 		for (var i=0, il=docSettings.docs.length; i<il; i++) {
-			var docSetting = docSettings.docs[i],
-				document = docs.DocManager.addDocument(bible.BibleNavigator, docSetting.version);
-			
-			document.syncCheckbox.prop('checked', docSetting.linked);
-			document.navigateById(docSetting.location, false);
+			var docSetting = docSettings.docs[i];
+						
+			if (docSetting.location != undefined) {
+				var docu = docs.DocManager.addDocument(bible.BibleNavigator, docSetting.version);
+
+				docu.syncCheckbox.prop('checked', docSetting.linked);
+				docu.navigateById(docSetting.location, false);
+			}
 		}
 				
 	},

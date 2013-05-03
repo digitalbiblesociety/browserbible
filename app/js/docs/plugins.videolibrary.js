@@ -18,11 +18,7 @@ docs.plugins.push({
 			var
 				width = 640,
 				height = 360,
-				popup = docs
-							.createModal('video-player', docs.Localizer.get('plugin_video_title'))
-							.size(width+14,height+36)
-							.center(),
-							
+				popup = docs.createModal('video-player', docs.Localizer.get('plugin_video_title')).size(width+14,height+36).center(),
 				playerid = 'player1',
 				player = null,
 				currentUrls = '';
@@ -90,7 +86,7 @@ docs.plugins.push({
 							videoIndex = videoLibrary[verseOsis],
 							//videoUrl = 'content/videos/' + videoIndex + '.mp4';
 							videoSrc = [
-										{type: 'video/mp4', src: 'content/videos/' + videoIndex + '.mp4'}
+										{type: 'video/mp4', src: 'content/videos/ar/' + videoIndex + '.mp4'}
 									   ];
 						if (canPlayMP4) {
 						popup.title.html('Video: ' + reference.toString());	
@@ -112,7 +108,7 @@ docs.plugins.push({
 						$('.popup-content').empty();
 						popup.title.html('Video: ' + reference.toString());	
 						popup.center().show();
-						$('.popup-content').append('<object id="flashplayer" type="application/x-shockwave-flash" data="js/docs/player.swf" width="100%" height="100%"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="flashvars" value="file=../../content/videos/' + videoIndex + '.mp4"></object>');
+						$('.popup-content').append('<object id="flashplayer" type="application/x-shockwave-flash" data="js/docs/player.swf" width="100%" height="100%"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="flashvars" value="file=content/videos/ar/' + videoIndex + '.mp4"></object>');
 					}
 					});
 				}

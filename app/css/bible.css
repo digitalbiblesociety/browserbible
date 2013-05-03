@@ -27,8 +27,8 @@
 .book-name 													{text-align:center;font-size:2em;margin:1.2em 0;}
 .chapter													{line-height: 1.8;}
 .chapter p 													{text-indent:1em;}
-.chapter[lang=he] p											{font-family:EzraSILRegular;}
-.chapter[lang=el] p											{font-family:GentiumPlus; line-height: 1.8;}
+.chapter[lang=he] p, .chapter[lang=heb] p					{font-family:EzraSILRegular;}
+.chapter[lang=el] p, .chapter[lang=gre] p					{font-family:GentiumPlus; line-height: 1.8;}
 .chapter ins                                                {text-decoration:none;font-style:italic;}
 .chapter-num                                                {float:left;font-size:2em;line-height:1;margin:0 .25em .5em 0;}
 .chapter-num + p                                            {text-indent: 0 ;}

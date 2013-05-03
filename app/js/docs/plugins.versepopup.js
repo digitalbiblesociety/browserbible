@@ -115,7 +115,7 @@ bible.genNames = function() {
 		
 		var osisName = bible.DEFAULT_BIBLE[i];
 		
-		names.push( bible.BOOK_DATA[osisName].names['en'].join('|') );
+		names.push( bible.BOOK_DATA[osisName].names['eng'].join('|') );
 	}
 	
 	return names.join('|');

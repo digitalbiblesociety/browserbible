@@ -151,8 +151,8 @@ label[for="config-maps"] 					{background-image:url(images/maps.svg);}
 .config-font-georgia                        {font-family:Geneva;font-size:16px;}
 .config-font-tahoma .chapter                {font-family:Geneva;}
 .config-font-tahoma                         {font-family:Geneva;font-size:16px;}
-.config-font-baskerville .chapter           {font-family:sans-serif;}
-.config-font-baskerville                    {font-family:sans-serif;font-size:16px;}
+.config-font-baskerville .chapter           {font-family:baskerville, serif;}
+.config-font-baskerville                    {font-family:baskerville, serif;font-size:16px;}
 
 /*
 

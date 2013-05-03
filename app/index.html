@@ -2,10 +2,11 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Bible Browser</title>
+	<title>inScript Bible Browser</title>
 	<!-- Apple specific code -->
 	<meta name="viewport" content="width=device-width, user-scalable = no, initial-scale=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link href="css/images/favicon.png" rel="icon" />
 	<!-- replacement console for IE -->
 	<script>
 	if (typeof console == 'undefined') { window.console = {log:function() {}}; }
@@ -38,32 +39,35 @@
 	<script src="js/docs/plugins.adddocument.js"></script>
 	<script src="js/docs/plugins.fullscreen.js"></script>	
 	<!-- plugins -->
-	<script src="js/docs/plugins.flexslider.js"></script>
 	<script src="js/docs/plugins.matchverses.js"></script>
 	<script src="js/docs/plugins.matchwords.js"></script>
 	<script src="js/docs/plugins.lemmapopup.js"></script>
 	<script src="js/docs/plugins.notes.js"></script>
 	<script src="js/docs/plugins.imagelibrary.js"></script>
+	<script src="js/docs/plugins.maplibrary.js"></script>
 	<script src="js/docs/plugins.videolibrary.js"></script>
 	<script src="js/docs/plugins.versepopup.js"></script>
 	<!-- main launcher -->
 	<script src="js/desktop.app.js"></script>
-	
-	
-	<link href="css/common.css" rel="stylesheet" />
-	<link href="css/bible.css" rel="stylesheet" />
-	<link href="css/desktop.css" rel="stylesheet" />
-	
-	<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
-</head>
-<body>	
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" href="css/IE7.css" media="screen, projection">
+	<![endif]-->
+	<link rel="stylesheet" href="css/desktop.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/bible.css" />
 
+	<link rel="stylesheet" href="css/jquery-ui.min.css" />
+</head>
+<body>
 <div id="header" class="site-header">
-	<a href="mobile.html"><img id="top-logo" src="css/images/top-logo.png" /></a>
-	<div id="header-nav"></div>
+<img id="top-logo" src="css/images/top-logo.png" />
+<a class="mobile-toggle" href="reader.html"></a>
+<div id="header-nav"></div>
+
 </div>
-	<div id="content"></div>
+<div id="content"></div>
 <div id="footer">
+<a href="http://digitalbiblesociety.com/bibles/"><img id="footer-logo" src="css/images/inscript-logo.png" alt="Inscript" /></a>
 </div>
 </body>
 </html>

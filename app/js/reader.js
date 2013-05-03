@@ -75,7 +75,7 @@ function updateReference() {
 				
 			setReference( chapterOsis );
 			
-			$reference.html( book.names['en'][2] + ' ' + chapterNumber);
+			$reference.html( book.names['eng'][2] + ' ' + chapterNumber);
 		
 			return false;
 		}
@@ -94,7 +94,7 @@ function start() {
 	
 	// load main settings
 	var defaultSettings = { 
-			version1: 'en_kjv',
+			version1: 'eng_kjv',
 			version2: '',
 			reference: 'John.1'
 		},
@@ -281,7 +281,7 @@ function createNavigation() {
 		var osis = bible.DEFAULT_BIBLE[i],
 			book = bible.BOOK_DATA[osis];
 
-		html.push('<span class="navigation-row navigation-book" data-osis="' + osis + '" data-chapters="' + book.chapters.length + '">' + book.names['en'][0] + '</span>');
+		html.push('<span class="navigation-row navigation-book" data-osis="' + osis + '" data-chapters="' + book.chapters.length + '">' + book.names['eng'][0] + '</span>');
 	}
 	$referenceNavigation.find('.book-list .reader-navigation-list').html( html.join('') );	
 	

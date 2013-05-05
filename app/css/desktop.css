@@ -228,17 +228,9 @@ label[class^="config-theme-"] 				{width:30px;height:30px;}
 .document-header .document-header-options,
 .search-result .verse-num,.search-result .cf,
 .search-result .note,
-.config-chapters-off .chapter-num,
-.config-verses-off .verse-num,
-.config-notes-off .chapter .note,
-.config-notes-off .chapter .cf,
 .config-images-off .image-icon,
 .config-video-off .video-icon               {display:none;}
 
-.config-titles-off .chapter h2,
-.config-titles-off .chapter h3	            {display:none;}
-
-.config-wordsofchrist-off .woc            {color:inherit;}
 
 .config-video-off .video-icon,
 .config-maps-off .map-icon               {display:none;}

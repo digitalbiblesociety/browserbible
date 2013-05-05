@@ -17,6 +17,10 @@ docs.plugins = [
  * Document manager for Bible app
  */
 docs.DocManager = {
+
+	addStyle: function(cssText) {
+		$('<style>' + cssText + '</style>').appendTo( $('head') );
+	},
 	
 	init: function(header, footer, content, window) {
 		this.header = header;
@@ -528,14 +532,7 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 		
 		
 	});
-	
-	
-	// TODO: real loading
-	//this.load(fragmentId);
-	//this.load('c001002', 'append');
-	//this.load('c001003', 'append');	
-	
-	// will be appended in the Document Manager class
+
 };
 docs.Document.prototype = {
 	

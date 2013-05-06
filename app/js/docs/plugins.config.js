@@ -87,49 +87,18 @@ docs.plugins.push({
 		
 		
 			// resize?
-		
-			configWindow.show();
-			
-			configWindow.size(configWidth, configBlock.position().top + configBlock.outerHeight(true) + 20);
-			configWindow.hide();
-			//configWindow.content.height
+			docManager.resizeConfigWindow();
 		}
+	
 		
-		docManager.createOptionToggle = function(title, prefix, checked) {
-				
-			checked = $.jStorage.get('docs-config-' + prefix, checked);
-			
-			
-			var bod = $(document.body),
-				setStyle = function(on) {
-					if (on) {
-						bod.removeClass( 'config-' + prefix + '-off');
-					} else {
-						bod.addClass( 'config-' + prefix + '-off');
-					}					
-				},
-				configBlock =
-					$('<div class="config-toggle">' +
-						'<input type="checkbox" ' + (checked ? ' checked' : '') + ' id="config-' + prefix + '" />' +
-						'<label for="config-' + prefix + '" title="' + title + '">' + title +'</label>' + 
-					'</div>')
-						.appendTo( configWindow.content )
-						.on('click', 'input', function() {
-							
-							var checked = $(this).is(':checked');
-								
-							setStyle(checked);
-							
-							// save setting
-							$.jStorage.set('docs-config-' + prefix + '', checked);
-						});
-			
-			setStyle(checked);	
+		docManager.resizeConfigWindow = function() {
 			
 			configWindow.show();
+			configWindow.content.css('height','auto');
+			configWindow.size(configWidth, configWindow.content.outerHeight(true) + configWindow.title.outerWidth(true) );
+			configWindow.hide();		
 			
-			configWindow.size(configWidth, configBlock.position().top + configBlock.outerHeight(true) + 20);
-			configWindow.hide();
-		}
+		}		
+	
 	}
 });

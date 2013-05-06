@@ -123,7 +123,7 @@ body                                        {overflow:hidden;}
 
 .chapter-list li                            {font-size:11px;line-height:1;float:left;width:24px;height:16px;border:solid 1px #aaa;text-align:center;padding:5px 0 2px;}
 
-.config-options                             {overflow:hidden;margin:0 0 10px;}
+.config-options                             {clear: both;margin:0 0 20px;overflow: hidden; padding: 0 0 1px 0;}
 .config-options h3							{margin:0 0 .5em;width:100%;border-bottom:thin solid gray;}
 .config-options .config-option              {float:left;width:85px;min-height:20px;line-height:1;margin:0 5px 0 0;}
 .config-options .config-option input{position:absolute;opacity:0;cursor:pointer;}
@@ -131,7 +131,7 @@ body                                        {overflow:hidden;}
 .config-options .config-option span         {vertical-align:middle;}
 .config-toggle                              {display:inline-block;width:50px;}
 #font-size									{font-weight: normal;}
-#font-slider								{margin:21px 5px 0 5px;border: solid 1px black;}
+#font-slider								{margin:10px 5px 5px 5px;border: solid 1px black;}
 .config-toggle input                        {position:absolute;opacity:0;cursor:pointer;}
 
 .config-toggle label 						{display:inline-block;background-size:100% 100%;text-indent:-9999px;width:30px;height:30px;margin:0 2px;cursor:pointer; border-radius: 3px;opacity: .5;box-shadow: 1px 1px 1px 1px rgba(0,0,0,.3);}
@@ -146,13 +146,13 @@ label[for="config-notes"] 					{background-image:url(images/notes.svg);}
 label[for="config-maps"] 					{background-image:url(images/maps.svg);}
 
 .theme-demo                                 {display:inline-block;width:20px;height:30px;cursor:pointer;}
-.config-font-default                        {font-family:Verdana;font-size:16px;}
-.config-font-georgia .chapter               {font-family:Verdana;}
-.config-font-georgia                        {font-family:Geneva;font-size:16px;}
-.config-font-tahoma .chapter                {font-family:Geneva;}
-.config-font-tahoma                         {font-family:Geneva;font-size:16px;}
-.config-font-baskerville .chapter           {font-family:baskerville, serif;}
-.config-font-baskerville                    {font-family:baskerville, serif;font-size:16px;}
+.config-fontfamily-default                        {font-family:Verdana;font-size:16px;}
+.config-fontfamily-georgia .chapter               {font-family:Verdana;}
+.config-fontfamily-georgia                        {font-family:Geneva;font-size:16px;}
+.config-fontfamily-tahoma .chapter                {font-family:Geneva;}
+.config-fontfamily-tahoma                         {font-family:Geneva;font-size:16px;}
+.config-fontfamily-baskerville .chapter           {font-family:baskerville, serif;}
+.config-fontfamily-baskerville                    {font-family:baskerville, serif;font-size:16px;}
 
 /*
 

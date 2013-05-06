@@ -12,7 +12,7 @@
 .lex-entry .strong-search:hover             {background:#0000cc;color:#fff;}
 .lex-entry.lemma-popup .definition          {display:block;}
 
-.popup-window                               {position:absolute;top:0;left:0;display:none;width:300px;border-radius:4px;font-size:14px;box-shadow:rgba(20,20,20,0.6) 0 5px 10px;border:solid 1px #111;}
+.popup-window                               {font-family: Avenir, Helvetica, sans-serif; position:absolute;top:0;left:0;display:none;width:300px;border-radius:4px;font-size:14px;box-shadow:rgba(20,20,20,0.6) 0 5px 10px;border:solid 1px #111;}
 .popup-window .popup-header                 {color:#fff;position:relative;padding:7px 7px 0;}
 .popup-window .popup-title                  {pointer-events:none;user-select:none;}
 .popup-window .popup-content                {background:#fff;min-height:60px;line-height:1.4;margin:7px;padding:8px;}

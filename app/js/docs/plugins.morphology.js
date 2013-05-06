@@ -258,32 +258,6 @@ docs.plugins.push({
 			runTransforms(e.chapter);
 		});		
 		
-		// add button to config
-		docManager.createMorphologyPlugin = function(title, prefix) {
-			
-			var configBlock =
-				$('<div class="config-options" id="config-' + prefix + '">' + 
-						'<h3 id="config-size-title">' + title + '</h3>' + 
-					'</div>')
-						.appendTo( docManager.configWindow.content );
-				
-			$('<input type="button" value="Edit Morphology Filters">')
-				.on('click', function(e) {
-					if (morphWindow.window.is(':visible')) {
-						morphWindow.hide();
-					} else {
-						morphWindow.show();
-					}					
-				})
-				.appendTo(configBlock);
-				
-			// double check size
-			docManager.resizeConfigWindow();
-		}	
-		
-		docManager.createMorphologyPlugin('Morphology Filters', 'morphology');		
-		
-		/*
 		// add button to header
 		$('<input type="button" id="docs-morphology" />')
 			.appendTo(docManager.header.find('#header-nav'))
@@ -293,8 +267,7 @@ docs.plugins.push({
 				} else {
 					morphWindow.show();
 				}
-			});	
-		*/		
+			});			
 		
 		// initial setup
 		drawTransforms();

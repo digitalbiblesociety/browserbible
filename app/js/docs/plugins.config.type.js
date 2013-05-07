@@ -67,7 +67,8 @@ docs.plugins.push({
 				fontSizeIndex = defaultFontSizeIndex;
 			}
 			
-			$('.document-wrapper').css('font-size', fontsSizes[fontSizeIndex] + 'px' );
+			//$('.document-wrapper').css('font-size', fontsSizes[fontSizeIndex] + 'px' );
+			$('#content').css('font-size', fontsSizes[fontSizeIndex] + 'px' );
 			$('#font-slider').slider({
 				value: fontSizeIndex,
 				min: 0,
@@ -76,7 +77,7 @@ docs.plugins.push({
 				slide: function(event, ui) {
 					var sFontSizeArray = fontsSizes[ui.value];
 					$('#font-size').html(sFontSizeArray + ' px');
-					$('.document-wrapper').css('font-size', sFontSizeArray + 'px' );
+					$('#content').css('font-size', sFontSizeArray + 'px' );
 					$.jStorage.set('docs-config-' + prefix, $('#font-slider').slider("option", "value")+1);
 				}
 			});

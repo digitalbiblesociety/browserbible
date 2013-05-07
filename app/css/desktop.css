@@ -56,7 +56,7 @@ body                                        {overflow:hidden;}
 #footer-logo:hover							{opacity: 1}
 
 #header,#footer,#content                    {font-family:Helvetica, Arial;}
-#content                                    {margin:10px auto 10px auto;box-shadow:0px 2px 30px;}
+#content                                    {margin:10px auto 10px auto;box-shadow:0px 2px 30px;font-size: 18px;}
 
 #header-nav input                           {background-color:transparent;background-size:100% 100%;width:30px;height:30px;cursor:pointer;margin:0 5px;border:solid 0 #fff;opacity: .5}
 #header-nav input:hover						{opacity: 1}
@@ -91,7 +91,7 @@ body                                        {overflow:hidden;}
 .document-audio-button                      {background-image:url(images/audio.svg);}
 
 .document-content                           {position:relative;overflow:auto;}
-.document-wrapper                           {position:absolute;line-height:1.6;font-size:14px;font-family:Helvetica, Arial;padding:10px 20px;}
+.document-wrapper                           {position:absolute;line-height:1.6;font-family:Helvetica, Arial;padding:10px 20px;}
 .document-about                             {position:absolute;background:rgba(0,0,0,0.9);display:none;padding:15px;overflow-y:scroll;color:white;}
 .document-about h1                          {line-height:1;margin:0 0 15px;}
 .document-about p                           {line-height:1.5;margin:15px 0;}

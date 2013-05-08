@@ -13,7 +13,7 @@ docs.plugins.push({
 			fontFamilyOptions = [
 				{name: 'Default'},
 				{name: 'Georgia'},
-				{name: 'Tahoma'},
+				{name: 'Geneva'},
 				{name: 'Baskerville'}
 			],
 			renderFontFamilyOption = function(id, name) {

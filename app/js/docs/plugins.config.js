@@ -34,6 +34,27 @@ docs.plugins.push({
 					}
 				});
 				
+				
+		// TEST!
+		//configButton.hide();
+		
+				
+		$('#top-logo').css('cursor','pointer').on('click', function(e) {
+			e.preventDefault();
+			
+			
+			// show config menu
+			if (configWindow.window.is(':visible')) {
+				configWindow.hide();
+			} else {
+				configWindow.show();
+				configWindow.center();
+			}	
+			
+			return false;		
+	
+		});
+				
 		docManager.configWindow = configWindow;			
 		
 		/// 
@@ -83,6 +104,8 @@ docs.plugins.push({
 			}
 			var userConfig = $.jStorage.get('docs-config-' + prefix, 'default');
 			
+			console.log('#config:' + prefix, userConfig);
+			console.log('#config-' + prefix + '-' + userConfig + '', configBlock.find('#config-' + prefix + '-' + userConfig + '') );
 			configBlock.find('#config-' + prefix + '-' + userConfig + '').trigger('click');			
 		
 		

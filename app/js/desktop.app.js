@@ -59,7 +59,7 @@ jQuery(function($) {
 				{
 					docs: [
 					{
-						version: 'en_kjv',
+						version: 'eng_kjv',
 						location: 'John.3.1',
 						linked: true
 					}
@@ -69,12 +69,12 @@ jQuery(function($) {
 				{
 					docs: [
 					{
-						version: 'en_kjv',
+						version: 'eng_nasb',
 						location: 'John.3.1',
 						linked: true
 					},
 					{
-						version: 'el_tisch',
+						version: 'eng_sblgnt',
 						location: 'John.3.1',
 						linked: true
 					}		
@@ -165,7 +165,7 @@ jQuery(function($) {
 							function(bookOsisID, chapterIndex, resultsCount, startDate) {
 								
 								//if (showFeedback) {
-									searchWindow.footer.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '; searching: ' + bible.BOOK_DATA[ bookOsisID ].names['en'][0] + ' ' + (chapterIndex+1).toString() )
+									searchWindow.footer.html('found: ' + resultsCount + '; time: ' + ((	new Date() - startDate)/1000) + '; searching: ' + bible.BOOK_DATA[ bookOsisID ].names['eng'][0] + ' ' + (chapterIndex+1).toString() )
 									//searchProgress.width( (bookIndex+1)/66 * sbw );
 								//}
 								

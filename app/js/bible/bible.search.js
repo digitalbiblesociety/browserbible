@@ -120,7 +120,7 @@ bible.BibleSearch = {
 	
 	bookOsisID: '',
 	
-	chapterIndex: 0,
+	chapterIndex: -1,
 	
 	searchText: '',
 	
@@ -149,7 +149,11 @@ bible.BibleSearch = {
 	
 	isLemmaSearch: false,
 	
-	basePath: 'content/bibles/',
+	bookRange: bible.DEFAULT_BIBLE,
+	
+	baseBiblePath: 'content/bibles/',
+	
+	baseLemmaPath: 'content/lexicons/content/',
 	
 	indexedChapters: [],
 	
@@ -180,11 +184,29 @@ bible.BibleSearch = {
 		s.searchResultsArray = [];
 		s.indexedChapters = [];
 		s.indexedChaptersIndex = -1;
-		s.bookOsisID = bible.DEFAULT_BIBLE[0];
-		s.chapterIndex = 0;
+		s.bookOsisID = s.bookRange[0];
+		s.chapterIndex = -1;
 	
 		
 		// SETUP REGEX For next word
+		s.isLemmaSearch = /(G|H)\d{1,5}/.test(s.searchText);
+		
+		if (s.isLemmaSearch) {
+		
+			// just search the desired testament
+			if (s.searchText.substring(0,1) === 'H') {
+				s.bookRange = bible.OT_BOOKS;
+			} else if (s.searchText.substring(0,1) === 'G') {
+				s.bookRange = bible.NT_BOOKS;
+			} else {
+				s.bookRange = bible.DEFAULT_BIBLE;
+			}
+
+		} else {
+			// search the whole bible
+			s.bookRange = bible.DEFAULT_BIBLE;
+		}
+		
 		
 		// all ASCII
 		s.allAsciiRegExp.lastIndex = 0;
@@ -235,6 +257,7 @@ bible.BibleSearch = {
 		
 		//s.searchByData();
 		s.checkForIndexes();	
+		//}
 	
 	},
 	
@@ -273,8 +296,8 @@ bible.BibleSearch = {
 			// OR Search
 			if (s.searchRegExp.length == 1) {
 				// create unique indexed chapters
-				for (var i=0, il=bible.DEFAULT_BIBLE.length; i<il; i++) {
-					var bookOsis = bible.DEFAULT_BIBLE[i],
+				for (var i=0, il=s.bookRange.length; i<il; i++) {
+					var bookOsis = s.bookRange[i],
 						bookChapters = s.osisBookMatches[bookOsis];
 						
 					if (typeof bookChapters != 'undefined') {
@@ -337,7 +360,9 @@ bible.BibleSearch = {
 			
 			var
 				term = s.searchTerms[s.searchTermsIndex],
-				indexUrl = s.basePath + s.version + '/index/' + term + '.json';
+				indexUrl = (s.isLemmaSearch) ? 
+								s.baseLemmaPath + term + '.json' :
+								s.baseBiblePath + s.version + '/index/' + term + '.json';
 				
 			if (term == 'undefined') {
 				console.log('STOP search. undefined term');	
@@ -415,9 +440,9 @@ bible.BibleSearch = {
 			//this.searchRegExp = new XRegExp('<span class="[^"]*?' + text + '[^"]*?"[^>]*?>.*?</span>', 'gi');
 			
 			if (text.substring(0,1) == 'H') {
-				s.bookOsisID = bible.DEFAULT_BIBLE[0];
+				s.bookOsisID = s.bookRange[0];
 			} else {				
-				s.bookOsisID = bible.DEFAULT_BIBLE[40];
+				s.bookOsisID = s.bookRange[40];
 			}
 			
 		} else {
@@ -439,7 +464,7 @@ bible.BibleSearch = {
 	loadChapter: function() {
 		
 		var s = this,
-			chapterUrl = s.basePath + s.version + '/' + (s.bookOsisID + '.' + (s.chapterIndex+1)) + '.html';
+			chapterUrl = s.baseBiblePath + s.version + '/' + (s.bookOsisID + '.' + (s.chapterIndex+1)) + '.html';
 		
 		s.chapterCallback(s.bookOsisID, s.chapterIndex, s.resultCount, s.startTime);
 		
@@ -526,7 +551,7 @@ bible.BibleSearch = {
 						verseSpan = verseSpan.replace(s.searchRegExp[j], function(str, p1, p2, offset, s) {
 							foundMatches[j] = true;
 							return ' ' + str + ' highlight ';
-						});				
+						});		
 						
 					} else {
 						verseSpan = verseSpan.replace(s.searchRegExp[j], function(match) {
@@ -591,14 +616,14 @@ bible.BibleSearch = {
 		} else {
 		
 			// more chapters?
-			if (this.chapterIndex < bible.BOOK_DATA[this.bookOsisID].chapters.length-1 ) {
+			if (this.chapterIndex < bible.BOOK_DATA[this.bookOsisID].chapters.length ) {
 				this.chapterIndex++;
 			} else {
 				
 				this.chapterIndex = 0;
 				
 				// check for last book!
-				if ( bible.DEFAULT_BIBLE.indexOf( this.bookOsisID ) == bible.DEFAULT_BIBLE.length-1 ) {
+				if ( s.bookRange.indexOf( this.bookOsisID ) == s.bookRange.length-1 ) {
 
 					//s.nextTerm();
 					this.ended();
@@ -606,7 +631,7 @@ bible.BibleSearch = {
 				} else {
 					
 					// go forward one book
-					this.bookOsisID = bible.DEFAULT_BIBLE[ bible.DEFAULT_BIBLE.indexOf( this.bookOsisID )+1 ];
+					this.bookOsisID = s.bookRange[ s.bookRange.indexOf( this.bookOsisID )+1 ];
 					
 				}
 			}

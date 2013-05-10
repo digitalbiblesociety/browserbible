@@ -13,6 +13,7 @@ docs.plugins.push({
 		var
 			wordAwaitingData = null,
 			selectedWord = null,
+			selectedWordVersion = '',
 			lemmaSelectedClass = 'lemma-selected',
 			popup = docs.createModal('lemma', docs.Localizer.get('plugin_lemma_title')),
 			timer = null,
@@ -48,7 +49,7 @@ docs.plugins.push({
 				var strongSearch = $(this),
 					strongKey = strongSearch.attr('data-strong');
 					
-				docs.Search.searchVersion.val( selectedWord.closest('.document-container').find('.document-header select').val() );
+				docs.Search.searchVersion.val( selectedWordVersion ); // selectedWord.closest('.document-container').find('.document-header select').val() );
 				docs.Search.searchInput.val( strongKey );
 				docs.Search.searchWindow.show();
 				docs.Search.doSearch();
@@ -140,6 +141,8 @@ docs.plugins.push({
 			$('.' + lemmaSelectedClass).removeClass(lemmaSelectedClass);
 			
 			var word = $(this);
+			
+			selectedWordVersion = word.closest('.document-container').find('.document-header select').val();
 			
 			loadWordIntoPopup(word);
 		});

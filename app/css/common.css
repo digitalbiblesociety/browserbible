@@ -23,11 +23,11 @@
 .popup-window .popup-content code           {font-family:monospace;background:#111;color:#eee;display:block;margin:10px 0;padding:5px;}
 
 .morph-row                                  {overflow:hidden;}
-.morph-strong                               {float:left;width:90px;}
-.morph-strong input                         {width:80px;}
-.morph-morph                                {float:left;width:140px;}
-.morph-style                                {float:left;width:130px;}
-.morph-color                                {float:left;width:80px;}
+.morph-data                               {float:left;width:110px;}
+.morph-data input                         {width:100px;}
+.morph-type                                {float:left;width:100px;}
+.morph-style                                {float:left;width:110px;}
+.morph-style select 						{float:left;width:100px;}
 .morph-example                              {float:left;width:60px;text-align:center;}
 .morph-remove                               {float:left;cursor:pointer;font-size:10px;line-height:1;text-align:center;color:#222;border-radius:10px;width:10px;height:10px;padding:4px;}
 .morph-remove:hover                         {background:#999;}

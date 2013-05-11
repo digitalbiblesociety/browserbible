@@ -12,21 +12,25 @@ docs.plugins.push({
 		var morphWindow = docs.createModal("morph", "Morphology Highlighting").size(550,300).center(),
 			defaultTransforms = [
 				{
-					strong: 'G2424',
-					morph: '',
-					style: 'underline-dotted',
-					color: '#9999ff'
+					type: 'strongs',
+					data: 'G2424',
+					style: 'border-bottom: dotted 2px #9999ff'
+				},
+				{
+					type: 'morph',
+					data: 'V-A',
+					style: 'border-bottom: dotted 2px #9999ff'
 				}
+				
 			],
 			transforms = $.jStorage.get('docs-morphology', defaultTransforms);
 			
 		// headers
 		morphWindow.content.append(
 			$('<div class="morph-row">' +
-				'<div class="morph-strong">Strong #</div>' +
-				'<div class="morph-morph">Morphology/Frequency</div>' +
+				'<div class="morph-type">Type</div>' +
+				'<div class="morph-data">Selector</div>' +
 				'<div class="morph-style">Style</div>' +
-				'<div class="morph-color">Color</div>' +
 			 '</div>')   
 		);
 		
@@ -41,6 +45,8 @@ docs.plugins.push({
 		
 		// Save and update
 		morphWindow.rows.on('change keyup', 'select, input', function() {
+			
+			updateExamples();
 			
 			saveTransforms();
 			
@@ -78,46 +84,59 @@ docs.plugins.push({
 				var row = $(this),
 					transform = {};
 				
-				transform.strong = row.find('.morph-strong input').val();
-				transform.morph = row.find('.morph-morph select').val();
+				transform.type = row.find('.morph-type select').val();
+				transform.data = row.find('.morph-data input').val();
 				transform.style = row.find('.morph-style select').val();
-				transform.color = row.find('.morph-color select').val();
-				transform.frequency = 0;
-				transform.morphRegExp = null;
+				
 				
 				// compute
+				switch (transform.type) {
+					case 'strongs':
+						// NOTHING
+						break;
+						
+					case 'morphology':
+						// compile regexp
+						transform.morphRegExp = new RegExp('^' + transform.data.replace('?','.{1}'), 'gi');
+						
+						console.log('regex', transform.morphRegExp );
+						
+						break;
+					case 'frequency':
+						// parse
+						
+						var number = parseInt(transform.data);
+						
+						if (isNaN(number)) {
+							transform.data = 0;
+						} else {
+							transform.data = number;						
+						}
+					
+						break;
+				}
+				
+				// compute
+				/*
 				if ((transform.strong != '' || transform.morph != '') && transform.style != '' && transform.color != '') {
 					
 					// compile regexp
+					
 					if (transform.morph.substring(0,2) === 'f-') {
 						transform.frequency = parseInt(transform.morph.substring(2), 10);
 					} else if (transform.morph != '') {			
 						transform.morphRegExp = new RegExp('^' + transform.morph, 'gi');
 					}
 					
-					// compute css
-					switch (transform.style) {
-						case 'color':
-							transform.css = {'color' : transform.color};
-							break;
-						case 'background':
-							transform.css = {'background' : transform.color};
-							break;
-						case 'underline-solid':
-							transform.css = {'border-bottom' : 'solid 2px ' + transform.color};
-							break;
-						case 'underline-dotted':
-							transform.css = {'border-bottom' : 'dotted 2px ' + transform.color};
-							break;
-					}
 					
-					row.find('.morph-example span')
-						.attr('style','')
-						.css(transform.css);
 					
-					transforms.push(transform);
 				}
+				*/
+				
+				transforms.push(transform);
 			});
+			
+			console.log('morphology: saved ' + transforms.length + ' transforms');
 			
 			// store for next load
 			$.jStorage.set('docs-morphology', transforms);
@@ -132,66 +151,68 @@ docs.plugins.push({
 				var row = createRow(),
 					transform = transforms[i];
 				
-				row.find('.morph-strong input').val(transform.strong);
-				row.find('.morph-morph select').val(transform.morph);
+				row.find('.morph-type select').val(transform.type);
+				row.find('.morph-data input').val(transform.data);
 				row.find('.morph-style select').val(transform.style);
-				row.find('.morph-color select').val(transform.color);
 				
-				morphWindow.rows.append(row);
+				morphWindow.rows.append(row);		
+			}
+		}
+		
+		function updateExamples() {
+			
+			console.log(morphWindow.rows);
+		
+			morphWindow.rows.find('.morph-row').each( function(i, el) {
+				var row = $(this),
+					styleValue = row.find('.morph-style select').val();
+					
+				
+				applyStyle(row.find('.morph-example span').attr('style',''), styleValue);
+				//	.css(styleValue.split(':')[0], styleValue.split(':')[1]);				
+			});
+		}
+		
+		function applyStyle(node, css) {
+			var parts = css.split(':');
+			if (parts.length === 2) {
+				node.css(parts[0], parts[1]);
 			}
 		}
 		
 		function createRow() {
+		
+			// create styles
+			var cssStyles = [],
+				colors = ['#ff9999','#99ff99','#9999ff"','#ffff99','#ff99ff','#99ffff'],
+				colorNames = ['Red','Green','Blue','Yellow','Magenta','Cyan'],
+				styles = ['color:{0}','background:{0}','border-bottom: solid 2px {0}','border-bottom: dotted 2px {0}',],
+				styleNames = ['Text Color','Background','Solid Underline','Dotted Underline'];
+				
+				
+			for (var i=0, il=styles.length; i<il; i++) {
+				for (var j=0, jl=colors.length; j<jl; j++) {
+					cssStyles.push('<option value="' + styles[i].replace('{0}',colors[j]) + '">' + colorNames[j] + ' ' + styleNames[i] + '</option>');
+				}
+			}
+		
+		
 			return $(
 				'<div class="morph-row">' +
-					'<div class="morph-strong">' +
-						'<input type="text" placeholder="Strong #" />' +
-					'</div>' +
-					'<div class="morph-morph">' +
+					'<div class="morph-type">' +
 						'<select>' +
-							'<option value="">--</option>' +
-							'<optgroup label="Frequency">' +
-								'<option value="f-5">5 times or fewer</option>' + 
-								'<option value="f-10">10 times or fewer</option>' +
-								'<option value="f-15">15 times or fewer</option>' + 
-								'<option value="f-20">20 times or fewer</option>' + 								
-							'</optgroup>' +								
-							'<optgroup label="Greek Verb Tenses">' +
-								'<option value="V">All Verb Tenses</option>' + 
-								'<option value="V-P">Present</option>' + 
-								'<option value="V-A">Aorist</option>' + 
-								'<option value="V-I">Imperfect</option>' + 
-								'<option value="V-F">Future</option>' + 
-								'<option value="V-R">Perfect</option>' + 
-								'<option value="V-L">Pluperfect</option>' + 	
-							'</optgroup>' +
-							'<optgroup label="Greek Noun Cases">' +
-								'<option value="N">All Noun Cases</option>' + 
-								'<option value="N-N">Nominative</option>' + 
-								'<option value="N-A">Accusative</option>' + 
-								'<option value="N-G">Genitive</option>' + 
-								'<option value="N-D">Dative</option>' +
-							'</optgroup>' +							
-						'</select>' +
+							'<option value="strongs">Strongs</option>' + 
+							'<option value="morphology">Morphology</option>' +
+							'<option value="frequency">Frequency</option>' + 
+						'</select>' +							
+					'</div>' + 
+					'<div class="morph-data">' +
+						'<input type="text" placeholder="Strong # or @Morph" />' +
 					'</div>' +
 					'<div class="morph-style">' +
 						'<select>' +
-							'<option value="color">Text Color</option>' +
-							'<option value="background">Text Background</option>' +
-							//'<option value="outline">Outline</option>' +
-							'<option value="underline-solid">Solid Underline</option>' +
-							'<option value="underline-dotted">Dotted Underline</option>' + 
-						'</select>' +					
-					'</div>' +
-					'<div class="morph-color">' +
-						'<select>' +
-							'<option value="#ff9999" style="background-color: #ff9999;">Red</option>' +
-							'<option value="#99ff99" style="background-color: #99ff99;">Green</option>' +
-							'<option value="#9999ff" style="background-color: #9999ff;">Blue</option>' +
-							'<option value="#ffff99" style="background-color: #ffff99;">Yellow</option>' +
-							'<option value="#ff99ff" style="background-color: #ff99ff;">Magenta</option>' +
-							'<option value="#99ffff" style="background-color: #99ffff;">Cyan</option>' +
-						'</select>' +					
+							cssStyles.join('') + 					
+						'</select>' +
 					'</div>' +
 					'<div class="morph-example">' +
 						'<span>example</span>' +
@@ -205,6 +226,71 @@ docs.plugins.push({
 		function runTransforms(chapter) {
 			if (transforms.length === 0)
 				return;
+			
+			
+			
+			chapter.find('span.w').each(function(index, node) {
+				var w = $(this),
+					transform,
+					wordMorphData;
+				
+				for (var i=0, il=transforms.length; i<il; i++) {
+					transform = transforms[i];
+
+					switch (transform.type) {
+						case 'strongs':
+						
+							if (transform.data !== '' && w.hasClass(transform.data)) {
+								applyStyle(w, transform.style);
+							}						
+						
+							break;
+						case 'morphology':
+
+							wordMorphData = w.attr('data-morph');
+							if (wordMorphData != null && transform.morphRegExp.test(wordMorphData)) {
+								applyStyle(w, transform.style);
+							}
+						
+						
+							break;
+						case 'frequency':
+							
+							if (transform.data  > 0) {
+								var strongs = w.attr('data-lemma');
+								
+								if (strongs != null ) {
+								
+									// run all possible strongs on this word or phrase
+									strongs = strongs.split(' ');
+									for (var j=0, jl=strongs.length; j<jl; j++) {
+										var freq = (typeof strongsGreekFrequencies != 'undefined') ? strongsGreekFrequencies[ strongs[j] ] : 0;
+										
+										if (freq > 0 && freq <= transform.data) {
+											applyStyle(w, transform.style);	
+										}
+									}
+								}								
+							}
+							
+						
+							break;
+					
+					
+					}			
+				}				
+			});
+			
+			
+			
+			
+				
+			// stop for a sceond
+			return;
+			
+			
+			
+			
 			
 			chapter.find('span.w').each(function(index, node) {
 				var w = $(this),
@@ -221,9 +307,9 @@ docs.plugins.push({
 						if (strongs != null ) {
 							strongs = strongs.split(' ');
 							for (var j=0, jl=strongs.length; j<jl; j++) {
-								var freq = strongsGreekFrequencies[ strongs[j] ];
+								var freq = (strongsGreekFrequencies) ? strongsGreekFrequencies[ strongs[j] ] : 0;
 								
-								if (freq <= transform.frequency) {
+								if (freq > 0 && freq <= transform.frequency) {
 									w.css(transform.css);	
 								}
 							}
@@ -298,6 +384,9 @@ docs.plugins.push({
 		
 		// initial setup
 		drawTransforms();
+		updateExamples();
 		saveTransforms();
+
+		morphWindow.show();
 	}
 });

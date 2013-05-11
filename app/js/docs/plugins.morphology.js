@@ -227,8 +227,6 @@ docs.plugins.push({
 			if (transforms.length === 0)
 				return;
 			
-			
-			
 			chapter.find('span.w').each(function(index, node) {
 				var w = $(this),
 					transform,
@@ -280,63 +278,6 @@ docs.plugins.push({
 					}			
 				}				
 			});
-			
-			
-			
-			
-				
-			// stop for a sceond
-			return;
-			
-			
-			
-			
-			
-			chapter.find('span.w').each(function(index, node) {
-				var w = $(this),
-					transform,
-					wordMorphData;
-				
-				for (var i=0, il=transforms.length; i<il; i++) {
-					transform = transforms[i];
-						
-					// both
-					if (transform.frequency > 0) {
-						var strongs = w.attr('data-lemma');
-						
-						if (strongs != null ) {
-							strongs = strongs.split(' ');
-							for (var j=0, jl=strongs.length; j<jl; j++) {
-								var freq = (strongsGreekFrequencies) ? strongsGreekFrequencies[ strongs[j] ] : 0;
-								
-								if (freq > 0 && freq <= transform.frequency) {
-									w.css(transform.css);	
-								}
-							}
-						}		
-					
-					} else if (transform.strong != '' && transform.morphRegExp != null) {
-						wordMorphData = w.attr('data-morph');
-						if (w.hasClass(transform.strong) && wordMorphData != null && transform.morphRegExp.test(wordMorphData)) {
-							w.css(transform.css);	
-						}
-					} else {
-						
-						// only strong's
-						if (transform.strong != '' && w.hasClass(transform.strong)) {
-							w.css(transform.css);
-						}
-						
-						// only morph
-						if (transform.morphRegExp != null) {
-							wordMorphData = w.attr('data-morph');
-							if (wordMorphData != null && transform.morphRegExp.test(wordMorphData)) {
-								w.css(transform.css);	
-							}
-						}
-					}
-				}
-			});
 		}
 		
 		// run transforms
@@ -387,6 +328,5 @@ docs.plugins.push({
 		updateExamples();
 		saveTransforms();
 
-		morphWindow.show();
 	}
 });

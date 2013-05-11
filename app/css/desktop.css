@@ -56,7 +56,7 @@ body                                        {overflow:hidden;}
 #footer-logo:hover							{opacity: 1}
 
 #header,#footer,#content                    {font-family:Helvetica, Arial;}
-#content                                    {margin:10px auto 10px auto;box-shadow:0px 2px 30px;font-size: 18px;}
+#content                                    {margin:10px 15px;box-shadow:0px 2px 30px;font-size: 18px;}
 
 #header-nav input                           {background-color:transparent;background-size:100% 100%;width:30px;height:30px;cursor:pointer;margin:0 5px;border:solid 0 #fff;opacity: .5}
 #header-nav input:hover						{opacity: 1}
@@ -90,7 +90,7 @@ body                                        {overflow:hidden;}
 .state-unlocked                             {background-image:url(images/unlock.svg);}
 .document-audio-button                      {background-image:url(images/audio.svg);}
 
-.document-content                           {position:relative;overflow:auto;}
+.document-content                           {position:relative;overflow:auto; -webkit-overflow-scrolling: touch;}
 .document-wrapper                           {position:absolute;line-height:1.6;font-family:Helvetica, Arial;padding:10px 20px;}
 .document-about                             {position:absolute;background:rgba(0,0,0,0.9);display:none;padding:15px;overflow-y:scroll;color:white;}
 .document-about h1                          {line-height:1;margin:0 0 15px;}
@@ -114,7 +114,7 @@ body                                        {overflow:hidden;}
 
 .document-navigation-window                 {position:absolute;border:2px solid #333;background:#222;border-radius:5px;width:300px;height:300px;top:0;left:0;display:none;font-size:12px;padding:5px;}
 .document-navigation-window h3              {color:#fff;font-size:14px;height:20px;margin:0;padding:0;}
-.document-navigation-list .nav-scroller     {height:280px;overflow-x:hidden;overflow-y:scroll;-x-border:solid 1px #222;background:#eee;color:#333;}
+.document-navigation-list .nav-scroller     {height:280px;overflow-x:hidden;overflow-y:scroll;-x-border:solid 1px #222;background:#eee;color:#333; -webkit-overflow-scrolling: touch;}
 .document-navigation-list .nav-scroller li  {cursor:pointer;}
 .document-navigation-list .nav-scroller li:hover{background:#aaaaff;}
 
@@ -257,3 +257,14 @@ label[class^="config-theme-"] 				{width:30px;height:30px;}
 .config-size-jumbo                          {font-size:22px;}
 .config-size-huge .chapter,
 .config-size-huge                           {font-size:26px;}
+
+
+/* special small screen instructions */
+@media only screen and (max-width: 480px) {
+	#content {
+		margin: 10px 0 0 0;
+	}
+	#footer {
+		display: none;
+	}
+}

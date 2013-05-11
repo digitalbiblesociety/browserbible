@@ -52,13 +52,14 @@ docs.DocManager = {
 		}
 		
 		var headerHeight = this.header.outerHeight(true),
-			footerHeight = this.footer.outerHeight(true),
+			footerHeight = this.footer.is(':visible') ? this.footer.outerHeight(true) : 0,
 			windowHeight = this.window.height(),
-			windowWidth = this.window.width();
+			windowWidth = this.window.width(),
+			contentWidthDifference = this.content.outerWidth(true) - this.content.width();
 			
 		this.content
 			.height(windowHeight - headerHeight - footerHeight - 10 + (docs.Features.hasTouch ? 50 : 0))
-			.width(windowWidth - 30);
+			.width(windowWidth - contentWidthDifference); // - 30);
 		
 		this.resizeDocuments();	
 	},

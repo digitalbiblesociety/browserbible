@@ -97,7 +97,11 @@ docs.plugins.push({
 						
 					case 'morphology':
 						// compile regexp
-						transform.morphRegExp = new RegExp('^' + transform.data.replace('?','.{1}'), 'gi');
+						if (transform.data != '') {
+							transform.morphRegExp = new RegExp('^' + transform.data.replace('?','.{1}'), 'gi');
+						} else {
+							transform.morphRegExp = null;
+						}
 						
 						console.log('regex', transform.morphRegExp );
 						
@@ -174,9 +178,18 @@ docs.plugins.push({
 		}
 		
 		function applyStyle(node, css) {
-			var parts = css.split(':');
-			if (parts.length === 2) {
-				node.css(parts[0], parts[1]);
+		
+			var props = css.split(';');
+			
+			console.log(node, css);
+			
+			for (var i=0, il=props.length; i<il; i++) {
+		
+				var parts = props[i].split(':');				
+				
+				if (parts.length === 2) {
+					node.css(parts[0], parts[1]);
+				}
 			}
 		}
 		
@@ -192,9 +205,13 @@ docs.plugins.push({
 				
 			for (var i=0, il=styles.length; i<il; i++) {
 				for (var j=0, jl=colors.length; j<jl; j++) {
-					cssStyles.push('<option value="' + styles[i].replace('{0}',colors[j]) + '">' + colorNames[j] + ' ' + styleNames[i] + '</option>');
+					cssStyles.push('<option value="' + styles[i].replace('{0}',colors[j]) + '">' + styleNames[i] + ': ' + colorNames[j] + '</option>');
 				}
 			}
+			
+			// custom
+			cssStyles.push('<option value="color:red;text-shadow:yellow 0 0 2px;">Fire</option>');
+			cssStyles.push('<option value="text-shadow:0 0 1px gray;">Shadow</option>');			
 		
 		
 			return $(
@@ -245,11 +262,12 @@ docs.plugins.push({
 							break;
 						case 'morphology':
 
-							wordMorphData = w.attr('data-morph');
-							if (wordMorphData != null && transform.morphRegExp.test(wordMorphData)) {
-								applyStyle(w, transform.style);
+							if (transform.morphRegExp != null) {
+								wordMorphData = w.attr('data-morph');
+								if (wordMorphData != null && transform.morphRegExp.test(wordMorphData)) {
+									applyStyle(w, transform.style);
+								}
 							}
-						
 						
 							break;
 						case 'frequency':

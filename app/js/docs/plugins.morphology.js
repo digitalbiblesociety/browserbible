@@ -54,6 +54,35 @@ docs.plugins.push({
 			
 		});
 		
+		// update placeholder
+		morphWindow.rows.on('change', '.morph-type select', function() {
+			var typeSelector = $(this),
+				type = typeSelector.val(),
+				placeholder = '';
+				
+			
+			switch (type) {
+				case 'strongs':
+					
+					placeholder = 'Strong\'s (e.g. G2424, H234)';
+					break;
+					
+				case 'morphology':
+					placeholder = 'Morphology Expression (e.g. V-P?I)';
+					
+					break;
+				case 'frequency':
+					placeholder = 'Number (e.g. 25)';
+				
+					break;
+			}
+			
+			console.log(placeholder, typeSelector.closest('tr').find('.morph-data input'));
+			
+			typeSelector.closest('.morph-row').find('.morph-data input').attr('placeholder', placeholder);
+		});
+
+		
 		// remove row
 		morphWindow.rows.on('click', '.morph-remove', function() {
 			
@@ -657,7 +686,7 @@ docs.plugins.push({
 						'</select>' +							
 					'</div>' + 
 					'<div class="morph-data">' +
-						'<input type="text" placeholder="Strong # or @Morph" />' +
+						'<input type="text" placeholder="Strong\'s (e.g. G2424, H234)" />' +
 					'</div>' +
 					'<div class="morph-style">' +
 						'<select>' +

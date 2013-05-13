@@ -75,6 +75,7 @@ docs.plugins.push({
 				type : 'Noun',
 				declensions : [
 					{
+						breakBefore: true,
 						declension : 'Case',
 						parts :  [
 							{
@@ -136,6 +137,7 @@ docs.plugins.push({
 				type : 'Verb',
 				declensions : [
 					{
+						breakBefore: true,
 						declension : 'Tense',
 						parts :  [
 							{
@@ -209,9 +211,11 @@ docs.plugins.push({
 								type : 'Participle'
 							}
 						]
-					},
+					}
+					,
 					{
 						declension : 'Person',
+						breakBefore: true,
 						parts :  [
 							{
 								letter : '1',
@@ -226,7 +230,21 @@ docs.plugins.push({
 								type : '3rd Person'
 							}
 						]
-					}			
+					},
+					{
+						declension : 'Number',
+						parts :  [
+							{
+								letter : 'S',
+								type : 'Singular'
+							},
+							{
+								letter : 'P',
+								type : 'Plural'
+							}
+						]
+					}
+							
 				]
 			}			
 		
@@ -241,27 +259,141 @@ docs.plugins.push({
 				'</tbody>' + 
 				'</table></div>')
 					.appendTo( $(document.body) )
-					.hide();
+					.hide(),
+			
+			morphSelectorTimer = null,
+			
+			startMorphSelectorTimer = function() {				
+				stopMorphSelectorTimer();
+				
+				morphSelectorTimer = setTimeout(function() {
+					morphSelector.hide();
+				}, 1000);
+			},
+			stopMorphSelectorTimer = function() {
+				if (morphSelectorTimer != null) {
+					clearTimeout(morphSelectorTimer);
+					morphSelectorTimer = null;
+				}
+			};
+		
+		morphSelector	
+			.on('mouseleave', function() {
+				startMorphSelectorTimer();
+			})
+			.on('mouseover', function() {
+				stopMorphSelectorTimer();	
+			});
 				
 		morphSelector.currentInput = null;
 		
-		// add main selector
+		// find table parts
 		var morphSelectorHeaderRow = morphSelector.find('thead tr'),
 			morphSelectorMainRow = morphSelector.find('tbody tr'),
 			morphSelectorPOS = $('<td class="morph-pos"></td>').appendTo(morphSelectorMainRow);
 
-							
+		// add parts of speech
 		for (var i=0, il=partsOfSpeech.length; i<il; i++) {
 			morphSelectorPOS.append(
 				$('<span data-value="' + partsOfSpeech[i].letter + '">' + partsOfSpeech[i].type + '</span>')
 			);
 		}
 		
+		function updateMorphSelector(value) {
+		
+			if (value.length == 0) {
+				morphSelector.find('span').removeClass('selected');
+				drawSelectedPartOfSpeech();
+				return;
+			}
+		
+			var firstChar = value.substring(0,1);
+			
+			// select it
+			var partOfSpeechSpan = morphSelectorPOS.find('span[data-value="' + firstChar + '"]');
+			
+			if (partOfSpeechSpan.length > 0) {
+				partOfSpeechSpan.addClass('selected')
+					.siblings()
+						.removeClass('selected');
+				
+				drawSelectedPartOfSpeech();
+								
+				// do the rest of the characters one by one
+				if (value.length > 2) {
+					var remainder = value.substring(2);
+					
+					for (var i=0, il=remainder.length; i<il; i++) {
+						var letter = remainder[i];
+						
+						console.log(i,letter, morphSelectorMainRow, morphSelectorMainRow
+							.find('td:nth-child(' + (i+2) + ')'));
+						
+						morphSelectorMainRow
+							.find('td:nth-child(' + (i+2) + ')')
+							.find('span[data-value="' + letter + '"]')
+								.addClass('selected');
+					}
+				}
+			}
+			
+			
+			
+		}	
+		
+		function drawSelectedPartOfSpeech() {
+			
+			// clear out headers
+			morphSelectorHeaderRow.find('th').first()
+				.siblings()
+				.remove();	
+		
+			// clear out the main declensions
+			morphSelectorMainRow.find('td').first()
+				.siblings()
+				.remove();					
+		
+			// find whatever is selcted
+			var selectedSpan = morphSelectorPOS.find('.selected'),
+				selectedValue = selectedSpan.attr('data-value');
+				
+			if (selectedSpan.length == 0) {
+				return;
+			}
+		
+			// find part of speech
+			var partOfSpeech = null;
+			for (var i=0, il=partsOfSpeech.length; i<il; i++) {
+				if (partsOfSpeech[i].letter === selectedValue) {
+					partOfSpeech = partsOfSpeech[i];
+					break;
+				}					
+			}	
+									
+			// now make the new siblings
+			for (var i=0, il=partOfSpeech.declensions.length; i<il; i++) {
+				// create td
+				//var td = $('<td />').appendTo( selectedSpan.closest('tr') );					
+				var declension = partOfSpeech.declensions[i],
+					td = $('<th>' + declension.declension + '</th>').appendTo( morphSelectorHeaderRow );
+					td = $('<td />').appendTo( selectedSpan.closest('tr') );				
+				
+				for (var j=0, jl=declension.parts.length; j<jl; j++) {
+					$('<span data-value="' + declension.parts[j].letter + '"' + (declension.breakBefore ? ' data-breakbefore="true"' : '') + '>' + declension.parts[j].type + '</span>')
+						.appendTo(td);
+				}
+			}	
+			
+			morphSelector.height( morphSelector.find('table').height() );		
+		}	
+		
 		// selecting a span	
 		morphSelector.on('click', 'span', function() {
 			var selectedSpan = $(this),
 				selectedValue = selectedSpan.attr('data-value');
 			
+			
+			// select or delect a class
 			if (selectedSpan.hasClass('selected')) {
 
 				selectedSpan
@@ -273,69 +405,46 @@ docs.plugins.push({
 					.addClass('selected')
 					.siblings()
 						.removeClass('selected');
-						
+								
 			}
-							
+
+			// redraw the parts if needed			
 			if (selectedSpan.closest('td').hasClass('morph-pos')) {
-				
-				// find part of speech
-				var partOfSpeech = null;
-				for (var i=0, il=partsOfSpeech.length; i<il; i++) {
-					if (partsOfSpeech[i].letter === selectedValue) {
-						partOfSpeech = partsOfSpeech[i];
-						break;
-					}					
-				}	
-				
-				// clear out the other TDs
-				selectedSpan.closest('td')
-					.siblings()
-					.remove();
-				
-				// clear out headers
-				morphSelectorHeaderRow.find('th').first()
-					.siblings()
-					.remove();
-										
-				// now make the new siblings
-				for (var i=0, il=partOfSpeech.declensions.length; i<il; i++) {
-					// create td
-					//var td = $('<td />').appendTo( selectedSpan.closest('tr') );					
-					var declension = partOfSpeech.declensions[i],
-						td = $('<th>' + declension.declension + '</th>').appendTo( morphSelectorHeaderRow );
-						td = $('<td />').appendTo( selectedSpan.closest('tr') );				
-					
-					for (var j=0, jl=declension.parts.length; j<jl; j++) {
-						$('<span data-value="' + declension.parts[j].letter + '">' + declension.parts[j].type + '</span>')
-							.appendTo(td);
-					}
-				}							
-				
+				drawSelectedPartOfSpeech();
 			}
-			
-			morphSelector.height( morphSelector.find('table').height() );
 			
 			
 			// push new value to input
-			var selector = '';
+			var selector = '',
+				lastPartOfSpeechWithSelection = -1;
+
+			// first see what the last position with a selected value is
+			// [Verb] [ ] [ ] [Subjunctive] == 3
+			selectedSpan.closest('tr').find('td').each(function(index, node) {
+				var td = $(this),
+					selectedDeclension = td.find('span.selected');	
+					
+				// if something is selected then mark it
+				if (selectedDeclension.length > 0) {			
+					lastPartOfSpeechWithSelection = index;
+				}
+			});
 			
-			selectedSpan.closest('tr').find('td').each(function() {
+			// construct the text input from the selected positions
+			selectedSpan.closest('tr').find('td').each(function(index, node) {
 			
 				var td = $(this),
-					selectedDeclension = td.find('span.selected');
-					
-				if (selectedDeclension.length == 0) {
-					selector += '?';
-				} else {
-					selector += selectedDeclension.attr('data-value');
-				}
+					selectedDeclension = td.find('span.selected'),
+					includeBreak = td.find('span').first().attr('data-breakbefore') == "true";
 				
-				// add a dash after the part of speach
-				if (td.hasClass('morph-pos')) {
-					selector += '-';
-				}					
-					
-				//}
+				// if nothing selected add ? but only if there is something after it
+				if (selectedDeclension.length == 0) {
+					if (index <= lastPartOfSpeechWithSelection) {
+						selector += (includeBreak ? '-' : '') + '?';
+					}
+				} else {
+					selector += (includeBreak ? '-' : '') + selectedDeclension.attr('data-value');
+				}
 			});
 			
 			console.log('form', selector, morphSelector.currentInput);
@@ -344,7 +453,9 @@ docs.plugins.push({
 				morphSelector.currentInput.val(selector);
 			}
 			
-			
+			saveTransforms();
+			resetTransforms();
+	
 		});
 		
 		// show with input
@@ -367,9 +478,26 @@ docs.plugins.push({
 					});
 				
 					morphSelector.currentInput = dataInput;
+					
+					updateMorphSelector( dataInput.val() );
 				}
 			}
-		});		
+		});
+		
+		morphWindow.rows.on('keyup', '.morph-data input', function() {
+			
+			var dataInput = $(this);
+
+			updateMorphSelector( dataInput.val() );			
+			
+			morphSelector.show();
+		});	
+		
+		morphWindow.rows.on('blur', '.morph-data input', function() {
+		
+			//morphSelector.hide();
+			
+		});
 			
 		
 		function resetTransforms() {
@@ -403,7 +531,7 @@ docs.plugins.push({
 					case 'morphology':
 						// compile regexp
 						if (transform.data != '') {
-							transform.morphRegExp = new RegExp('^' + transform.data.replace('?','.{1}'), 'gi');
+							transform.morphRegExp = new RegExp('^' + transform.data.replace(/\?/gi,'.{1}'), 'gi');
 						} else {
 							transform.morphRegExp = null;
 						}

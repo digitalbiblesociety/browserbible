@@ -23,6 +23,7 @@ docs.plugins.push({
 		
 		function findVerses(chapter) {
 			
+			bibly.ignoreClassName = 'cf';
 			bibly.handleLinks = function(node, reference) {
 				
 				//node.style.fontWeight = 'bold';

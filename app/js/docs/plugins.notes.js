@@ -93,6 +93,8 @@ docs.plugins.push({
 			notesPopup.show();
 			notesPopup.window.css({top: top, left: left});
 			
+			bibly.scanForReferences(notesPopup.content.find('.text')[0]);
+			
 			stopTimer();
 			
 			$(document).one('mousemove', function() {

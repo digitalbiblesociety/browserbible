@@ -32,6 +32,44 @@
 .morph-remove                               {float:left;cursor:pointer;font-size:10px;line-height:1;text-align:center;color:#222;border-radius:10px;width:10px;height:10px;padding:4px;}
 .morph-remove:hover                         {background:#999;}
 
+.morph-selector {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 400px;
+	padding: 10px;
+	
+	height: 100px;
+	background: #ddd;
+	z-index: 100;
+	font-family: Avenir, Helvetica, sans-serif;
+	font-size: 13px;
+	border-radius: 2px;
+	box-shadow: #333 0 0 5px;
+}
+
+.morph-selector table thead th {
+	padding: 0 6px 5px 4px;
+	font-weight: bold;
+	text-align: left;
+}
+
+.morph-selector table tbody span {
+	display: block;
+	padding: 4px;
+	margin: 0 10px 4px 0 ;
+	cursor: pointer;
+}
+.morph-selector table tbody span:hover {
+	background: #bbcbe6;
+}
+
+.morph-selector table tbody span.selected {
+	background: #7fa4e1;
+}
+
+
+
 .outline                                    {display:block;margin:5px 0;}
 .outline ul,.outline ol                     {margin:0 0 0 10px;}
 .outline ol li                              {list-style-type:decimal;margin:0 0 0 10px;}

@@ -779,6 +779,6 @@ docs.plugins.push({
 		updateExamples();
 		saveTransforms();
 
-		morphWindow.show();
+		//morphWindow.show();
 	}
 });

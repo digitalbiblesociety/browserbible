@@ -65,7 +65,312 @@ docs.plugins.push({
 			
 			resetTransforms();			
 			
+		});
+		
+		
+		// morph selector
+		var partsOfSpeech = [
+			{
+				letter : 'N',
+				type : 'Noun',
+				declensions : [
+					{
+						declension : 'Case',
+						parts :  [
+							{
+								letter : 'N',
+								type : 'Nominative'
+							},
+							{
+								letter : 'A',
+								type : 'Accusative'
+							},					
+							{
+								letter : 'D',
+								type : 'Dative'
+							},					
+							{
+								letter : 'G',
+								type : 'Genative'
+							},					
+							{
+								letter : 'V',
+								type : 'Vocative'
+							}											
+						]
+					},
+					{
+						declension : 'Number',
+						parts :  [
+							{
+								letter : 'P',
+								type : 'Plural'
+							},
+							{
+								letter : 'S',
+								type : 'Singular'
+							}
+						]
+					},
+					{
+						declension : 'Gender',
+						parts :  [
+							{
+								letter : 'F',
+								type : 'Feminine'
+							},
+							{
+								letter : 'M',
+								type : 'Masculine'
+							},
+							{
+								letter : 'N',
+								type : 'Nueter'
+							}
+						]
+					}			
+				]
+			},
+			{
+				letter : 'V',
+				type : 'Verb',
+				declensions : [
+					{
+						declension : 'Tense',
+						parts :  [
+							{
+								letter : 'A',
+								type : 'Aorist'
+							},
+							{
+								letter : 'F',
+								type : 'Future'
+							},					
+							{
+								letter : 'I',
+								type : 'Imperfect'
+							},					
+							{
+								letter : 'R',
+								type : 'Perfect'
+							},					
+							{
+								letter : 'L',
+								type : 'Pluperfect'
+							},					
+							{
+								letter : 'P',
+								type : 'Present'
+							}
+						]
+					},
+					{
+						declension : 'Voice',
+						parts :  [
+							{
+								letter : 'A',
+								type : 'Active'
+							},
+							{
+								letter : 'M',
+								type : 'Middle'
+							},
+							{
+								letter : 'P',
+								type : 'Passive'
+							}
+						]
+					},
+					{
+						declension : 'Mood',
+						parts :  [
+							{
+								letter : 'I',
+								type : 'Indicative'
+							},
+							{
+								letter : 'S',
+								type : 'Subjunctive'
+							},
+							{
+								letter : 'O',
+								type : 'Optative'
+							},
+							{
+								letter : 'M',
+								type : 'Imperative'
+							},
+							{
+								letter : 'N',
+								type : 'Infinitive'
+							},
+							{
+								letter : 'P',
+								type : 'Participle'
+							}
+						]
+					},
+					{
+						declension : 'Person',
+						parts :  [
+							{
+								letter : '1',
+								type : '1st Person'
+							},
+							{
+								letter : '2',
+								type : '2nd Person'
+							},
+							{
+								letter : '3',
+								type : '3rd Person'
+							}
+						]
+					}			
+				]
+			}			
+		
+		];	
+		
+		var morphSelector = $('<div class="morph-selector"><table>' + 
+				'<thead>' + 
+					'<tr><th>Part of Speech</th></tr>' + 
+				'</thead>' + 
+				'<tbody>' + 
+					'<tr></tr>' +
+				'</tbody>' + 
+				'</table></div>')
+					.appendTo( $(document.body) )
+					.hide();
+				
+		morphSelector.currentInput = null;
+		
+		// add main selector
+		var morphSelectorHeaderRow = morphSelector.find('thead tr'),
+			morphSelectorMainRow = morphSelector.find('tbody tr'),
+			morphSelectorPOS = $('<td class="morph-pos"></td>').appendTo(morphSelectorMainRow);
+
+							
+		for (var i=0, il=partsOfSpeech.length; i<il; i++) {
+			morphSelectorPOS.append(
+				$('<span data-value="' + partsOfSpeech[i].letter + '">' + partsOfSpeech[i].type + '</span>')
+			);
+		}
+		
+		// selecting a span	
+		morphSelector.on('click', 'span', function() {
+			var selectedSpan = $(this),
+				selectedValue = selectedSpan.attr('data-value');
+			
+			if (selectedSpan.hasClass('selected')) {
+
+				selectedSpan
+					.removeClass('selected')
+
+			} else {
+
+				selectedSpan
+					.addClass('selected')
+					.siblings()
+						.removeClass('selected');
+						
+			}
+							
+			if (selectedSpan.closest('td').hasClass('morph-pos')) {
+				
+				// find part of speech
+				var partOfSpeech = null;
+				for (var i=0, il=partsOfSpeech.length; i<il; i++) {
+					if (partsOfSpeech[i].letter === selectedValue) {
+						partOfSpeech = partsOfSpeech[i];
+						break;
+					}					
+				}	
+				
+				// clear out the other TDs
+				selectedSpan.closest('td')
+					.siblings()
+					.remove();
+				
+				// clear out headers
+				morphSelectorHeaderRow.find('th').first()
+					.siblings()
+					.remove();
+										
+				// now make the new siblings
+				for (var i=0, il=partOfSpeech.declensions.length; i<il; i++) {
+					// create td
+					//var td = $('<td />').appendTo( selectedSpan.closest('tr') );					
+					var declension = partOfSpeech.declensions[i],
+						td = $('<th>' + declension.declension + '</th>').appendTo( morphSelectorHeaderRow );
+						td = $('<td />').appendTo( selectedSpan.closest('tr') );				
+					
+					for (var j=0, jl=declension.parts.length; j<jl; j++) {
+						$('<span data-value="' + declension.parts[j].letter + '">' + declension.parts[j].type + '</span>')
+							.appendTo(td);
+					}
+				}							
+				
+			}
+			
+			morphSelector.height( morphSelector.find('table').height() );
+			
+			
+			// push new value to input
+			var selector = '';
+			
+			selectedSpan.closest('tr').find('td').each(function() {
+			
+				var td = $(this),
+					selectedDeclension = td.find('span.selected');
+					
+				if (selectedDeclension.length == 0) {
+					selector += '?';
+				} else {
+					selector += selectedDeclension.attr('data-value');
+				}
+				
+				// add a dash after the part of speach
+				if (td.hasClass('morph-pos')) {
+					selector += '-';
+				}					
+					
+				//}
+			});
+			
+			console.log('form', selector, morphSelector.currentInput);
+			
+			if (morphSelector.currentInput != null) {
+				morphSelector.currentInput.val(selector);
+			}
+			
+			
+		});
+		
+		// show with input
+		morphWindow.rows.on('click', '.morph-data', function() {
+			
+			var dataBlock = $(this),
+				dataInput = dataBlock.find('input'),
+				type = dataBlock.closest('.morph-row').find('.morph-type select').val();
+						
+			if (type == 'morphology') {
+			
+				if (morphSelector.is(':visible')) {
+					morphSelector.hide();
+				} else {
+					morphSelector.show();
+					morphSelector.css({
+						top: dataInput.offset().top + dataBlock.height(),
+						left: dataInput.offset().left,
+						zIndex: morphWindow.window.css('zindex')+1
+					});
+				
+					morphSelector.currentInput = dataInput;
+				}
+			}
 		});		
+			
 		
 		function resetTransforms() {
 			// remove all inline styles
@@ -346,5 +651,6 @@ docs.plugins.push({
 		updateExamples();
 		saveTransforms();
 
+		morphWindow.show();
 	}
 });

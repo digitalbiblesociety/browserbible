@@ -59,7 +59,7 @@ jQuery(function($) {
 				{
 					docs: [
 					{
-						version: 'eng_kjv',
+						version: 'eng_nasb',
 						location: 'John.3.1',
 						linked: true
 					}
@@ -80,7 +80,79 @@ jQuery(function($) {
 					}		
 					]
 				};
-				docs.DocManager.loadSettings(defaultDocSettings);
+				
+				// load cookie/localStorage settings
+				var docSettings = $.jStorage.get('docs-settings', defaultDocSettings);	
+				
+				
+				
+				// get from URL
+				function parseQuerystring(querystring) {
+					// remove any preceding url and split
+					querystring = querystring.substring(querystring.indexOf('?')+1).split('&');
+					var params = {}, pair, d = decodeURIComponent;
+					// march and parse
+					for (var i = querystring.length - 1; i >= 0; i--) {
+					pair = querystring[i].split('=');
+					params[d(pair[0])] = d(pair[1]);
+					}
+					
+					return params;
+				};
+				
+				function convertQuerystringToSettings( querystringParams, max) {
+					
+					var queryDocs = [];
+					
+					if (querystringParams['location1'] != 'undefined') {
+					
+						for (var i=1; i<=max; i++) {
+							var 
+								version = querystringParams['document' + i.toString()],
+								location = querystringParams['location' + i.toString()], 
+								linked = querystringParams['linked' + i.toString()];
+								
+							if (typeof version != 'undefined' && typeof location != 'undefined') {
+								queryDocs.push({
+									version: version,
+									location: location,
+									linked: linked
+								});
+							}		
+						}
+					}
+					
+					return queryDocs;				
+				}
+			
+				// test ?location=1		
+				if (window.location.search.length > 0) {
+		
+					var querystringParams = parseQuerystring( window.location.search.substring(1) );
+					var queryDocs = convertQuerystringToSettings( querystringParams , 3);					
+												
+					if (queryDocs.length > 0) {
+						docSettings.docs = queryDocs;
+					}
+				}
+				
+				// test #location=1
+				if (window.location.href.indexOf('#') > -1) {
+					var hashParams = parseQuerystring( window.location.href.substring( window.location.href.indexOf('#') + 1) );
+					var hashDocs = convertQuerystringToSettings( hashParams , 3);					
+												
+					if (hashDocs.length > 0) {
+						docSettings.docs = hashDocs;
+					}
+				}	
+				
+				
+				// LOAD interface
+				docs.DocManager.loadSettings(docSettings);
+				
+							
+				
+				
 				
 				docs.DocManager.addEventListener('navigation', function(e) {		
 					docs.DocManager.saveSettings();

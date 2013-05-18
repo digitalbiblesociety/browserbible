@@ -88,9 +88,9 @@ docs.DocManager = {
 		return document;
 	},
 	
-	loadSettings: function(defaultSettings) {
+	loadSettings: function(docSettings) {
 		
-		var docSettings = $.jStorage.get('docs-settings', defaultSettings);				
+					
 		
 		// setup all documents and load content
 		for (var i=0, il=docSettings.docs.length; i<il; i++) {

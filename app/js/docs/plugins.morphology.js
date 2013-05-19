@@ -77,7 +77,6 @@ docs.plugins.push({
 					break;
 			}
 			
-			console.log(placeholder, typeSelector.closest('tr').find('.morph-data input'));
 			
 			typeSelector.closest('.morph-row').find('.morph-data input').attr('placeholder', placeholder);
 		});
@@ -354,10 +353,7 @@ docs.plugins.push({
 					
 					for (var i=0, il=remainder.length; i<il; i++) {
 						var letter = remainder[i];
-						
-						console.log(i,letter, morphSelectorMainRow, morphSelectorMainRow
-							.find('td:nth-child(' + (i+2) + ')'));
-						
+												
 						morphSelectorMainRow
 							.find('td:nth-child(' + (i+2) + ')')
 							.find('span[data-value="' + letter + '"]')
@@ -476,7 +472,6 @@ docs.plugins.push({
 				}
 			});
 			
-			console.log('form', selector, morphSelector.currentInput);
 			
 			if (morphSelector.currentInput != null) {
 				morphSelector.currentInput.val(selector);
@@ -564,9 +559,7 @@ docs.plugins.push({
 						} else {
 							transform.morphRegExp = null;
 						}
-						
-						console.log('regex', transform.morphRegExp );
-						
+												
 						break;
 					case 'frequency':
 						// parse
@@ -601,9 +594,7 @@ docs.plugins.push({
 				
 				transforms.push(transform);
 			});
-			
-			console.log('morphology: saved ' + transforms.length + ' transforms');
-			
+						
 			// store for next load
 			$.jStorage.set('docs-morphology', transforms);
 		}
@@ -627,7 +618,6 @@ docs.plugins.push({
 		
 		function updateExamples() {
 			
-			console.log(morphWindow.rows);
 		
 			morphWindow.rows.find('.morph-row').each( function(i, el) {
 				var row = $(this),
@@ -643,7 +633,6 @@ docs.plugins.push({
 		
 			var props = css.split(';');
 			
-			console.log(node, css);
 			
 			for (var i=0, il=props.length; i<il; i++) {
 		

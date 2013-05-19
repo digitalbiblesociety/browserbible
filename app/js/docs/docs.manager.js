@@ -629,20 +629,21 @@ docs.Document.prototype = {
 			url: url,
 			dataType: 'html',
 			error: function() {
-				//console.log('failed', url);
+				
+				console.log('failed', url, t.switchingOver);
 				
 				if (!t.switchingOver) {
 					t.switchingOver = true;
 
 					var currentVersion = t.selector.val(),
+						versionData = JSON.parse(t.selector.find('option:checked').attr('data-version')),
+						switchToVersion = versionData.errorSwitchToVersion;
+						
+					if (typeof switchToVersion == 'undefined') {
+						//switchToVersion = 'eng_kjv';
 						switchToVersion = '';
-					
-					if (currentVersion === 'el_tisch') {
-						switchToVersion = 'he_wlc';
-					} else if (currentVersion === 'he_wlc') {
-						switchToVersion = 'el_tisch';
 					}
-					
+				
 					if (switchToVersion != '') {
 						//console.log('switch to ', switchToVersion);
 						

@@ -254,7 +254,7 @@ var hebrewTools = {
 		return output;		
 	},
 	
-	colorizeInline: function(input) {
+	colorizeLayers: function(input) {
 		var output = 
 				'<span class="hebrew-layers">' +
 					'<span class="hebrew-layers-original">' + input + '</span>' +
@@ -266,7 +266,7 @@ var hebrewTools = {
 		return output;
 	},
 		
-	colorizeLayers: function(input) {
+	colorizeInline: function(input) {
 		
 		var output = '';
 		

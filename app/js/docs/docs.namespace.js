@@ -6,4 +6,4 @@
 
 var docs = {};
 
-docs.version = '2.0.5';
+docs.version = '2.2.0';

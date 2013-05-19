@@ -229,6 +229,7 @@ bible.language = {
 	gre: 'Greek',
 	elx: 'Elamite',
 	eng: 'English',
+	engn: 'English Commentaries',
 	epo: 'Esperanto',
 	est: 'Estonian',
 	baq: 'Basque',

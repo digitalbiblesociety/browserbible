@@ -104,8 +104,6 @@ docs.plugins.push({
 			}
 			var userConfig = $.jStorage.get('docs-config-' + prefix, 'default');
 			
-			console.log('#config:' + prefix, userConfig);
-			console.log('#config-' + prefix + '-' + userConfig + '', configBlock.find('#config-' + prefix + '-' + userConfig + '') );
 			configBlock.find('#config-' + prefix + '-' + userConfig + '').trigger('click');			
 		
 		

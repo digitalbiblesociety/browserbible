@@ -38,7 +38,7 @@ docs.plugins.push({
 		// TEST!
 		//configButton.hide();
 		
-				
+		/*		
 		$('#top-logo').css('cursor','pointer').on('click', function(e) {
 			e.preventDefault();
 			
@@ -54,6 +54,7 @@ docs.plugins.push({
 			return false;		
 	
 		});
+		*/
 				
 		docManager.configWindow = configWindow;			
 		

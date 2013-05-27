@@ -146,6 +146,32 @@ jQuery(function($) {
 					}
 				}	
 				
+				// ensure all versions exists
+				for (var i=0, il=docSettings.docs.length; i<il; i++) {
+					var versionKey = docSettings.docs[i].version;
+					
+					// check if this version exists
+					if (typeof bible.versions.versionsByKey[versionKey] == 'undefined') {
+
+						// get first english one
+						if (typeof bible.versions.versionData['eng'] != 'undefined') {
+
+							var engVersions = bible.versions.versionData['eng'].versions;
+							for (var eng in engVersions) {
+								docSettings.docs[i].version = eng;
+								break;
+							}
+														
+						} else {
+							// first available
+							docSettings.docs[i].version = bible.versions.versionKeys[0];
+						}
+					
+						
+					}
+					//console.log('checking: ' + docSettings.docs[i].version + ' - ', bible.versions.versionsByKey[versionKey]);
+				}
+				
 				
 				// LOAD interface
 				docs.DocManager.loadSettings(docSettings);

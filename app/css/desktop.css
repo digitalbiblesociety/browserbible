@@ -118,7 +118,7 @@ body                                        {overflow:hidden;}
 .document-navigation-list .nav-scroller li  {cursor:pointer;}
 .document-navigation-list .nav-scroller li:hover{background:#aaaaff;}
 
-.book-list li                               {display:block;border:solid 1px #aaa;border-color:#ccc #333 #333 #ccc;padding:4px 0 4px 5px;font-family:'padauk_src';}
+.book-list li                               {display:block;border:solid 1px #aaa;border-color:#ccc #333 #333 #ccc;padding:4px 0 4px 5px;}
 .book-list li.selected                      {background:#ccccff;}
 
 .chapter-list li                            {font-size:11px;line-height:1;float:left;width:24px;height:16px;border:solid 1px #aaa;text-align:center;padding:5px 0 2px;}
@@ -129,7 +129,10 @@ body                                        {overflow:hidden;}
 .config-options .config-option input{position:absolute;opacity:0;cursor:pointer;}
 .config-options .config-option input:checked ~ label {color:darkred;}
 .config-options .config-option span         {vertical-align:middle;}
-.config-toggle                              {display:inline-block;width:50px;}
+.config-toggle                              {display: block;
+width: 30px;
+float: left;
+margin: 0 10px 10px 0;}
 #font-size									{font-weight: normal;}
 #font-slider								{margin:10px 5px 5px 5px;border: solid 1px black;}
 .config-toggle input                        {position:absolute;opacity:0;cursor:pointer;}
@@ -137,13 +140,14 @@ body                                        {overflow:hidden;}
 .config-toggle label 						{display:inline-block;background-size:100% 100%;text-indent:-9999px;width:30px;height:30px;margin:0 2px;cursor:pointer; border-radius: 3px;opacity: .5;box-shadow: 1px 1px 1px 1px rgba(0,0,0,.3);}
 .config-toggle input:checked ~ label		{opacity: 1;}
 
-label[for="config-verses"] 					{background-image:url(images/Verses.svg);}
-label[for="config-wordsofchrist"] 			{background-image:url(images/ChristWords.svg);}
-label[for="config-chapters"] 				{background-image:url(images/Chapter.svg);}
+label[for="config-verses"] 					{background-image:url(images/verses.svg);}
+label[for="config-wordsofchrist"] 			{background-image:url(images/christwords.svg);}
+label[for="config-chapters"] 				{background-image:url(images/chapter.svg);}
 label[for="config-images"] 					{background-image:url(images/images.svg);}
 label[for="config-video"] 					{background-image:url(images/video.svg);}
 label[for="config-notes"] 					{background-image:url(images/notes.svg);}
 label[for="config-maps"] 					{background-image:url(images/maps.svg);}
+label[for="config-titles"] 					{background-image:url(images/titles.svg);}
 
 .theme-demo                                 {display:inline-block;width:20px;height:30px;cursor:pointer;}
 .config-fontfamily-default                        {font-family:Verdana, sans-serif;font-size:16px;}

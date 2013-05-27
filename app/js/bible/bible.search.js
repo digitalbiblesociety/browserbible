@@ -153,7 +153,7 @@ bible.BibleSearch = {
 	
 	baseBiblePath: 'content/bibles/',
 	
-	baseLemmaPath: 'content/lexicons/content/',
+	baseLemmaPath: 'content/lexicons/index/',
 	
 	indexedChapters: [],
 	
@@ -343,9 +343,9 @@ bible.BibleSearch = {
 				
 			if (s.indexedChapters.length > 0) {		
 				// set the first one
-				s.indexedChaptersIndex = 0;
-				s.bookOsisID = s.indexedChapters[s.indexedChaptersIndex].split('.')[0];
-				s.chapterIndex = parseInt(s.indexedChapters[s.indexedChaptersIndex].split('.')[1])-1;	
+				s.indexedChaptersIndex = -1;
+				s.bookOsisID = s.indexedChapters[s.indexedChaptersIndex+1].split('.')[0];
+				s.chapterIndex = parseInt(s.indexedChapters[s.indexedChaptersIndex+1].split('.')[1])-1;	
 			}
 			
 			console.log( 'loaded indexes', s.indexedChapters);

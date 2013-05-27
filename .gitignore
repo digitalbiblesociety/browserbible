@@ -8,6 +8,7 @@
 /app/content/bibles/**/*.*
 /app/content/bibles/**/*
 /app/content/bibles/**/**/*.json
+/app/content/lexicons/index/*.json
 /app/content/audio/*.mp3
 /app/content/videos/*.mp4
 /app/content/images/*.jpg

@@ -86,7 +86,7 @@ docs.plugins.push({
 							videoIndex = videoLibrary[verseOsis],
 							//videoUrl = 'content/videos/' + videoIndex + '.mp4';
 							videoSrc = [
-										{type: 'video/mp4', src: 'content/videos/ar/' + videoIndex + '.mp4'}
+										{type: 'video/mp4', src: 'content/videos/' + videoIndex + '.mp4'}
 									   ];
 						if (canPlayMP4) {
 						popup.title.html('Video: ' + reference.toString());	

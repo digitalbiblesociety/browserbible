@@ -10,104 +10,294 @@ docs.plugins.push({
 	init: function(docManager) {
 	
 		docManager.addStyle('\
-.texan-original {\
+.eng2p-original {\
 text-decoration: line-through;\
 color: #444;\
 display:none;\
 }\
-.texan-corrected {\
+.eng2p-corrected {\
 color:#393;\
 }\
-.config-texan-off .texan-original {\
+.eng2p-highlight,.eng2p-highlight-demo {\
+color:#393;\
+}\
+.config-eng2p-off .eng2p-original {\
 text-decoration: inherit;\
 color: inherit;\
 display: inherit;\
 }\
-.config-texan-off .texan-corrected {\
+.config-eng2p-off .eng2p-corrected {\
 display: none;\
 }\
 label[for="config-texan"] {\
 background-image:url(css/images/texan.svg);\
+}\
+#config-eng2p th {\
+white-space:nowrap;\
+}\
+#config-eng2p td,th {\
+border: solid 1px #ddd;\
+padding: 2px;\
+text-align:left;\
+font-size: 85%;\
 }');	
 	
 		
-		docManager.createOptionToggle('Texanize plurals', 'texan', true);
-			
-		
-		var youPluralRegExp =  /\b([yY])ou(r|rs|rselves)?\b/g;
-			
+		//docManager.createOptionToggle('Texanize plurals', 'texan', true);
 
+		var configBlock =
+			$('<div class="config-options" id="config-eng2p">' + 
+				'<h3>English Second Person Plural</h3>' + 		
 		
-		function runTransforms(node) {
+	'<table>' +
+		'<tbody>' +	
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-none" value="none" />' +
+					'<label for="eng2p-option-none">None</label>' +
+				'</th>' +
+				'<td>You</td>' +
+				'<td>Your</td>' +
+				'<td>Yours</td>' +
+				'<td>Yourselves</td>' +
+			'</tr>' +
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-highlight" value="highlight" />' +
+					'<label for="eng2p-option-highlight">Highlight</label>' +
+				'</th>' +
+				'<td><span class="eng2p-highlight-demo">You</span></td>' +
+				'<td><span class="eng2p-highlight-demo">Your</span></td>' +
+				'<td><span class="eng2p-highlight-demo">Yours</span></td>' +
+				'<td><span class="eng2p-highlight-demo">Yourselves</span></td>' +
+			'</tr>' +	
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-youall" value="youall"  />' +
+					'<label for="eng2p-option-youall">General US</label>' +
+				'</th>' +
+				'<td>You all</td>' +
+				'<td>You all\'s</td>' +
+				'<td>You all\'s</td>' +				
+				'<td>You allselves</td>' +
+			'</tr>' +					
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-yall" value="yall" />' +
+					'<label for="eng2p-option-yall">Southern US</label>' +
+				'</th>' +
+				'<td>Y\'all</td>' +
+				'<td>Y\'all\'s</td>' +
+				'<td>Y\'all\'s</td>' +
+				'<td>Y\'allselves</td>' +
+			'</tr>' +
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-youguys"  value="youguys" />' +
+					'<label for="eng2p-option-youguys">Western US</label>' +
+				'</th>' +
+				'<td>You guys</td>' +
+				'<td>Your guys\'s</td>' +
+				'<td>Your guys\'s</td>' +			
+				'<td>Your guys selves</td>' +				
+			'</tr>' +
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-youseguys" value="youseguys" />' +
+					'<label for="eng2p-option-youseguys">NYC/Chicago</label>' +
+				'</th>' +
+				'<td>Youse guys</td>' +
+				'<td>Youse guys\'s</td>' +
+				'<td>Youse guys\'s</td>' +			
+				'<td>Youse guys selves</td>' +
+			'</tr>' +
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-yinz" value="yinz" />' +
+					'<label for="eng2p-option-yinz">Pittsburgh</label>' +
+				'</th>' +
+				'<td>Yinz</td>' +
+				'<td>Yinz\'s</td>' +
+				'<td>Yinz\'s</td>' +
+				'<td>Yinzselves</td>' +				
+			'</tr>' +
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-youlot" value="youlot" />' +
+					'<label for="eng2p-option-youlot">United Kingdom</label>' +
+				'</th>' +
+				'<td>You lot</td>' +
+				'<td>You lot\'s</td>' +
+				'<td>You lot\'s</td>' +				
+				'<td>Yourlot\'s</td>' +				
+			'</tr>' +
+			'<tr>' +
+				'<th>' +
+					'<input type="radio" name="eng2p-option" id="eng2p-option-ye" value="ye" />' +
+					'<label for="eng2p-option-ye">Old English</label>' +
+				'</th>' +
+				'<td>Ye</td>' +
+				'<td>Ye\'s</td>' +
+				'<td>Ye\'s</td>' +
+				'<td>Yeselves</td>' +				
+			'</tr>' +						
+		'</tbody>' +	
+	'</table>' +
+				'</div>')
+				.appendTo( docManager.configWindow.content );	
+				
+		// push settings				
+		var texanSetting = $.jStorage.get('docs-config-eng2p-setting', 'none');
+		$('#eng2p-option-' + texanSetting).prop('checked',true);
+		getPluralValues();			
 		
+		// create updates
+		$('input[name="eng2p-option"]').on('click',function() {
+			// update the setting value
+			texanSetting = $(this).val();
+			
+			// store value
+			$.jStorage.set('docs-config-eng2p-setting', texanSetting);
+			
+			// values
+			getPluralValues();
+			
+			// re-run
+			$('div.chapter[lang="eng"]').each(function() {
+				var chapter = $(this);
+			
+				removePluralTransforms(chapter);
+				runPluralTransforms(chapter);						
+			});
+		});				
+					
+	
+		function getPluralValues() {
+		
+			var selectedRow = $('#eng2p-option-' + texanSetting).closest('tr');
+		
+			bible.eng2p.youPluralSubject = selectedRow.find('td:eq(0)').html();
+			bible.eng2p.youPluralPossessiveDeterminer = selectedRow.find('td:eq(1)').html();
+			bible.eng2p.youPluralPossessivePronoun = selectedRow.find('td:eq(2)').html();
+			bible.eng2p.youPluralReflexive = selectedRow.find('td:eq(3)').html();
+		}
+	
+		function removePluralTransforms(node) {
+			bible.eng2p.removePluralTransforms(node);
+		}
+	
+		function runPluralTransforms(node) {
 			node.find('.verse').each(function(index, el) {
 				var verse = $(this),
 					osis = verse.attr('data-osis');
 
-				if (bible.texan.secondPersonPlurals.indexOf(osis) > -1) {
-					
+				if (bible.eng2p.secondPersonPlurals.indexOf(osis) > -1) {
 					var html = verse.html();
 					
-					html = html.replace(youPluralRegExp, function(match, $1, $2, offset, originalString) { 			
-						var replacement = '';
-			
-						// you, your, yours checker
-						switch (match.toLowerCase()) {
-							case 'you':
-								replacement = "Y'all";
-								break;
-							case 'your':
-								replacement = "Y'all's";
-								break;
-							case 'yours':
-								replacement = "Y'all's";
-								break;
-							case 'yourselves':
-								replacement = "Y'allselves";
-								break;
-							default:
-								replacement = match; // 'UNKNOWN [' + match + ',' + $1 + ']';
-								break;
-								
-						}
-						
-						// You vs. you
-						if ($1 === $1.toUpperCase()) {
-							replacement = replacement.substring(0,1).toUpperCase() + replacement.substring(1);
-						} else {
-							replacement = replacement.substring(0,1).toLowerCase() + replacement.substring(1);
-						}
-			
-						//console.log(match, $1, $2, offset, $1 == $1.toUpperCase(), replacement);
-			
-						
-						// replace standard ' with ’
-						replacement = replacement.replace(/'/gi,'&rsquo;');		
+					if (texanSetting == 'highlight') {
+						html = bible.eng2p.highlightPlurals( html );
+					} else if (texanSetting != 'none') {
+						html = bible.eng2p.replacePlurals( html );				
+					}
 					
-					
-						// return the greatness
-						return '<span class="texan-original">' + match + '</span><span class="texan-corrected">' + replacement + '</span>';	
-					});
-				
-					verse.html( html )
+					verse.html( html );
+
 				};
-			});
-			
-		
+			});	
 		}
-	
 	
 		// run transforms
 		docManager.addEventListener('load', function(e) {
-			if (e.chapter.attr('lang') == 'eng') {
-				runTransforms(e.chapter);
+			if (e.chapter.attr('lang') == 'eng' && texanSetting != 'none') {			
+				runPluralTransforms(e.chapter);
 			}
 		});				
 		
 	}
 });
 
-bible.texan = {
+bible.eng2p = {
+
+	youPluralRegExp:  /\b([yY])ou(r|rs|rselves)?\b/g,
+	
+	youPluralSubject: "Y'all",
+	youPluralPossessiveDeterminer: "Y'all's",
+	youPluralPossessivePronoun: "Y'all's",
+	youPluralReflexive: "Y'allselves",	
+	
+	removePluralTransforms: function(node) {
+		// remove the changed words
+		node.find('.eng2p-corrected').remove();
+		
+		// remove the surrounding spans
+		node.find('.eng2p-highlight').each(function() {
+			var span = this;
+			
+			this.parentNode.replaceChild(document.createTextNode(span.innerText), this);
+		});
+		
+		// remove the surrounding spans		
+		node.find('.eng2p-original').each(function() {
+			var span = this;
+			
+			this.parentNode.replaceChild(document.createTextNode(span.innerText), this);
+		});		
+	},
+	
+	highlightPlurals: function(input) {
+		var output = input.replace(bible.eng2p.youPluralRegExp, function(match, $1, $2, offset, originalString) { 			
+		
+			// return the greatness
+			return '<span class="eng2p-highlight">' + match + '</span>';	
+		});	
+			
+		return output;
+	},		
+	
+	replacePlurals: function(input) {
+		
+		var output = input.replace(bible.eng2p.youPluralRegExp, function(match, $1, $2, offset, originalString) { 			
+			var replacement = '';
+
+			// you, your, yours checker
+			switch (match.toLowerCase()) {
+				case 'you':
+					replacement = bible.eng2p.youPluralSubject;
+					break;
+				case 'your':
+					replacement = bible.eng2p.youPluralPossessiveDeterminer;
+					break;
+				case 'yours':
+					replacement = bible.eng2p.youPluralPossessivePronoun;
+					break;
+				case 'yourselves':
+					replacement = bible.eng2p.youPluralReflexive;
+					break;
+				default:
+					replacement = match; // 'UNKNOWN [' + match + ',' + $1 + ']';
+					break;
+					
+			}
+			
+			// You vs. you
+			if ($1 === $1.toUpperCase()) {
+				replacement = replacement.substring(0,1).toUpperCase() + replacement.substring(1);
+			} else {
+				replacement = replacement.substring(0,1).toLowerCase() + replacement.substring(1);
+			}
+			
+			// replace standard ' with ’
+			replacement = replacement.replace(/'/gi,'&rsquo;');		
+		
+		
+			// return the greatness
+			return '<span class="eng2p-original">' + match + '</span><span class="eng2p-corrected">' + replacement + '</span>';	
+		});
+	
+		return output;
+	},
+		
+
 	secondPersonPlurals: [
 // Logos @R?2?P on ESV Reverse Interlinear
 "Gen.1.22","Gen.1.28","Gen.3.1","Gen.3.3","Gen.3.4","Gen.3.5","Gen.4.23","Gen.9.1","Gen.9.4","Gen.9.7","Gen.17.10","Gen.17.11","Gen.18.4","Gen.18.5","Gen.19.2","Gen.19.7","Gen.19.8","Gen.19.14","Gen.22.5","Gen.23.4","Gen.23.8","Gen.24.49","Gen.24.54","Gen.24.56","Gen.26.27","Gen.29.5","Gen.29.7","Gen.31.6","Gen.31.46","Gen.32.4","Gen.32.16","Gen.32.19","Gen.32.20","Gen.34.8","Gen.34.9","Gen.34.10","Gen.34.11","Gen.34.12","Gen.34.15","Gen.34.17","Gen.34.30","Gen.35.2","Gen.37.6","Gen.37.20","Gen.37.22","Gen.37.27","Gen.38.24","Gen.39.14","Gen.40.8","Gen.41.55","Gen.42.1","Gen.42.2","Gen.42.7","Gen.42.9","Gen.42.12","Gen.42.15","Gen.42.16","Gen.42.18","Gen.42.19","Gen.42.20","Gen.42.22","Gen.42.33","Gen.42.34","Gen.42.36","Gen.42.38","Gen.43.2","Gen.43.3","Gen.43.5","Gen.43.6","Gen.43.7","Gen.43.11","Gen.43.12","Gen.43.13","Gen.43.23","Gen.43.27","Gen.43.29","Gen.43.31","Gen.44.4","Gen.44.5","Gen.44.10","Gen.44.15","Gen.44.17","Gen.44.21","Gen.44.23","Gen.44.25","Gen.44.27","Gen.44.29","Gen.45.1","Gen.45.4","Gen.45.5","Gen.45.8","Gen.45.9","Gen.45.13","Gen.45.17","Gen.45.18","Gen.45.19","Gen.45.24","Gen.46.34","Gen.47.16","Gen.47.23","Gen.47.24","Gen.49.1","Gen.49.2","Gen.49.29","Gen.50.4","Gen.50.17","Gen.50.19","Gen.50.20","Gen.50.21","Gen.50.25",
@@ -209,5 +399,4 @@ bible.texan = {
 "Jude.1.2","Jude.1.3","Jude.1.5","Jude.1.12","Jude.1.17","Jude.1.18","Jude.1.20","Jude.1.21","Jude.1.22","Jude.1.23","Jude.1.24",
 "Rev.1.4","Rev.1.9","Rev.2.10","Rev.2.13","Rev.2.23","Rev.2.24","Rev.2.25","Rev.6.16","Rev.7.3","Rev.11.12","Rev.12.12","Rev.14.7","Rev.16.1","Rev.18.4","Rev.18.6","Rev.18.7","Rev.18.20","Rev.19.5","Rev.19.17","Rev.19.18","Rev.22.16"	
 	]	
-
 };

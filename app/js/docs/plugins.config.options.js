@@ -76,7 +76,6 @@ display: none;\
 		
 		// <h3> title </h3>
 		docManager.addStyle('\
-.config-titles-off .chapter h2,\
 .config-titles-off .chapter h3 {\
 	display:none;\
 }');		

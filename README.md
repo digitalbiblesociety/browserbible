@@ -2,7 +2,7 @@
 
 A browser based Bible Study Application built with the holy trinity of HTML, CSS, and JavaScript.
 
-* Created by: [http://www.dbsbible.org](Digital Bible Society)
+* Created by: [Digital Bible Society](http://www.dbsbible.org)
 * Project Leader: John Dyer [http://j.hn/](http://j.hn/)
 * Code License: GPLv2/MIT
 * Content License: See each content folder for a license
@@ -23,7 +23,7 @@ The application has full search and highlighting features but requires
 
 To make this happen, there are two ways to view the same biblical content
 
-* *Mobile Version* - The mobile version uses [http://www.jquerymobile.com/](jQuery Mobile) to navigate through the Bible chapter by chapter
+* *Mobile Version* - The mobile version uses [jQuery Mobile](http://www.jquerymobile.com/) to navigate through the Bible chapter by chapter
 * *Desktop Version* - The desktop version is a multipane application based off ideas at [http://biblewebapp.com/](http://biblewebapp.com/)
 
 ## Credits
@@ -31,21 +31,21 @@ To make this happen, there are two ways to view the same biblical content
 ### Original Language Data
 
 Many of the texts are the product of the hard work of many individuals dedicated to open
-source work including [http://openscriptures.org](Open Scriptures) and [http://www.crosswire.org/](CrossWire). Thanks for the great work!
+source work including [Open Scriptures](http://openscriptures.org) and [CrossWire](http://www.crosswire.org/). Thanks for the great work!
 
-* *KJV text* - [http://www.crosswire.org/~dmsmith/kjv2006/index.html](KJV2006 project) from Crosswire
-* *Tischendorf* - [https://github.com/morphgnt/tischendorf-data](MorphNT) from Ulrik Sandborg-Petersen 
-* *WLC* - [https://github.com/openscriptures/morphhb](MorphHB) project from Open Scriptures and David Troidl
-* *Strongs* - [https://github.com/openscriptures/strongs](strong database) in JSON format
+* *KJV text* - [KJV2006 project](http://www.crosswire.org/~dmsmith/kjv2006/index.html) from Crosswire
+* *Tischendorf* - [MorphNT](https://github.com/morphgnt/tischendorf-data) from Ulrik Sandborg-Petersen 
+* *WLC* - [MorphHB](https://github.com/openscriptures/morphhb) project from Open Scriptures and David Troidl
+* *Strongs* - [strong database](https://github.com/openscriptures/strongs) in JSON format
 
 ### English Versions
 
-* [http://openenglishbible.org/](Open English Version)
-* [http://ebible.org](World English Bible)
+* [Open English Version](http://openenglishbible.org/)
+* [World English Bible](http://ebible.org)
 
 ### Non-English Verions
 
-* The remaining versions in this repository were downloaded from [http://www.unboundbible.org](Unbound Bible)
+* The remaining versions in this repository were downloaded from [Unbound Bible](http://www.unboundbible.org)
 
 ## Road Map
 
